@@ -5,6 +5,7 @@ import edu.ksu.cis.macr.aasis.agent.cc_m.IPersonaControlComponentMaster;
 import edu.ksu.cis.macr.aasis.agent.cc_message.participate.ParticipateMessage;
 import edu.ksu.cis.macr.aasis.agent.cc_message.participate.ParticipatePerformative;
 import edu.ksu.cis.macr.aasis.agent.persona.IPersona;
+import edu.ksu.cis.macr.aasis.simulator.player.IPlayable;
 import edu.ksu.cis.macr.aasis.simulator.player.PlayableCapability;
 import edu.ksu.cis.macr.aasis.spec.OrganizationFocus;
 import edu.ksu.cis.macr.goal.model.InstanceParameters;
@@ -199,8 +200,8 @@ public class Master extends AbstractBaseControlComponent implements IPersonaCont
     }
 
     @Override
-    public synchronized void setPlayerCapability(final PlayableCapability playerCapability) {
-        this.playerCapability = playerCapability;
+    public synchronized void setPlayerCapability(final IPlayable playerCapability) {
+        this.playerCapability = (PlayableCapability)playerCapability;
     }
 
     @Override

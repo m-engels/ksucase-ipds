@@ -31,7 +31,7 @@ import edu.ksu.cis.macr.obaa_pp.cc_cip.IdentifierProviderBuilder;
 import edu.ksu.cis.macr.obaa_pp.cc_message.AssignmentContent;
 import edu.ksu.cis.macr.obaa_pp.cc_message.ModificationContent;
 import edu.ksu.cis.macr.obaa_pp.cc_p.IdentifierProvider;
-import edu.ksu.cis.macr.obaa_pp.events.IOrganizationEvents;
+import edu.ksu.cis.macr.obaa_pp.events.OrganizationEvents;
 import edu.ksu.cis.macr.organization.model.*;
 import edu.ksu.cis.macr.organization.model.identifiers.UniqueIdentifier;
 import org.slf4j.Logger;
@@ -167,7 +167,7 @@ public abstract class AbstractBaseControlComponent extends AbstractControlCompon
     }
 
     @Override
-    public IOrganizationEvents getOrganizationEvents() {
+    public OrganizationEvents getOrganizationEvents() {
         return this.organizationEvents;
     }
 

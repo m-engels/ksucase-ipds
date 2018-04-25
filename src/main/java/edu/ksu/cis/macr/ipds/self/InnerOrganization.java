@@ -26,7 +26,7 @@ import edu.ksu.cis.macr.aasis.types.IAgentType;
 import edu.ksu.cis.macr.goal.model.InstanceParameters;
 import edu.ksu.cis.macr.goal.model.InstanceTreeChanges;
 import edu.ksu.cis.macr.ipds.self.guidelines.SelfGuidelineManager;
-import edu.ksu.cis.macr.obaa_pp.events.IOrganizationEvents;
+import edu.ksu.cis.macr.obaa_pp.events.OrganizationEvents;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -250,14 +250,14 @@ public class InnerOrganization extends Organization implements IInnerOrganizatio
     @Override
     public void setOrganizationEventsFromControlComponent() {
         Collection<IPersona> allPersona = this.getAllPersona();
-        IOrganizationEvents masterOrgEvents = null;
+        OrganizationEvents masterOrgEvents = null;
 
         // first find the master and get the org events
         for (IPersona p : allPersona) {
 
             if (p.getPersonaControlComponent().getClass().equals(ISelfPersona.class)) {
                 IPersonaControlComponentMaster master = (IPersonaControlComponentMaster) p.getPersonaControlComponent();
-                masterOrgEvents = master.getOrganizationEvents();
+                masterOrgEvents = (OrganizationEvents)master.getOrganizationEvents();
                 if (masterOrgEvents == null) {
                     LOG.error("masterOrgEvents was null - will not be able to initialize EC org events");
                     System.exit(-55);

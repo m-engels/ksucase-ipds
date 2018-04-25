@@ -10,8 +10,9 @@ import edu.ksu.cis.macr.obaa_pp.ec.AgentDisabledException;
 import edu.ksu.cis.macr.obaa_pp.ec_ps.IPlanSelector;
 import edu.ksu.cis.macr.obaa_pp.ec_task.ITask;
 import edu.ksu.cis.macr.obaa_pp.ec_task.TaskManager;
+import edu.ksu.cis.macr.obaa_pp.events.IEventManager;
 import edu.ksu.cis.macr.obaa_pp.events.IOrganizationEvent;
-import edu.ksu.cis.macr.obaa_pp.events.IOrganizationEvents;
+import edu.ksu.cis.macr.obaa_pp.events.OrganizationEvents;
 import edu.ksu.cis.macr.obaa_pp.events.OrganizationEvents;
 import edu.ksu.cis.macr.obaa_pp.objects.AbstractObject;
 import edu.ksu.cis.macr.obaa_pp.objects.IDisplayInformation;
@@ -88,7 +89,7 @@ public abstract class AbstractPersona extends AbstractObject implements IPersona
      */
     protected IInternalCommunicationCapability internalCommunicationCapability = null;
 
-    protected IOrganizationEvents organizationEvents;
+    protected OrganizationEvents organizationEvents;
     /**
      * If the {@code IAgent} is still running, {@code alive} is {@code true}, otherwise {@code alive} is {@code false}.
      */
@@ -738,12 +739,12 @@ public abstract class AbstractPersona extends AbstractObject implements IPersona
     }
 
     @Override
-    public IOrganizationEvents getOrganizationEvents() {
+    public OrganizationEvents getOrganizationEvents() {
         return organizationEvents;
     }
 
     @Override
-    public void setOrganizationEvents(IOrganizationEvents organizationEvents) {
-        this.organizationEvents = organizationEvents;
+    public void setOrganizationEvents(IEventManager organizationEvents) {
+        this.organizationEvents = (OrganizationEvents)organizationEvents;
     }
 }

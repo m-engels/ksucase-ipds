@@ -10,7 +10,7 @@ package edu.ksu.cis.macr.ipds.primary.persona;
 import edu.ksu.cis.macr.aasis.agent.cc_a.AbstractControlComponent;
 import edu.ksu.cis.macr.aasis.agent.persona.IPersona;
 import edu.ksu.cis.macr.aasis.spec.OrganizationFocus;
-import edu.ksu.cis.macr.obaa_pp.events.IOrganizationEvents;
+import edu.ksu.cis.macr.obaa_pp.events.OrganizationEvents;
 import org.w3c.dom.Element;
 
 /**
@@ -56,7 +56,7 @@ public class EmptyControlComponent extends AbstractControlComponent {
 
 
   @Override
-  public IOrganizationEvents getOrganizationEvents() {
+  public OrganizationEvents getOrganizationEvents() {
     return null;
   }
 
