@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RoleDiagram version="1.1" name="Substation Power Market Role Model" embedded="false">
+	<Capability id="15d504fa-505a-4d31-9dff-d57f950afa19" name="ManageSubstationCapability" x="358" y="552" width="-1" height="-1">
+	</Capability>
+	<Capability id="17d0e802-0e6e-47c2-963a-5a3a17078466" name="IInternalCommunicationCapability" x="289" y="5" width="-1" height="-1">
+	</Capability>
+	<Capability id="c42b9b9b-582a-46ec-a6c8-a9f973c500cb" name="IPowerCommunicationCapability" x="301" y="57" width="-1" height="-1">
+	</Capability>
+	<Capability id="8e08477b-5ca7-44de-afd4-5b0f317c244b" name="DateTimeCapability" x="353" y="199" width="114" height="41">
+	</Capability>
+	<Capability id="210cebfd-5260-4215-b711-137113f8b0de" name="AggregatePowerCapability" x="139" y="540" width="-1" height="-1">
+	</Capability>
+	<Capability id="31c639fc-f5aa-4270-a0cd-9d2716f470d4" name="ManageFeederCapability" x="470" y="365" width="-1" height="-1">
+	</Capability>
+	<Capability id="f6864f1b-2a48-4b63-8fee-30dcf5ba546a" name="GridAdminCapability" x="4" y="427" width="-1" height="-1">
+	</Capability>
+	<Capability id="4c7cfa32-ad3f-44f1-8b95-2a0070620e9b" name="DistributeLoadCapability" x="234" y="487" width="-1" height="-1">
+	</Capability>
+	<Capability id="bc612046-0ec1-4f1f-890d-7dd1071ec695" name="AssessReactivePowerCapability" x="771" y="354" width="203" height="35">
+	</Capability>
+	<Capability id="a3b5fe89-2fc7-4769-b27e-c90f315623cd" name="AssessReactivePowerQualityCapability" x="669" y="418" width="-1" height="-1">
+	</Capability>
+	<Capability id="223d2d86-4469-41f1-93a5-1c8a21272c30" name="GridControlSuperHolonCapability" x="11" y="488" width="-1" height="-1">
+	</Capability>
+	<Capability id="e17ceb23-657c-41c5-9ccf-59e460ead203" name="GridControlHolonCapability" x="496" y="428" width="-1" height="-1">
+	</Capability>
+	<Capability id="2986b33c-a576-4270-bbbb-fb3709ae554e" name="GridParticipateCapability" x="576" y="491" width="-1" height="-1">
+	</Capability>
+	<Capability id="633bcd44-8a74-423b-85ea-9bf1331477c4" name="IGridConnectCapability" x="343" y="311" width="-1" height="-1">
+	</Capability>
+	<Goal id="9b21f068-c412-47f5-9f73-ad43ad51186d" name="Broker Power" number="0" preference="1.0" x="70" y="36" width="-1" height="-1" definition="" description="" color="No">
+	</Goal>
+	<Goal id="1ee959a7-47d6-46e3-9ad7-f8d198112be2" name="Auction Power" number="1" preference="1.0" x="605" y="10" width="-1" height="-1" definition="" description="" color="No">
+	</Goal>
+	<Role id="72cd5382-6643-4a3c-8a0e-c0eb270f3b46" name="Broker Power Role" x="10" y="120" width="279" height="253">
+		<achieves name="achieves" score="1.0">
+			<child>9b21f068-c412-47f5-9f73-ad43ad51186d</child>
+		</achieves>
+		<requires>
+			<child>17d0e802-0e6e-47c2-963a-5a3a17078466</child>
+		</requires>
+		<requires>
+			<child>8e08477b-5ca7-44de-afd4-5b0f317c244b</child>
+		</requires>
+		<requires>
+			<child>c42b9b9b-582a-46ec-a6c8-a9f973c500cb</child>
+		</requires>
+		<requires>
+			<child>15d504fa-505a-4d31-9dff-d57f950afa19</child>
+		</requires>
+		<requires>
+			<child>210cebfd-5260-4215-b711-137113f8b0de</child>
+		</requires>
+		<requires>
+			<child>4c7cfa32-ad3f-44f1-8b95-2a0070620e9b</child>
+		</requires>
+		<requires>
+			<child>223d2d86-4469-41f1-93a5-1c8a21272c30</child>
+		</requires>
+		<requires>
+			<child>f6864f1b-2a48-4b63-8fee-30dcf5ba546a</child>
+		</requires>
+		<requires>
+			<child>633bcd44-8a74-423b-85ea-9bf1331477c4</child>
+		</requires>
+	</Role>
+	<Role id="a3180fd6-2726-4b19-8e91-4829afa8cd0b" name="Auction Power Role" x="497" y="110" width="321" height="225">
+		<achieves name="achieves" score="1.0">
+			<child>1ee959a7-47d6-46e3-9ad7-f8d198112be2</child>
+		</achieves>
+		<requires>
+			<child>17d0e802-0e6e-47c2-963a-5a3a17078466</child>
+		</requires>
+		<requires>
+			<child>8e08477b-5ca7-44de-afd4-5b0f317c244b</child>
+		</requires>
+		<requires>
+			<child>c42b9b9b-582a-46ec-a6c8-a9f973c500cb</child>
+		</requires>
+		<requires>
+			<child>31c639fc-f5aa-4270-a0cd-9d2716f470d4</child>
+		</requires>
+		<requires>
+			<child>bc612046-0ec1-4f1f-890d-7dd1071ec695</child>
+		</requires>
+		<requires>
+			<child>a3b5fe89-2fc7-4769-b27e-c90f315623cd</child>
+		</requires>
+		<requires>
+			<child>e17ceb23-657c-41c5-9ccf-59e460ead203</child>
+		</requires>
+		<requires>
+			<child>2986b33c-a576-4270-bbbb-fb3709ae554e</child>
+		</requires>
+		<requires>
+			<child>633bcd44-8a74-423b-85ea-9bf1331477c4</child>
+		</requires>
+	</Role>
+</RoleDiagram>

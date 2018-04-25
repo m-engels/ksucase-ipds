@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GoalDiagram version="1.1" name="Home Power Market Goal Model" embedded="false">
+	<Goal id="d963e6bd-2ce6-44c9-854c-0e35a8124432" name="Succeed" number="2.0" preference="1.0" x="307" y="7" width="-1" height="-1" definition="" description="" color="No">
+			<parameter name="brokerConnections" collection="" type="Connections"/>
+			<parameter name="auctionGuidelines" collection="" type="AuctionGuidelines"/>
+		<and>
+			<child>91142357-b59c-4866-ab65-580e6923c10c</child>
+		</and>
+	</Goal>
+	<Goal id="91142357-b59c-4866-ab65-580e6923c10c" name="Auction Power" number="2.1" preference="1.0" x="311" y="124" width="-1" height="-1" definition="" description="" color="No">
+			<parameter name="brokerConnections" collection="" type="Connections"/>
+			<parameter name="auctionGuidelines" collection="" type="AuctionGuidelines"/>
+	</Goal>
+</GoalDiagram>

@@ -1,0 +1,71 @@
+===============================================================================
+                  AO-MASE Streamlined Implementation Approach
+===============================================================================
+
+The following includes connectionSet short set of notes for doing connectionSet quick code spike.
+
+===============================================================================
+Design
+===============================================================================
+
+Create the refined goal model using AgentTool3. 
+
+Create the role model:  
+  One role for each goal.
+  Then add the capabilities needed to perform that role.
+  Every role must have the "Communication" capability. 
+  Every IPDS role must have the "IPowerCommunicationCapability" capability.
+  (Required for the base Control Component class).
+
+Create connectionSet plan model for each leaf goal, connecting states with either messages or
+  guard conditions.
+  
+===============================================================================
+Coding Implementation
+===============================================================================
+
+New goal model elements must be added to: 
+  goals.GoalEvents.java
+  goals.GoalIdentifiers.java
+  goals.GoalParameters.java
+
+Goal parameters must be added to:
+  goal.parameters.NEWCLASS.java
+  
+Roles must be listed in: 
+  agent.BaseAgent.java
+  
+Roles must be matched to goals in:
+  agent.BaseAgent.java
+  
+ Capabilities must be added to: 
+  capabilities.NEWCLASS.java
+  
+Communication capabilities must have:
+  capabilities.NEWCLASS.java
+  capabilities.NEWCLASSImpl.java
+  capabilities.message.NEWCLASSMessage.java
+  capabilities.message.NEWCLASSMessageContent.java
+
+Capabilities (using interface class names) must be listed in: 
+  agent.cc.UniqueIdentifierProvider.java
+  
+Plans for each leaf goal must be added to:
+  plans.
+  
+Plan states for each plan must be added to:
+  plan.states.
+  
+===============================================================================
+Configuring the Agents and Environment objects (e.g. smart devices)
+===============================================================================
+  
+List agents in Agent.xml file, add capabilities. If 
+  communication capabilities, use the IMPL class name.
+  Do not include the basic "Communication" capability. 
+
+===============================================================================
+
+===============================================================================
+ 
+  

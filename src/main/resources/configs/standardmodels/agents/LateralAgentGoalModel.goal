@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GoalDiagram version="1.1" name="Lateral Agent Goal Model" embedded="false">
+	<Goal id="9d3b987e-28ab-431a-879c-36d2d7856a54" name="Succeed" number="1" preference="1.0" x="280" y="11" width="-1" height="-1" definition="" description="" color="No">
+			<parameter name="gridConnections" collection="" type="Connections"/>
+			<parameter name="lateralGuidelines" collection="" type="LateralGuidelines"/>
+			<parameter name="auctionGuidelines" collection="" type="AuctionGuidelines"/>
+			<parameter name="auctionConnections" collection="" type="Connections"/>
+			<parameter name="brokerGuidelines" collection="" type="BrokerGuidelines"/>
+		<and>
+			<child>55a1698c-6b60-41fe-8cf2-ca120fa34fd4</child>
+		</and>
+		<and>
+			<child>4c14d43c-3dec-4106-93b5-d560f7f3851e</child>
+		</and>
+		<and>
+			<child>18f76700-49e9-4022-abe4-e661c6565e99</child>
+		</and>
+		<and>
+			<child>083d74c4-ddda-41a0-8de3-dfdc73257842</child>
+		</and>
+		<and>
+			<child>5a518945-3bc3-4383-8eec-9eb48f0e6830</child>
+		</and>
+	</Goal>
+	<Goal id="55a1698c-6b60-41fe-8cf2-ca120fa34fd4" name="Self Control" number="2" preference="1.0" x="16" y="165" width="-1" height="-1" definition="" description="" color="No">
+			<parameter name="gridConnections" collection="" type="Connections"/>
+			<parameter name="lateralGuidelines" collection="" type="LateralGuidelines"/>
+			<parameter name="auctionConnections" collection="" type="Connections"/>
+			<parameter name="auctionGuidelines" collection="" type="AuctionGuidelines"/>
+			<parameter name="brokerGuidelines" collection="" type="BrokerGuidelines"/>
+		<triggers name="beginSuper" min="" max="">
+			<child>18f76700-49e9-4022-abe4-e661c6565e99</child>
+			<parameter name="childConnections" collection="" type="Connections"/>
+			<parameter name="lateralGuidelines" collection="" type="LateralGuidelines"/>
+		</triggers>
+		<triggers name="beginSub" min="" max="">
+			<child>083d74c4-ddda-41a0-8de3-dfdc73257842</child>
+			<parameter name="parentConnections" collection="" type="Connections"/>
+			<parameter name="lateralGuidelines" collection="" type="LateralGuidelines"/>
+		</triggers>
+		<triggers name="beginBroker" min="" max="">
+			<child>5a518945-3bc3-4383-8eec-9eb48f0e6830</child>
+			<parameter name="brokerGuidelines" collection="" type="BrokerGuidelines"/>
+			<parameter name="auctionConnections" collection="" type="Connections"/>
+		</triggers>
+	</Goal>
+	<Goal id="4c14d43c-3dec-4106-93b5-d560f7f3851e" name="Manage Lateral" number="4" preference="1.0" x="694" y="177" width="-1" height="-1" definition="" description="" color="No">
+			<parameter name="lateralGuidelines" collection="" type="LateralGuidelines"/>
+			<parameter name="gridConnections" collection="" type="Connections"/>
+			<parameter name="auctionConnections" collection="" type="Connections"/>
+	</Goal>
+	<Goal id="18f76700-49e9-4022-abe4-e661c6565e99" name="Be Super Holon" number="5" preference="1.0" x="400" y="440" width="-1" height="-1" definition="" description="" color="No">
+			<parameter name="childConnections" collection="" type="Connections"/>
+			<parameter name="lateralGuidelines" collection="" type="LateralGuidelines"/>
+	</Goal>
+	<Goal id="083d74c4-ddda-41a0-8de3-dfdc73257842" name="Be Holon" number="3" preference="1.0" x="112" y="441" width="-1" height="-1" definition="" description="" color="No">
+			<parameter name="parentConnections" collection="" type="Connections"/>
+			<parameter name="lateralGuidelines" collection="" type="LateralGuidelines"/>
+	</Goal>
+	<Goal id="5a518945-3bc3-4383-8eec-9eb48f0e6830" name="Broker Power" number="1.5" preference="1.0" x="618" y="336" width="-1" height="-1" definition="" description="" color="No">
+			<parameter name="brokerGuidelines" collection="" type="BrokerGuidelines"/>
+			<parameter name="auctionConnections" collection="" type="Connections"/>
+	</Goal>
+</GoalDiagram>

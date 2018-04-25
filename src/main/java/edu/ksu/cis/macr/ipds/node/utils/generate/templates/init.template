@@ -1,0 +1,166 @@
+/**
+ * 
+ * Copyright 2012 
+ * Kansas State University MACR Laboratory http://macr.cis.ksu.edu/
+ * Department of Computing & Information Sciences
+ * 
+ * See License.txt file for the license agreement. 
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+package edu.ksu.cis.macr.ipds.plans.[[[NAMEHERE]]];
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import edu.ksu.cis.macr.goal.model.InstanceParameters;
+import edu.ksu.cis.macr.ipds.agents.FeederAgent;
+import GoalEvents;
+import GoalParameters;
+import edu.ksu.cis.macr.ipds.plan.PlanState;
+import edu.ksu.cis.macr.obaa.agent.architecture.ExecutionComponent;
+import edu.ksu.cis.macr.obaa.agent.architecture.OrganizationEvent;
+import edu.ksu.cis.macr.obaa.agent.architecture.OrganizationEvent.EventType;
+import edu.ksu.cis.macr.organization.model.Agent;
+import edu.ksu.cis.macr.organization.model.InstanceGoal;
+import edu.ksu.cis.macr.organization.model.identifiers.StringIdentifier;
+import edu.ksu.cis.macr.organization.model.identifiers.UniqueIdentifier;
+
+public class Init extends PlanState<[[[NAMEHERE]]]Plan> {
+	private static Init instance = new Init();
+
+	private static final Logger LOG = LoggerFactory
+			.getLogger(Init.class);
+
+	/**
+	 * @return the singleton instance
+	 */
+	public static Init Instance() {
+		return instance;
+	}
+
+	private Init() {
+	}
+
+	@Override
+	public void Enter(final [[[NAMEHERE]]]Plan plan,
+			final ExecutionComponent executionComponent,
+			final InstanceGoal<?> instanceGoal) {
+		// Nothing
+	}
+
+	@Override
+	public void Execute(final [[[NAMEHERE]]]Plan plan,
+			final ExecutionComponent executionComponent,
+			final InstanceGoal<?> instanceGoal) {
+
+		LOG.debug("EXECUTE Plan with Instance Goal {}",
+				instanceGoal.getInstanceIdentifier().toString());
+
+		// Get the parameter values from the existing active instance goal
+
+		final InstanceParameters params = (InstanceParameters) instanceGoal
+				.getParameter();
+
+		final double combinedMinKW = (double) params.getValue(StringIdentifier
+				.getIdentifier("combinedMinKW"));
+		final double combinedMaxKW = (double) params.getValue(StringIdentifier
+				.getIdentifier("combinedMaxKW"));
+		final double minVoltageMultiplier = (double) params
+				.getValue(StringIdentifier
+						.getIdentifier("minVoltageMultiplier"));
+		final double maxVoltageMultiplier = (double) params
+				.getValue(StringIdentifier
+						.getIdentifier("maxVoltageMultiplier"));
+
+		// get the list of registered prosumer peer agents active in the local
+		// organization
+
+		final Set<Agent<?>> allAgents = executionComponent
+				.getControlComponent().getOrganizationModel().getAgents();
+		LOG.debug("Num agents found in plan is {}",	allAgents.size());
+
+		final Set<FeederAgent> prosumers = getLocalProsumers(allAgents);
+		double numProsumers = prosumers.size(); // TODO get from queue
+
+		// TODO: Finish determination of which agents are prosumers. Currently
+		// one less than total (for the neighborhood)
+		numProsumers = allAgents.size() - 1;
+
+		if (numProsumers == 0) {
+			return;
+		}
+
+		LOG.debug("Num agents registered in this organization is {}",numProsumers);
+		// create instance goals for each registered peer agent in the localorganization
+		// just for goal creation, assume
+
+		final double minKW = combinedMinKW / numProsumers;
+		final double maxKW = combinedMaxKW / numProsumers;
+
+		final Map<UniqueIdentifier, Object> map = new HashMap<UniqueIdentifier, Object>();
+
+		map.put(GoalParameters.minKW, minKW);
+		map.put(GoalParameters.maxKW, maxKW);
+		map.put(GoalParameters.minVoltageMultiplier, minVoltageMultiplier);
+		map.put(GoalParameters.maxVoltageMultiplier, maxVoltageMultiplier);
+
+		final InstanceParameters instanceParams = new InstanceParameters(map);
+
+		final List<OrganizationEvent> organizationEvents = new ArrayList<OrganizationEvent>();
+
+		for (int i = 1; i <= numProsumers; i++) {
+
+			final OrganizationEvent organizationEvent = new OrganizationEvent(
+					EventType.GOAL_MODEL_EVENT, GoalEvents.assign,
+					instanceGoal, instanceParams);
+
+			LOG.debug("Created NEW ORGANIZATION EVENT:  {}",organizationEvent.toString());
+			organizationEvents.add(organizationEvent);
+
+		}
+		executionComponent.getControlComponent().addOrganizationEvent(
+				organizationEvents);
+		LOG.debug("added organization events {}", organizationEvents.toString());
+
+		plan.getStateMachine().changeState(Work.Instance(),
+				executionComponent, instanceGoal);
+	}
+
+	@Override
+	public void Exit(final [[[NAMEHERE]]]Plan plan,
+			final ExecutionComponent executionComponent,
+			final InstanceGoal<?> instanceGoal) {
+		// Nothing
+	}
+
+	/**
+	 * @param allAgents
+	 * @return
+	 */
+	private Set<FeederAgent> getLocalProsumers(final Set<Agent<?>> allAgents) {
+		final Set<FeederAgent> prosumers = new HashSet<FeederAgent>();
+		for (final Agent<?> agent : allAgents) {
+			try {
+				prosumers.add((FeederAgent) agent);
+			} catch (final Exception ex) {
+				continue;
+			} finally {
+			}
+
+		}
+		return prosumers;
+	}
+}

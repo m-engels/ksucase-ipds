@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RoleDiagram version="1.1" name="Lateral Grid Control Role Model" embedded="false">
+	<Capability id="15d504fa-505a-4d31-9dff-d57f950afa19" name="ManageLateralCapability" x="500" y="575" width="-1" height="-1">
+	</Capability>
+	<Capability id="17d0e802-0e6e-47c2-963a-5a3a17078466" name="IInternalCommunicationCapability" x="411" y="432" width="-1" height="-1">
+	</Capability>
+	<Capability id="c42b9b9b-582a-46ec-a6c8-a9f973c500cb" name="IPowerCommunicationCapability" x="292" y="46" width="248" height="38">
+	</Capability>
+	<Capability id="8e08477b-5ca7-44de-afd4-5b0f317c244b" name="DateTimeCapability" x="410" y="359" width="114" height="41">
+	</Capability>
+	<Capability id="210cebfd-5260-4215-b711-137113f8b0de" name="AggregatePowerCapability" x="304" y="579" width="-1" height="-1">
+	</Capability>
+	<Capability id="31c639fc-f5aa-4270-a0cd-9d2716f470d4" name="ManageNeighborhoodCapability" x="610" y="466" width="-1" height="-1">
+	</Capability>
+	<Capability id="f6864f1b-2a48-4b63-8fee-30dcf5ba546a" name="GridAdminCapability" x="166" y="516" width="-1" height="-1">
+	</Capability>
+	<Capability id="4c7cfa32-ad3f-44f1-8b95-2a0070620e9b" name="DistributeLoadCapability" x="419" y="634" width="-1" height="-1">
+	</Capability>
+	<Capability id="bc612046-0ec1-4f1f-890d-7dd1071ec695" name="AssessReactivePowerCapability" x="792" y="352" width="203" height="35">
+	</Capability>
+	<Capability id="a3b5fe89-2fc7-4769-b27e-c90f315623cd" name="AssessReactivePowerQualityCapability" x="798" y="418" width="-1" height="-1">
+	</Capability>
+	<Capability id="223d2d86-4469-41f1-93a5-1c8a21272c30" name="GridControlSuperHolonCapability" x="8" y="440" width="-1" height="-1">
+	</Capability>
+	<Capability id="e17ceb23-657c-41c5-9ccf-59e460ead203" name="GridControlHolonCapability" x="719" y="546" width="-1" height="-1">
+	</Capability>
+	<Capability id="2986b33c-a576-4270-bbbb-fb3709ae554e" name="GridParticipateCapability" x="757" y="592" width="-1" height="-1">
+	</Capability>
+	<Capability id="f9ee35cd-6375-4d32-95ef-ba6ed40fa1b7" name="IGridConnectCapability" x="641" y="680" width="-1" height="-1">
+	</Capability>
+	<Goal id="9b21f068-c412-47f5-9f73-ad43ad51186d" name="Be Super Holon" number="0" preference="1.0" x="70" y="36" width="-1" height="-1" definition="" description="" color="No">
+	</Goal>
+	<Goal id="1ee959a7-47d6-46e3-9ad7-f8d198112be2" name="Be Holon" number="1" preference="1.0" x="605" y="10" width="-1" height="-1" definition="" description="" color="No">
+	</Goal>
+	<Goal id="c9bd9dfa-d9d4-4c52-bda0-b47f08a7cb7a" name="Be Sub Lateral Holon" number="2" preference="1.0" x="1054" y="50" width="-1" height="-1" definition="" description="" color="No">
+	</Goal>
+	<Role id="72cd5382-6643-4a3c-8a0e-c0eb270f3b46" name="Be Super Holon Role" x="48" y="120" width="303" height="253">
+		<achieves name="achieves" score="1.0">
+			<child>9b21f068-c412-47f5-9f73-ad43ad51186d</child>
+		</achieves>
+		<requires>
+			<child>17d0e802-0e6e-47c2-963a-5a3a17078466</child>
+		</requires>
+		<requires>
+			<child>8e08477b-5ca7-44de-afd4-5b0f317c244b</child>
+		</requires>
+		<requires>
+			<child>c42b9b9b-582a-46ec-a6c8-a9f973c500cb</child>
+		</requires>
+		<requires>
+			<child>15d504fa-505a-4d31-9dff-d57f950afa19</child>
+		</requires>
+		<requires>
+			<child>210cebfd-5260-4215-b711-137113f8b0de</child>
+		</requires>
+		<requires>
+			<child>4c7cfa32-ad3f-44f1-8b95-2a0070620e9b</child>
+		</requires>
+		<requires>
+			<child>223d2d86-4469-41f1-93a5-1c8a21272c30</child>
+		</requires>
+		<requires>
+			<child>f6864f1b-2a48-4b63-8fee-30dcf5ba546a</child>
+		</requires>
+		<requires>
+			<child>f9ee35cd-6375-4d32-95ef-ba6ed40fa1b7</child>
+		</requires>
+	</Role>
+	<Role id="a3180fd6-2726-4b19-8e91-4829afa8cd0b" name="Be Holon Role" x="463" y="111" width="321" height="225">
+		<achieves name="achieves" score="1.0">
+			<child>1ee959a7-47d6-46e3-9ad7-f8d198112be2</child>
+		</achieves>
+		<requires>
+			<child>17d0e802-0e6e-47c2-963a-5a3a17078466</child>
+		</requires>
+		<requires>
+			<child>8e08477b-5ca7-44de-afd4-5b0f317c244b</child>
+		</requires>
+		<requires>
+			<child>c42b9b9b-582a-46ec-a6c8-a9f973c500cb</child>
+		</requires>
+		<requires>
+			<child>31c639fc-f5aa-4270-a0cd-9d2716f470d4</child>
+		</requires>
+		<requires>
+			<child>bc612046-0ec1-4f1f-890d-7dd1071ec695</child>
+		</requires>
+		<requires>
+			<child>a3b5fe89-2fc7-4769-b27e-c90f315623cd</child>
+		</requires>
+		<requires>
+			<child>e17ceb23-657c-41c5-9ccf-59e460ead203</child>
+		</requires>
+		<requires>
+			<child>2986b33c-a576-4270-bbbb-fb3709ae554e</child>
+		</requires>
+		<requires>
+			<child>f9ee35cd-6375-4d32-95ef-ba6ed40fa1b7</child>
+		</requires>
+	</Role>
+	<Role id="f2e446e8-c2d9-47b5-a7df-dc88bd55be8c" name="Be Sub Lateral Holon Role" x="961" y="135" width="375" height="244">
+		<requires>
+			<child>c42b9b9b-582a-46ec-a6c8-a9f973c500cb</child>
+		</requires>
+		<requires>
+			<child>8e08477b-5ca7-44de-afd4-5b0f317c244b</child>
+		</requires>
+		<requires>
+			<child>17d0e802-0e6e-47c2-963a-5a3a17078466</child>
+		</requires>
+		<requires>
+			<child>e17ceb23-657c-41c5-9ccf-59e460ead203</child>
+		</requires>
+		<requires>
+			<child>2986b33c-a576-4270-bbbb-fb3709ae554e</child>
+		</requires>
+		<requires>
+			<child>a3b5fe89-2fc7-4769-b27e-c90f315623cd</child>
+		</requires>
+		<requires>
+			<child>bc612046-0ec1-4f1f-890d-7dd1071ec695</child>
+		</requires>
+		<requires>
+			<child>f9ee35cd-6375-4d32-95ef-ba6ed40fa1b7</child>
+		</requires>
+		<achieves name="achieves" score="1.0">
+			<child>c9bd9dfa-d9d4-4c52-bda0-b47f08a7cb7a</child>
+		</achieves>
+		<requires>
+			<child>15d504fa-505a-4d31-9dff-d57f950afa19</child>
+		</requires>
+	</Role>
+</RoleDiagram>

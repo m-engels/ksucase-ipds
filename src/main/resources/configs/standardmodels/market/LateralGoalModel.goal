@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GoalDiagram version="1.1" name="Lateral Power Market Goal Model" embedded="false">
+	<Goal id="d963e6bd-2ce6-44c9-854c-0e35a8124432" name="Succeed" number="2.0" preference="1.0" x="306" y="5" width="-1" height="-1" definition="" description="" color="No">
+			<parameter name="auctionConnections" collection="" type="Connections"/>
+			<parameter name="brokerGuidelines" collection="" type="BrokerGuidelines"/>
+		<and>
+			<child>91142357-b59c-4866-ab65-580e6923c10c</child>
+		</and>
+		<and>
+			<child>f7dde922-8b6a-49f2-b7be-6ddc5ad4c77d</child>
+		</and>
+	</Goal>
+	<Goal id="91142357-b59c-4866-ab65-580e6923c10c" name="Broker Power" number="2.1" preference="1.0" x="15" y="169" width="-1" height="-1" definition="" description="" color="No">
+			<parameter name="auctionConnections" collection="" type="Connections"/>
+			<parameter name="brokerGuidelines" collection="" type="BrokerGuidelines"/>
+		<triggers name="beginAuction" min="" max="">
+			<child>f7dde922-8b6a-49f2-b7be-6ddc5ad4c77d</child>
+			<bendpoint x="369" y="259"/>
+			<parameter name="brokerConnections" collection="" type="Connections"/>
+			<parameter name="auctionGuidelines" collection="" type="NeighborhoodGuidelines"/>
+		</triggers>
+		<negative_triggers name="removeAuction" min="" max="">
+			<child>f7dde922-8b6a-49f2-b7be-6ddc5ad4c77d</child>
+			<bendpoint x="382" y="155"/>
+			<parameter name="brokerConnections" collection="" type="Connections"/>
+			<parameter name="auctionGuidelines" collection="" type="AuctionGuidelines"/>
+		</negative_triggers>
+	</Goal>
+	<Goal id="f7dde922-8b6a-49f2-b7be-6ddc5ad4c77d" name="Auction Power" number="2.2" preference="1.0" x="564" y="174" width="-1" height="-1" definition="" description="" color="No">
+			<parameter name="brokerConnections" collection="" type="Connections"/>
+			<parameter name="auctionGuidelines" collection="" type="NeighborhoodGuidelines"/>
+	</Goal>
+</GoalDiagram>

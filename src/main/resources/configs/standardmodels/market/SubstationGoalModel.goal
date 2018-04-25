@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GoalDiagram version="1.1" name="Substation Power Market Goal Model" embedded="false">
+	<Goal id="d963e6bd-2ce6-44c9-854c-0e35a8124432" name="Succeed" number="2.0" preference="1.0" x="328" y="10" width="-1" height="-1" definition="" description="" color="No">
+			<parameter name="auctionConnections" collection="" type="Connections"/>
+			<parameter name="substationGuidelines" collection="" type="SubstationGuidelines"/>
+		<and>
+			<child>91142357-b59c-4866-ab65-580e6923c10c</child>
+		</and>
+		<and>
+			<child>f7dde922-8b6a-49f2-b7be-6ddc5ad4c77d</child>
+		</and>
+	</Goal>
+	<Goal id="91142357-b59c-4866-ab65-580e6923c10c" name="Broker Power" number="2.1" preference="1.0" x="40" y="205" width="-1" height="-1" definition="" description="" color="No">
+			<parameter name="auctionConnections" collection="" type="Connections"/>
+			<parameter name="substationGuidelines" collection="" type="SubstationGuidelines"/>
+		<triggers name="manage" min="" max="">
+			<child>f7dde922-8b6a-49f2-b7be-6ddc5ad4c77d</child>
+			<bendpoint x="412" y="308"/>
+			<parameter name="connectionGuidelines" collection="" type="ConnectionGuidelines"/>
+			<parameter name="auctionGuidelines" collection="" type="FeederGuidelines"/>
+		</triggers>
+		<negative_triggers name="unmanage" min="" max="">
+			<child>f7dde922-8b6a-49f2-b7be-6ddc5ad4c77d</child>
+			<bendpoint x="388" y="186"/>
+			<parameter name="connectionGuidelines" collection="" type="ConnectionGuidelines"/>
+			<parameter name="auctionGuidelines" collection="" type="FeederGuidelines"/>
+		</negative_triggers>
+	</Goal>
+	<Goal id="f7dde922-8b6a-49f2-b7be-6ddc5ad4c77d" name="Auction Power" number="2.2" preference="1.0" x="585" y="200" width="-1" height="-1" definition="" description="" color="No">
+			<parameter name="connectionGuidelines" collection="" type="ConnectionGuidelines"/>
+			<parameter name="auctionGuidelines" collection="" type="FeederGuidelines"/>
+	</Goal>
+</GoalDiagram>

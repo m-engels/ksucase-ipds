@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<goalparameters>
+  <gridConnections expectedmaster="F20inF20" in="orgF20" to="F20inF20"/>
+  <gridConnections expectedmaster="F21inF21" in="orgF21" to="F22inF21"/>
+  <gridConnections expectedmaster="F21inF21" in="orgF21" to="F23inF21"/>
+  <orgF21 combinedkw="1280.0" orgModelFolder="grid" specpath="F21/orgF21"/>
+  <feederGuidelines maxKW="1280.0"/>
+</goalparameters>

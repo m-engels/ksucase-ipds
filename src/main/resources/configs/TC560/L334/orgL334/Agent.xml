@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<environment>
+  <agents package="edu.ksu.cis.macr.ipds.grid.persona.types" type="LateralGridPersona">
+    <organization package="edu.ksu.cis.macr.ipds.grid.capabilities.admin" type="GridMaster"/>
+    <agent>L334inL334</agent>
+    <capability package="edu.ksu.cis.macr.ipds.grid.capabilities.connect" type="GridConnectCapability"/>
+    <capability package="edu.ksu.cis.macr.ipds.primary.capabilities.participate" type="PowerCommunicationCapability"/>
+    <capability package="edu.ksu.cis.macr.ipds.primary.capabilities.manage" type="DateTimeCapability"/>
+    <capability package="edu.ksu.cis.macr.ipds.grid.capabilities.admin" type="GridAdminCapability"/>
+    <capability package="edu.ksu.cis.macr.ipds.grid.capabilities.admin" type="GridControlSuperHolonCapability"/>
+    <capability package="edu.ksu.cis.macr.ipds.grid.capabilities.admin" type="DistributeLoadCapability"/>
+    <capability package="edu.ksu.cis.macr.ipds.grid.capabilities.admin" type="AggregatePowerCapability"/>
+    <capability package="edu.ksu.cis.macr.ipds.primary.capabilities.manage" type="AssessReactivePowerQualityCapability"/>
+    <capability package="edu.ksu.cis.macr.ipds.primary.capabilities.manage" type="AssessReactivePowerCapability"/>
+    <capability package="edu.ksu.cis.macr.ipds.primary.capabilities.manage" type="ManageLateralCapability"/>
+  </agents>
+  <agents package="edu.ksu.cis.macr.ipds.primary.persona.types" type="LateralPersona">
+    <organization package="edu.ksu.cis.macr.ipds.grid.capabilities.participate" type="GridParticipant"/>
+    <agent>L335inL334</agent>
+    <capability package="edu.ksu.cis.macr.ipds.grid.capabilities.connect" type="GridConnectCapability"/>
+    <capability package="edu.ksu.cis.macr.ipds.primary.capabilities.participate" type="PowerCommunicationCapability"/>
+    <capability package="edu.ksu.cis.macr.ipds.primary.capabilities.manage" type="DateTimeCapability"/>
+    <capability package="edu.ksu.cis.macr.ipds.grid.capabilities.participate" type="GridParticipateCapability"/>
+    <capability package="edu.ksu.cis.macr.ipds.grid.capabilities.participate" type="GridControlHolonCapability"/>
+    <capability package="edu.ksu.cis.macr.ipds.primary.capabilities.manage" type="AssessReactivePowerCapability"/>
+    <capability package="edu.ksu.cis.macr.ipds.primary.capabilities.manage" type="AssessReactivePowerQualityCapability"/>
+    <capability package="edu.ksu.cis.macr.ipds.primary.capabilities.manage" type="ManageLateralCapability"/>
+  </agents>
+  <agents package="edu.ksu.cis.macr.ipds.primary.persona.types" type="NeighborhoodPersona">
+    <organization package="edu.ksu.cis.macr.ipds.grid.capabilities.participate" type="GridParticipant"/>
+    <agent>N342inL334</agent>
+    <capability package="edu.ksu.cis.macr.ipds.grid.capabilities.connect" type="GridConnectCapability"/>
+    <capability package="edu.ksu.cis.macr.ipds.primary.capabilities.participate" type="PowerCommunicationCapability"/>
+    <capability package="edu.ksu.cis.macr.ipds.primary.capabilities.manage" type="DateTimeCapability"/>
+    <capability package="edu.ksu.cis.macr.ipds.grid.capabilities.participate" type="GridParticipateCapability"/>
+    <capability package="edu.ksu.cis.macr.ipds.grid.capabilities.participate" type="GridControlHolonCapability"/>
+    <capability package="edu.ksu.cis.macr.ipds.primary.capabilities.manage" type="AssessReactivePowerCapability"/>
+    <capability package="edu.ksu.cis.macr.ipds.primary.capabilities.manage" type="AssessReactivePowerQualityCapability"/>
+    <capability package="edu.ksu.cis.macr.ipds.primary.capabilities.manage" type="ManageNeighborhoodCapability"/>
+  </agents>
+</environment>

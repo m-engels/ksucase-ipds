@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GoalDiagram version="1.1" name="Feeder Grid Control Goal Model" embedded="false">
+	<Goal id="d963e6bd-2ce6-44c9-854c-0e35a8124432" name="Succeed" number="2.0" preference="1.0" x="328" y="10" width="-1" height="-1" definition="" description="" color="No">
+			<parameter name="childConnections" collection="" type="Connections"/>
+			<parameter name="feederGuidelines" collection="" type="FeederGuidelines"/>
+		<and>
+			<child>91142357-b59c-4866-ab65-580e6923c10c</child>
+		</and>
+		<and>
+			<child>f7dde922-8b6a-49f2-b7be-6ddc5ad4c77d</child>
+		</and>
+		<and>
+			<child>cb5f80fe-438e-4bea-befe-fc84ba3bed05</child>
+		</and>
+	</Goal>
+	<Goal id="91142357-b59c-4866-ab65-580e6923c10c" name="Be Super Holon" number="2.1" preference="1.0" x="23" y="156" width="-1" height="-1" definition="" description="" color="No">
+			<parameter name="childConnections" collection="" type="Connections"/>
+			<parameter name="feederGuidelines" collection="" type="FeederGuidelines"/>
+		<triggers name="manage" min="" max="">
+			<child>f7dde922-8b6a-49f2-b7be-6ddc5ad4c77d</child>
+			<bendpoint x="418" y="222"/>
+			<parameter name="connectionGuidelines" collection="" type="ConnectionGuidelines"/>
+			<parameter name="lateralGuidelines" collection="" type="LateralGuidelines"/>
+		</triggers>
+		<negative_triggers name="unmanage" min="" max="">
+			<child>f7dde922-8b6a-49f2-b7be-6ddc5ad4c77d</child>
+			<bendpoint x="399" y="157"/>
+			<parameter name="connectionGuidelines" collection="" type="ConnectionGuidelines"/>
+			<parameter name="lateralGuidelines" collection="" type="LateralGuidelines"/>
+		</negative_triggers>
+		<triggers name="manage" min="" max="">
+			<child>cb5f80fe-438e-4bea-befe-fc84ba3bed05</child>
+			<bendpoint x="141" y="331"/>
+			<parameter name="connectionGuidelines" collection="" type="ConnectionGuidelines"/>
+			<parameter name="feederGuidelines" collection="" type="FeederGuidelines"/>
+		</triggers>
+		<negative_triggers name="unmanage" min="" max="">
+			<child>cb5f80fe-438e-4bea-befe-fc84ba3bed05</child>
+			<parameter name="connectionGuidelines" collection="" type="ConnectionGuidelines"/>
+			<parameter name="feederGuidelines" collection="" type="FeederGuidelines"/>
+		</negative_triggers>
+	</Goal>
+	<Goal id="f7dde922-8b6a-49f2-b7be-6ddc5ad4c77d" name="Be Holon" number="2.2" preference="1.0" x="609" y="143" width="-1" height="-1" definition="" description="" color="No">
+			<parameter name="connectionGuidelines" collection="" type="ConnectionGuidelines"/>
+			<parameter name="lateralGuidelines" collection="" type="LateralGuidelines"/>
+	</Goal>
+	<Goal id="cb5f80fe-438e-4bea-befe-fc84ba3bed05" name="Be Sub Feeder Holon" number="2.3" preference="1.0" x="333" y="291" width="-1" height="-1" definition="" description="" color="No">
+			<parameter name="connectionGuidelines" collection="" type="ConnectionGuidelines"/>
+			<parameter name="feederGuidelines" collection="" type="FeederGuidelines"/>
+	</Goal>
+</GoalDiagram>

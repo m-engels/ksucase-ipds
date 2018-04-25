@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GoalDiagram version="1.1" name="Neighborhood Power Market Goal Model" embedded="false">
+	<Goal id="d963e6bd-2ce6-44c9-854c-0e35a8124432" name="Succeed" number="2.0" preference="1.0" x="321" y="7" width="-1" height="-1" definition="" description="" color="No">
+			<parameter name="auctionConnections" collection="" type="Connections"/>
+			<parameter name="auctionGuidelines" collection="" type="AuctionGuidelines"/>
+			<parameter name="brokerGuidelines" collection="" type="BrokerGuidelines"/>
+			<parameter name="brokerConnections" collection="" type="Connections"/>
+		<and>
+			<child>91142357-b59c-4866-ab65-580e6923c10c</child>
+		</and>
+		<and>
+			<child>f7dde922-8b6a-49f2-b7be-6ddc5ad4c77d</child>
+		</and>
+	</Goal>
+	<Goal id="91142357-b59c-4866-ab65-580e6923c10c" name="Broker Power" number="2.1" preference="1.0" x="21" y="178" width="-1" height="-1" definition="" description="" color="No">
+			<parameter name="auctionConnections" collection="" type="Connections"/>
+			<parameter name="auctionGuidelines" collection="" type="AuctionGuidelines"/>
+			<parameter name="brokerGuidelines" collection="" type="BrokerGuidelines"/>
+			<parameter name="brokerConnections" collection="" type="Connections"/>
+		<triggers name="beginAuction" min="" max="">
+			<child>f7dde922-8b6a-49f2-b7be-6ddc5ad4c77d</child>
+			<bendpoint x="433" y="293"/>
+			<parameter name="brokerConnections" collection="" type="Connections"/>
+			<parameter name="auctionGuidelines" collection="" type="AuctionGuidelines"/>
+		</triggers>
+		<negative_triggers name="removeAuction" min="" max="">
+			<child>f7dde922-8b6a-49f2-b7be-6ddc5ad4c77d</child>
+			<bendpoint x="433" y="187"/>
+			<parameter name="brokerConnections" collection="" type="Connections"/>
+			<parameter name="auctionGuidelines" collection="" type="AuctionGuidelines"/>
+		</negative_triggers>
+	</Goal>
+	<Goal id="f7dde922-8b6a-49f2-b7be-6ddc5ad4c77d" name="Auction Power" number="2.2" preference="1.0" x="632" y="208" width="-1" height="-1" definition="" description="" color="No">
+			<parameter name="brokerConnections" collection="" type="Connections"/>
+			<parameter name="auctionGuidelines" collection="" type="AuctionGuidelines"/>
+	</Goal>
+</GoalDiagram>

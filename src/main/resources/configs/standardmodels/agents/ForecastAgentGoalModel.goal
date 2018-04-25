@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GoalDiagram version="1.1" name="Home Forecaster Agent Goal Model" embedded="false">
+	<Goal id="9d3b987e-28ab-431a-879c-36d2d7856a54" name="Succeed" number="0" preference="1.0" x="248" y="8" width="-1" height="-1" definition="" description="" color="No">
+			<parameter name="gridConnections" collection="" type="AllConnections"/>
+			<parameter name="homeGuidelines" collection="" type="HomeGuidelines"/>
+		<and>
+			<child>55a1698c-6b60-41fe-8cf2-ca120fa34fd4</child>
+		</and>
+		<and>
+			<child>d2eb861a-c6c9-4307-b79d-5e22c96e6f9e</child>
+		</and>
+		<and>
+			<child>4c14d43c-3dec-4106-93b5-d560f7f3851e</child>
+		</and>
+	</Goal>
+	<Goal id="55a1698c-6b60-41fe-8cf2-ca120fa34fd4" name="Self Control" number="1" preference="1.0" x="11" y="164" width="-1" height="-1" definition="" description="" color="No">
+			<parameter name="gridConnections" collection="" type="AllConnections"/>
+			<parameter name="homeGuidelines" collection="" type="HomeGuidelines"/>
+		<triggers name="connect" min="" max="">
+			<child>d2eb861a-c6c9-4307-b79d-5e22c96e6f9e</child>
+			<parameter name="connectionGuidelines" collection="" type="ConnectionGuidelines"/>
+			<parameter name="homeGuidelines" collection="" type="HomeGuidelines"/>
+		</triggers>
+	</Goal>
+	<Goal id="d2eb861a-c6c9-4307-b79d-5e22c96e6f9e" name="Connect" number="2" preference="1.0" x="244" y="380" width="-1" height="-1" definition="" description="" color="No">
+			<parameter name="connectionGuidelines" collection="" type="ConnectionGuidelines"/>
+			<parameter name="homeGuidelines" collection="" type="HomeGuidelines"/>
+		<triggers name="manage" min="" max="">
+			<child>4c14d43c-3dec-4106-93b5-d560f7f3851e</child>
+			<bendpoint x="581" y="278"/>
+			<parameter name="connectionGuidelines" collection="" type="ConnectionGuidelines"/>
+			<parameter name="homeGuidelines" collection="" type="HomeGuidelines"/>
+		</triggers>
+	</Goal>
+	<Goal id="4c14d43c-3dec-4106-93b5-d560f7f3851e" name="Forecast Home" number="3" preference="1.0" x="548" y="155" width="-1" height="-1" definition="" description="" color="No">
+			<parameter name="connectionGuidelines" collection="" type="ConnectionGuidelines"/>
+			<parameter name="homeGuidelines" collection="" type="HomeGuidelines"/>
+	</Goal>
+</GoalDiagram>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<environment>
+  <agents package="edu.ksu.cis.macr.ipds.market.persona.types" type="LateralMarketPersona">
+    <organization package="edu.ksu.cis.macr.ipds.market.capabilities.admin" type="MarketMaster"/>
+    <agent>L408AinL408A</agent>
+    <capability package="edu.ksu.cis.macr.ipds.market.capabilities.participate" type="AuctionCommunicationCapability"/>
+    <capability package="edu.ksu.cis.macr.ipds.primary.capabilities.manage" type="DateTimeCapability"/>
+    <capability package="edu.ksu.cis.macr.ipds.market.capabilities.connect" type="MarketConnectCapability"/>
+    <capability package="edu.ksu.cis.macr.ipds.market.capabilities.admin" type="MarketAdminCapability"/>
+    <capability package="edu.ksu.cis.macr.ipds.market.capabilities.admin" type="BrokerPowerCapability"/>
+  </agents>
+  <agents package="edu.ksu.cis.macr.ipds.primary.persona.types" type="LateralPersona">
+    <organization package="edu.ksu.cis.macr.ipds.market.capabilities.participate" type="MarketParticipant"/>
+    <agent>L409AinL408A</agent>
+    <capability package="edu.ksu.cis.macr.ipds.market.capabilities.participate" type="AuctionCommunicationCapability"/>
+    <capability package="edu.ksu.cis.macr.ipds.primary.capabilities.manage" type="DateTimeCapability"/>
+    <capability package="edu.ksu.cis.macr.ipds.market.capabilities.connect" type="MarketConnectCapability"/>
+    <capability package="edu.ksu.cis.macr.ipds.market.capabilities.participate" type="MarketParticipateCapability"/>
+    <capability package="edu.ksu.cis.macr.ipds.market.capabilities.participate" type="AuctionPowerCapability"/>
+  </agents>
+  <agents package="edu.ksu.cis.macr.ipds.primary.persona.types" type="NeighborhoodPersona">
+    <organization package="edu.ksu.cis.macr.ipds.market.capabilities.participate" type="MarketParticipant"/>
+    <agent>N426AinL408A</agent>
+    <capability package="edu.ksu.cis.macr.ipds.market.capabilities.participate" type="AuctionCommunicationCapability"/>
+    <capability package="edu.ksu.cis.macr.ipds.primary.capabilities.manage" type="DateTimeCapability"/>
+    <capability package="edu.ksu.cis.macr.ipds.market.capabilities.connect" type="MarketConnectCapability"/>
+    <capability package="edu.ksu.cis.macr.ipds.market.capabilities.participate" type="MarketParticipateCapability"/>
+    <capability package="edu.ksu.cis.macr.ipds.market.capabilities.participate" type="AuctionPowerCapability"/>
+  </agents>
+</environment>

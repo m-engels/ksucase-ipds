@@ -1,0 +1,7 @@
+<?xml version="1.0" standalone="yes"?>
+<config>
+    <DefaultCommunicationReliability type="double" value="1.00"/>
+    <DefaultCommunicationDelay_millisecs type="double" value="0"/>
+    <PowerCommunicationReliability type="double" value="1.00"/>
+    <PowerCommunicationDelay_millisecs type="double" value="0"/>
+</config>

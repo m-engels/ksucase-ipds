@@ -1,0 +1,98 @@
+/**
+ * 
+ * Copyright 2012 
+ * Kansas State University MACR Laboratory http://macr.cis.ksu.edu/
+ * Department of Computing & Information Sciences
+ * 
+ * See License.txt file for the license agreement. 
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+package edu.ksu.cis.macr.ipds.plans.[[[NAMEHERE]]];
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import IPowerCommunicationCapability;
+import edu.ksu.cis.macr.ipds.message.PowerMessage;
+import edu.ksu.cis.macr.ipds.message.PowerMessageContent;
+import edu.ksu.cis.macr.ipds.plan.PlanState;
+import edu.ksu.cis.macr.obaa.agent.architecture.ExecutionComponent;
+import edu.ksu.cis.macr.organization.model.InstanceGoal;
+
+public class Work extends PlanState<[[[NAMEHERE]]]Plan> {
+
+	private static final Work instance = new Work();
+
+	private static final Logger LOG = LoggerFactory.getLogger(Work.class);
+
+	/**
+	 * @return the singleton instance
+	 */
+	public static Work Instance() {
+		return instance;
+	}
+
+	private Work() {
+	}
+
+	@Override
+	public void Enter(final [[[NAMEHERE]]]Plan plan,
+			final ExecutionComponent executionComponent,
+			final InstanceGoal<?> instanceGoal) {
+	}
+
+	@Override
+	public void Execute(final [[[NAMEHERE]]]Plan plan,
+			final ExecutionComponent executionComponent,
+			final InstanceGoal<?> instanceGoal) {
+		final IPowerCommunicationCapability localPowerCommunication = executionComponent
+				.getCapability(IPowerCommunicationCapability.class);
+		if (localPowerCommunication == null) {
+			throw new java.lang.RuntimeException(
+					"Supervisor should have local power communication capability");
+		}
+		boolean (Scenario.isStopped()) = false;
+		LOG.debug("Supervising - in STATE Supervise");
+		// TODO: Implement listening for subordinate messages... reevaluating
+		// and reporting to controller as needed...
+		LOG.debug("There are {} local messages",
+				localPowerCommunication.messages());
+		while (localPowerCommunication.messages() > 0) {
+			final PowerMessage localMessage = localPowerCommunication
+					.receive();
+			String message = null;
+			switch (localMessage.getPerformative()) {
+			case REPORT_OBJECT:
+				message = String.format(
+						"Supervising: Get report from : %s says %s",
+						localMessage.getSender(),
+						((PowerMessageContent) localMessage.getContent())
+								.getContent());
+				LOG.info(message);
+				break;
+			case REPORT_ALL_DONE:
+				(Scenario.isStopped()) = true;
+				break;
+			}
+			if ((Scenario.isStopped())) {
+				plan.getStateMachine().changeState(
+						Stop.Instance(),
+						executionComponent, instanceGoal);
+				break;
+			}
+		}
+	}
+
+	@Override
+	public void Exit(final [[[NAMEHERE]]]Plan plan,
+			final ExecutionComponent executionComponent,
+			final InstanceGoal<?> instanceGoal) {
+		// nothing
+	}
+}

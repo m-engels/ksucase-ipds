@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RoleDiagram version="1.1" name="Home Agent Role Model" embedded="true">
+	<Capability id="a3b5fe89-2fc7-4769-b27e-c90f315623cd" name="GridParticipateCapability" x="576" y="573" width="-1" height="-1">
+	</Capability>
+	<Capability id="5fe792f6-f2be-453d-bb5a-cb0d04e46ca5" name="IGridConnectCapability" x="58" y="432" width="-1" height="-1">
+	</Capability>
+	<Capability id="9f5e283f-64e5-4f4d-ad34-71c2d3e22e48" name="IInternalCommunicationCapability" x="377" y="399" width="-1" height="-1">
+	</Capability>
+	<Capability id="0a3f0b0e-20b2-4084-be48-082dd141ccb3" name="IPowerCommunicationCapability" x="169" y="371" width="-1" height="-1">
+	</Capability>
+	<Capability id="c7be348c-904b-46d8-86b0-55fd4302af7b" name="SelfControlCapability" x="3" y="346" width="-1" height="-1">
+	</Capability>
+	<Capability id="4518e4c6-4e1b-4df9-8b4d-a10c6f7e9e83" name="ParticipateCapability" x="591" y="505" width="-1" height="-1">
+	</Capability>
+	<Capability id="3210f02d-076d-498f-9854-76891829b082" name="DateTimeCapability" x="685" y="386" width="-1" height="-1">
+	</Capability>
+	<Capability id="50102f1b-a1e0-4944-aa50-dd62a6f7799b" name="ManageHomeCapability" x="916" y="305" width="-1" height="-1">
+	</Capability>
+	<Capability id="a9c97cba-799f-4be3-bfd5-b62fb6954091" name="GridControlHolonCapability" x="13" y="593" width="-1" height="-1">
+	</Capability>
+	<Capability id="049a5174-8724-4af9-8dda-c352d585cda6" name="SmartMeterCapability" x="875" y="153" width="-1" height="-1">
+	</Capability>
+	<Capability id="9b8ea129-447f-4461-90e7-f7942bb20259" name="SmartInverterCapability" x="905" y="223" width="-1" height="-1">
+	</Capability>
+	<Capability id="67b0fa62-3a34-46db-99b6-e1bd85674136" name="AutonomousOperationCapability" x="889" y="56" width="-1" height="-1">
+	</Capability>
+	<Capability id="0144476b-5a94-4a5e-9a6a-5d7934837c9d" name="IMarketConnectCapability" x="579" y="653" width="-1" height="-1">
+	</Capability>
+	<Capability id="dbf04a84-2c34-4215-b53c-44a91e64a1d3" name="IAuctionCommunicationCapability" x="749" y="686" width="-1" height="-1">
+	</Capability>
+	<Capability id="1afe363e-19fc-4d99-a28b-77dc40ab2f3b" name="AssessReactivePowerCapability" x="405" y="17" width="-1" height="-1">
+	</Capability>
+	<Capability id="5bb0f1f0-38c1-47c9-a21b-33068fe91f0c" name="AssessReactivePowerQualityCapability" x="645" y="21" width="-1" height="-1">
+	</Capability>
+	<Capability id="89591619-1e72-4e99-a02e-cf5e6273275e" name="MarketParticipateCapability" x="1251" y="390" width="175" height="38">
+	</Capability>
+	<Capability id="1daed5f7-5c3f-4b3b-a3ff-0b58599ead07" name="IAuctionPowerCapability" x="1227" y="278" width="-1" height="-1">
+	</Capability>
+	<Goal id="1ee959a7-47d6-46e3-9ad7-f8d198112be2" name="Manage Home" number="1" preference="1.0" x="294" y="17" width="-1" height="-1" definition="" description="" color="No">
+	</Goal>
+	<Goal id="2c8c1a06-a218-43ef-aba9-8a2810a9a17a" name="Self Control" number="3" preference="1.0" x="171" y="10" width="-1" height="-1" definition="" description="" color="No">
+	</Goal>
+	<Goal id="36e7874f-bcfe-4850-8b05-41582a487ec1" name="Be Holon" number="4" preference="1.0" x="13" y="499" width="-1" height="-1" definition="" description="" color="No">
+	</Goal>
+	<Goal id="5b87f019-26f1-4108-baa0-ceab2d9d0364" name="Auction Power" number="0" preference="1.0" x="900" y="358" width="-1" height="-1" definition="" description="" color="No">
+	</Goal>
+	<Role id="a3180fd6-2726-4b19-8e91-4829afa8cd0b" name="Manage Home Role" x="518" y="81" width="-1" height="-1">
+		<achieves name="achieves" score="1.0">
+			<child>1ee959a7-47d6-46e3-9ad7-f8d198112be2</child>
+		</achieves>
+		<requires>
+			<child>9f5e283f-64e5-4f4d-ad34-71c2d3e22e48</child>
+		</requires>
+		<requires>
+			<child>0a3f0b0e-20b2-4084-be48-082dd141ccb3</child>
+		</requires>
+		<requires>
+			<child>4518e4c6-4e1b-4df9-8b4d-a10c6f7e9e83</child>
+		</requires>
+		<requires>
+			<child>3210f02d-076d-498f-9854-76891829b082</child>
+		</requires>
+		<requires>
+			<child>50102f1b-a1e0-4944-aa50-dd62a6f7799b</child>
+		</requires>
+		<requires>
+			<child>049a5174-8724-4af9-8dda-c352d585cda6</child>
+		</requires>
+		<requires>
+			<child>9b8ea129-447f-4461-90e7-f7942bb20259</child>
+		</requires>
+		<requires>
+			<child>67b0fa62-3a34-46db-99b6-e1bd85674136</child>
+		</requires>
+		<requires>
+			<child>1afe363e-19fc-4d99-a28b-77dc40ab2f3b</child>
+		</requires>
+		<requires>
+			<child>5bb0f1f0-38c1-47c9-a21b-33068fe91f0c</child>
+		</requires>
+	</Role>
+	<Role id="5d79f874-415e-4eb5-956b-74edc8f78fcc" name="Self Control Role" x="59" y="92" width="-1" height="-1">
+		<requires>
+			<child>0a3f0b0e-20b2-4084-be48-082dd141ccb3</child>
+		</requires>
+		<achieves name="achieves" score="1.0">
+			<child>2c8c1a06-a218-43ef-aba9-8a2810a9a17a</child>
+		</achieves>
+		<requires>
+			<child>9f5e283f-64e5-4f4d-ad34-71c2d3e22e48</child>
+		</requires>
+		<requires>
+			<child>c7be348c-904b-46d8-86b0-55fd4302af7b</child>
+		</requires>
+		<requires>
+			<child>5fe792f6-f2be-453d-bb5a-cb0d04e46ca5</child>
+		</requires>
+		<requires>
+			<child>3210f02d-076d-498f-9854-76891829b082</child>
+		</requires>
+		<requires>
+			<child>0144476b-5a94-4a5e-9a6a-5d7934837c9d</child>
+		</requires>
+		<requires>
+			<child>dbf04a84-2c34-4215-b53c-44a91e64a1d3</child>
+		</requires>
+	</Role>
+	<Role id="a3b9cb55-9f3c-4bf1-8556-1b62642756b4" name="Be Holon Role" x="243" y="498" width="-1" height="-1">
+		<achieves name="achieves" score="1.0">
+			<child>36e7874f-bcfe-4850-8b05-41582a487ec1</child>
+		</achieves>
+		<requires>
+			<child>0a3f0b0e-20b2-4084-be48-082dd141ccb3</child>
+		</requires>
+		<requires>
+			<child>9f5e283f-64e5-4f4d-ad34-71c2d3e22e48</child>
+		</requires>
+		<requires>
+			<child>a3b5fe89-2fc7-4769-b27e-c90f315623cd</child>
+		</requires>
+		<requires>
+			<child>4518e4c6-4e1b-4df9-8b4d-a10c6f7e9e83</child>
+		</requires>
+		<requires>
+			<child>a9c97cba-799f-4be3-bfd5-b62fb6954091</child>
+		</requires>
+		<requires>
+			<child>3210f02d-076d-498f-9854-76891829b082</child>
+		</requires>
+		<requires>
+			<child>5fe792f6-f2be-453d-bb5a-cb0d04e46ca5</child>
+		</requires>
+	</Role>
+	<Role id="b70cc8be-6207-498f-b713-ebb0483bb079" name="Auction Power Role" x="877" y="445" width="-1" height="-1">
+		<achieves name="achieves" score="1.0">
+			<child>5b87f019-26f1-4108-baa0-ceab2d9d0364</child>
+		</achieves>
+		<requires>
+			<child>4518e4c6-4e1b-4df9-8b4d-a10c6f7e9e83</child>
+		</requires>
+		<requires>
+			<child>3210f02d-076d-498f-9854-76891829b082</child>
+		</requires>
+		<requires>
+			<child>9f5e283f-64e5-4f4d-ad34-71c2d3e22e48</child>
+		</requires>
+		<requires>
+			<child>0144476b-5a94-4a5e-9a6a-5d7934837c9d</child>
+		</requires>
+		<requires>
+			<child>dbf04a84-2c34-4215-b53c-44a91e64a1d3</child>
+		</requires>
+		<requires>
+			<child>89591619-1e72-4e99-a02e-cf5e6273275e</child>
+		</requires>
+		<requires>
+			<child>1daed5f7-5c3f-4b3b-a3ff-0b58599ead07</child>
+		</requires>
+	</Role>
+</RoleDiagram>

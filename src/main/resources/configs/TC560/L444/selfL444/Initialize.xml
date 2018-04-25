@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<goalparameters>
+  <gridConnections expectedmaster="L443inL443" in="orgL443" to="L443inL443"/>
+  <gridConnections expectedmaster="L444inL444" in="orgL444" to="N460inL444"/>
+  <brokerConnections expectedmaster="L443AinL443A" in="orgL443A" to="L443AinL443A"/>
+  <auctionConnections expectedmaster="L444AinL444A" in="orgL444A" to="N460AinL444A"/>
+  <orgL444 combinedkw="160.0" orgModelFolder="grid" specpath="L444/orgL444"/>
+  <brokerGuidelines auctionAlgorithm="1" authorizedParticipants="0" iteration="0" maxIteration="1" openTimeSlice="1" purchaseTimeSlice="10" tierNumber="2"/>
+  <orgL444A combinedkw="160.0" orgModelFolder="market" specpath="L444/orgL444A"/>
+  <lateralGuidelines maxKW="160.0"/>
+</goalparameters>

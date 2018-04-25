@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RoleDiagram version="1.1" name="Lateral Power Market Role Model" embedded="false">
+	<Capability id="17d0e802-0e6e-47c2-963a-5a3a17078466" name="IInternalCommunicationCapability" x="336" y="19" width="-1" height="-1">
+	</Capability>
+	<Capability id="c42b9b9b-582a-46ec-a6c8-a9f973c500cb" name="IAuctionCommunicationCapability" x="335" y="124" width="-1" height="-1">
+	</Capability>
+	<Capability id="8e08477b-5ca7-44de-afd4-5b0f317c244b" name="DateTimeCapability" x="385" y="193" width="114" height="41">
+	</Capability>
+	<Capability id="f6864f1b-2a48-4b63-8fee-30dcf5ba546a" name="MarketAdminCapability" x="9" y="362" width="-1" height="-1">
+	</Capability>
+	<Capability id="223d2d86-4469-41f1-93a5-1c8a21272c30" name="BrokerPowerCapability" x="157" y="361" width="-1" height="-1">
+	</Capability>
+	<Capability id="2986b33c-a576-4270-bbbb-fb3709ae554e" name="MarketParticipateCapability" x="742" y="339" width="-1" height="-1">
+	</Capability>
+	<Capability id="f9ee35cd-6375-4d32-95ef-ba6ed40fa1b7" name="IMarketConnectCapability" x="385" y="258" width="-1" height="-1">
+	</Capability>
+	<Capability id="6f695df1-74c4-4fee-886c-eae86aa1818c" name="AuctionPowerCapability" x="583" y="339" width="-1" height="-1">
+	</Capability>
+	<Goal id="9b21f068-c412-47f5-9f73-ad43ad51186d" name="Broker Power" number="0" preference="1.0" x="70" y="36" width="-1" height="-1" definition="" description="" color="No">
+	</Goal>
+	<Goal id="1ee959a7-47d6-46e3-9ad7-f8d198112be2" name="Auction Power" number="1" preference="1.0" x="617" y="7" width="-1" height="-1" definition="" description="" color="No">
+	</Goal>
+	<Role id="72cd5382-6643-4a3c-8a0e-c0eb270f3b46" name="Broker Power Role" x="12" y="120" width="257" height="190">
+		<achieves name="achieves" score="1.0">
+			<child>9b21f068-c412-47f5-9f73-ad43ad51186d</child>
+		</achieves>
+		<requires>
+			<child>17d0e802-0e6e-47c2-963a-5a3a17078466</child>
+		</requires>
+		<requires>
+			<child>8e08477b-5ca7-44de-afd4-5b0f317c244b</child>
+		</requires>
+		<requires>
+			<child>c42b9b9b-582a-46ec-a6c8-a9f973c500cb</child>
+		</requires>
+		<requires>
+			<child>223d2d86-4469-41f1-93a5-1c8a21272c30</child>
+		</requires>
+		<requires>
+			<child>f6864f1b-2a48-4b63-8fee-30dcf5ba546a</child>
+		</requires>
+		<requires>
+			<child>f9ee35cd-6375-4d32-95ef-ba6ed40fa1b7</child>
+		</requires>
+	</Role>
+	<Role id="a3180fd6-2726-4b19-8e91-4829afa8cd0b" name="Auction Power Role" x="672" y="121" width="300" height="178">
+		<achieves name="achieves" score="1.0">
+			<child>1ee959a7-47d6-46e3-9ad7-f8d198112be2</child>
+		</achieves>
+		<requires>
+			<child>17d0e802-0e6e-47c2-963a-5a3a17078466</child>
+		</requires>
+		<requires>
+			<child>8e08477b-5ca7-44de-afd4-5b0f317c244b</child>
+		</requires>
+		<requires>
+			<child>c42b9b9b-582a-46ec-a6c8-a9f973c500cb</child>
+		</requires>
+		<requires>
+			<child>2986b33c-a576-4270-bbbb-fb3709ae554e</child>
+		</requires>
+		<requires>
+			<child>f9ee35cd-6375-4d32-95ef-ba6ed40fa1b7</child>
+		</requires>
+		<requires>
+			<child>6f695df1-74c4-4fee-886c-eae86aa1818c</child>
+		</requires>
+	</Role>
+</RoleDiagram>

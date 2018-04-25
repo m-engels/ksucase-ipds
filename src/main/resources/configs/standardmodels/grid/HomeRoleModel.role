@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RoleDiagram version="1.1" name="Home Grid Control Role Model" embedded="false">
+	<Capability id="15d504fa-505a-4d31-9dff-d57f950afa19" name="ManageHomeCapability" x="420" y="487" width="-1" height="-1">
+	</Capability>
+	<Capability id="17d0e802-0e6e-47c2-963a-5a3a17078466" name="IInternalCommunicationCapability" x="404" y="42" width="-1" height="-1">
+	</Capability>
+	<Capability id="c42b9b9b-582a-46ec-a6c8-a9f973c500cb" name="IPowerCommunicationCapability" x="468" y="225" width="-1" height="-1">
+	</Capability>
+	<Capability id="8e08477b-5ca7-44de-afd4-5b0f317c244b" name="DateTimeCapability" x="481" y="96" width="114" height="41">
+	</Capability>
+	<Capability id="f6864f1b-2a48-4b63-8fee-30dcf5ba546a" name="GridAdminCapability" x="9" y="453" width="-1" height="-1">
+	</Capability>
+	<Capability id="bc612046-0ec1-4f1f-890d-7dd1071ec695" name="AssessReactivePowerCapability" x="656" y="301" width="203" height="35">
+	</Capability>
+	<Capability id="a3b5fe89-2fc7-4769-b27e-c90f315623cd" name="AssessReactivePowerQualityCapability" x="619" y="345" width="-1" height="-1">
+	</Capability>
+	<Capability id="e17ceb23-657c-41c5-9ccf-59e460ead203" name="GridControlHolonCapability" x="528" y="395" width="-1" height="-1">
+	</Capability>
+	<Capability id="2986b33c-a576-4270-bbbb-fb3709ae554e" name="GridParticipateCapability" x="472" y="440" width="-1" height="-1">
+	</Capability>
+	<Capability id="3676a768-834c-4edb-ac98-0e5c8fe5b1da" name="IGridConnectCapability" x="507" y="163" width="-1" height="-1">
+	</Capability>
+	<Capability id="60e36d22-ce08-4592-8acf-f6f1a3aeabdc" name="IssueGridAssignmentsCapability" x="66" y="511" width="-1" height="-1">
+	</Capability>
+	<Capability id="00b842ee-c2c9-40b0-87f1-b14823d64395" name="RunGoalModelCapability" x="224" y="557" width="-1" height="-1">
+	</Capability>
+	<Goal id="9b21f068-c412-47f5-9f73-ad43ad51186d" name="Be Holon" number="0" preference="1.0" x="70" y="36" width="-1" height="-1" definition="" description="" color="No">
+	</Goal>
+	<Role id="72cd5382-6643-4a3c-8a0e-c0eb270f3b46" name="Be Holon Role" x="48" y="120" width="302" height="289">
+		<achieves name="achieves" score="1.0">
+			<child>9b21f068-c412-47f5-9f73-ad43ad51186d</child>
+		</achieves>
+		<requires>
+			<child>17d0e802-0e6e-47c2-963a-5a3a17078466</child>
+		</requires>
+		<requires>
+			<child>8e08477b-5ca7-44de-afd4-5b0f317c244b</child>
+		</requires>
+		<requires>
+			<child>c42b9b9b-582a-46ec-a6c8-a9f973c500cb</child>
+		</requires>
+		<requires>
+			<child>15d504fa-505a-4d31-9dff-d57f950afa19</child>
+		</requires>
+		<requires>
+			<child>f6864f1b-2a48-4b63-8fee-30dcf5ba546a</child>
+		</requires>
+		<requires>
+			<child>e17ceb23-657c-41c5-9ccf-59e460ead203</child>
+		</requires>
+		<requires>
+			<child>bc612046-0ec1-4f1f-890d-7dd1071ec695</child>
+		</requires>
+		<requires>
+			<child>a3b5fe89-2fc7-4769-b27e-c90f315623cd</child>
+		</requires>
+		<requires>
+			<child>2986b33c-a576-4270-bbbb-fb3709ae554e</child>
+		</requires>
+		<requires>
+			<child>3676a768-834c-4edb-ac98-0e5c8fe5b1da</child>
+		</requires>
+		<requires>
+			<child>60e36d22-ce08-4592-8acf-f6f1a3aeabdc</child>
+		</requires>
+		<requires>
+			<child>00b842ee-c2c9-40b0-87f1-b14823d64395</child>
+		</requires>
+	</Role>
+</RoleDiagram>

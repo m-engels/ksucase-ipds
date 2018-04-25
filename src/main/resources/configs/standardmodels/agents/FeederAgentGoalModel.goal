@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GoalDiagram version="1.1" name="Feeder Agent Goal Model" embedded="false">
+	<Goal id="9d3b987e-28ab-431a-879c-36d2d7856a54" name="Succeed" number="1" preference="1.0" x="215" y="11" width="-1" height="-1" definition="" description="" color="No">
+			<parameter name="gridConnections" collection="" type="Connections"/>
+			<parameter name="feederGuidelines" collection="" type="FeederGuidelines"/>
+		<and>
+			<child>55a1698c-6b60-41fe-8cf2-ca120fa34fd4</child>
+		</and>
+		<and>
+			<child>4c14d43c-3dec-4106-93b5-d560f7f3851e</child>
+		</and>
+		<and>
+			<child>18f76700-49e9-4022-abe4-e661c6565e99</child>
+		</and>
+		<and>
+			<child>083d74c4-ddda-41a0-8de3-dfdc73257842</child>
+		</and>
+	</Goal>
+	<Goal id="55a1698c-6b60-41fe-8cf2-ca120fa34fd4" name="Self Control" number="2" preference="1.0" x="16" y="135" width="-1" height="-1" definition="" description="" color="No">
+			<parameter name="gridConnections" collection="" type="Connections"/>
+			<parameter name="feederGuidelines" collection="" type="FeederGuidelines"/>
+		<triggers name="beginSuper" min="" max="">
+			<child>18f76700-49e9-4022-abe4-e661c6565e99</child>
+			<parameter name="childConnections" collection="" type="Connections"/>
+			<parameter name="feederGuidelines" collection="" type="FeederGuidelines"/>
+		</triggers>
+		<triggers name="beginSub" min="" max="">
+			<child>083d74c4-ddda-41a0-8de3-dfdc73257842</child>
+			<parameter name="parentConnections" collection="" type="Connections"/>
+			<parameter name="feederGuidelines" collection="" type="FeederGuidelines"/>
+		</triggers>
+	</Goal>
+	<Goal id="4c14d43c-3dec-4106-93b5-d560f7f3851e" name="Manage Feeder" number="4" preference="1.0" x="550" y="143" width="-1" height="-1" definition="" description="" color="No">
+			<parameter name="feederGuidelines" collection="" type="FeederGuidelines"/>
+			<parameter name="gridConnections" collection="" type="Connections"/>
+	</Goal>
+	<Goal id="18f76700-49e9-4022-abe4-e661c6565e99" name="Be Super Holon" number="5" preference="1.0" x="487" y="290" width="-1" height="-1" definition="" description="" color="No">
+			<parameter name="childConnections" collection="" type="Connections"/>
+			<parameter name="feederGuidelines" collection="" type="FeederGuidelines"/>
+	</Goal>
+	<Goal id="083d74c4-ddda-41a0-8de3-dfdc73257842" name="Be Holon" number="3" preference="1.0" x="252" y="399" width="-1" height="-1" definition="" description="" color="No">
+			<parameter name="parentConnections" collection="" type="Connections"/>
+			<parameter name="feederGuidelines" collection="" type="FeederGuidelines"/>
+	</Goal>
+</GoalDiagram>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GoalDiagram version="1.1" name="Neighborhood Transformer Agent Goal Model" embedded="false">
+	<Goal id="9d3b987e-28ab-431a-879c-36d2d7856a54" name="Succeed" number="1" preference="1.0" x="322" y="8" width="-1" height="-1" definition="" description="" color="No">
+			<parameter name="gridConnections" collection="" type="Connections"/>
+			<parameter name="neighborhoodGuidelines" collection="" type="NeighborhoodGuidelines"/>
+			<parameter name="auctionGuidelines" collection="" type="AuctionGuidelines"/>
+			<parameter name="auctionConnections" collection="" type="Connections"/>
+			<parameter name="brokerGuidelines" collection="" type="BrokerGuidelines"/>
+			<parameter name="brokerConnections" collection="" type="Connections"/>
+		<and>
+			<child>55a1698c-6b60-41fe-8cf2-ca120fa34fd4</child>
+		</and>
+		<and>
+			<child>4c14d43c-3dec-4106-93b5-d560f7f3851e</child>
+		</and>
+		<and>
+			<child>18f76700-49e9-4022-abe4-e661c6565e99</child>
+		</and>
+		<and>
+			<child>083d74c4-ddda-41a0-8de3-dfdc73257842</child>
+		</and>
+		<and>
+			<child>7f458210-e552-4533-bb54-5dd9e634cf38</child>
+		</and>
+		<and>
+			<child>4303bc19-15a3-4bdc-851e-7424132037f4</child>
+		</and>
+	</Goal>
+	<Goal id="55a1698c-6b60-41fe-8cf2-ca120fa34fd4" name="Self Control" number="2" preference="1.0" x="15" y="206" width="300" height="149" definition="" description="" color="No">
+			<parameter name="gridConnections" collection="" type="Connections"/>
+			<parameter name="neighborhoodGuidelines" collection="" type="NeighborhoodGuidelines"/>
+			<parameter name="auctionConnections" collection="" type="Connections"/>
+			<parameter name="brokerGuidelines" collection="" type="BrokerGuidelines"/>
+			<parameter name="auctionGuidelines" collection="" type="AuctionGuidelines"/>
+			<parameter name="brokerConnections" collection="" type="Connections"/>
+		<triggers name="beginSuper" min="" max="">
+			<child>18f76700-49e9-4022-abe4-e661c6565e99</child>
+			<parameter name="childConnections" collection="" type="Connections"/>
+			<parameter name="neighborhoodGuidelines" collection="" type="NeighborhoodGuidelines"/>
+		</triggers>
+		<triggers name="beginSub" min="" max="">
+			<child>083d74c4-ddda-41a0-8de3-dfdc73257842</child>
+			<parameter name="parentConnections" collection="" type="Connections"/>
+			<parameter name="neighborhoodGuidelines" collection="" type="NeighborhoodGuidelines"/>
+		</triggers>
+		<triggers name="beginAuction" min="" max="">
+			<child>4303bc19-15a3-4bdc-851e-7424132037f4</child>
+			<parameter name="auctionGuidelines" collection="" type="AuctionGuidelines"/>
+			<parameter name="brokerConnections" collection="" type="Connections"/>
+		</triggers>
+		<triggers name="beginBroker" min="" max="">
+			<child>7f458210-e552-4533-bb54-5dd9e634cf38</child>
+			<parameter name="brokerGuidelines" collection="" type="BrokerGuidelines"/>
+			<parameter name="auctionConnections" collection="" type="Connections"/>
+		</triggers>
+	</Goal>
+	<Goal id="4c14d43c-3dec-4106-93b5-d560f7f3851e" name="Manage Neighborhood" number="4" preference="1.0" x="753" y="195" width="-1" height="-1" definition="" description="" color="No">
+			<parameter name="neighborhoodGuidelines" collection="" type="NeighborhoodGuidelines"/>
+			<parameter name="gridConnections" collection="" type="Connections"/>
+			<parameter name="auctionConnections" collection="" type="Connections"/>
+	</Goal>
+	<Goal id="18f76700-49e9-4022-abe4-e661c6565e99" name="Be Super Holon" number="5" preference="1.0" x="349" y="548" width="-1" height="-1" definition="" description="" color="No">
+			<parameter name="childConnections" collection="" type="Connections"/>
+			<parameter name="neighborhoodGuidelines" collection="" type="NeighborhoodGuidelines"/>
+	</Goal>
+	<Goal id="083d74c4-ddda-41a0-8de3-dfdc73257842" name="Be Holon" number="3" preference="1.0" x="19" y="546" width="-1" height="-1" definition="" description="" color="No">
+			<parameter name="parentConnections" collection="" type="Connections"/>
+			<parameter name="neighborhoodGuidelines" collection="" type="NeighborhoodGuidelines"/>
+	</Goal>
+	<Goal id="4303bc19-15a3-4bdc-851e-7424132037f4" name="Auction Power" number="1.6" preference="1.0" x="713" y="345" width="-1" height="-1" definition="" description="" color="No">
+			<parameter name="auctionGuidelines" collection="" type="AuctionGuidelines"/>
+			<parameter name="brokerConnections" collection="" type="Connections"/>
+	</Goal>
+	<Goal id="7f458210-e552-4533-bb54-5dd9e634cf38" name="Broker Power" number="1.5" preference="1.0" x="600" y="447" width="-1" height="-1" definition="" description="" color="No">
+			<parameter name="brokerGuidelines" collection="" type="BrokerGuidelines"/>
+			<parameter name="auctionConnections" collection="" type="Connections"/>
+	</Goal>
+</GoalDiagram>

@@ -1,0 +1,4 @@
+include ':aasis'
+project(':aasis').projectDir = new File(settingsDir, '../aasis')
+include ':obaa_pp'
+project(':obaa_pp').projectDir = new File(settingsDir, '../obaa_pp')

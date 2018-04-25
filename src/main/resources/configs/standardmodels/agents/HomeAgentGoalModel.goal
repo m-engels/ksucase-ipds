@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GoalDiagram version="1.1" name="Home Agent Goal Model" embedded="false">
+	<Goal id="9d3b987e-28ab-431a-879c-36d2d7856a54" name="Succeed" number="1" preference="1.0" x="324" y="14" width="292" height="118" definition="" description="" color="No">
+			<parameter name="gridConnections" collection="" type="Connections"/>
+			<parameter name="homeGuidelines" collection="" type="HomeGuidelines"/>
+			<parameter name="auctionGuidelines" collection="" type="AuctionGuidelines"/>
+			<parameter name="brokerConnections" collection="" type="Connections"/>
+		<and>
+			<child>55a1698c-6b60-41fe-8cf2-ca120fa34fd4</child>
+		</and>
+		<and>
+			<child>4c14d43c-3dec-4106-93b5-d560f7f3851e</child>
+		</and>
+		<and>
+			<child>083d74c4-ddda-41a0-8de3-dfdc73257842</child>
+		</and>
+		<and>
+			<child>3a5fef39-8dc8-4e52-b496-b35b786f8f3b</child>
+		</and>
+	</Goal>
+	<Goal id="55a1698c-6b60-41fe-8cf2-ca120fa34fd4" name="Self Control" number="2" preference="1.0" x="25" y="227" width="-1" height="-1" definition="" description="" color="No">
+			<parameter name="gridConnections" collection="" type="Connections"/>
+			<parameter name="homeGuidelines" collection="" type="HomeGuidelines"/>
+			<parameter name="auctionGuidelines" collection="" type="AuctionGuidelines"/>
+			<parameter name="brokerConnections" collection="" type="Connections"/>
+		<triggers name="beginSub" min="" max="">
+			<child>083d74c4-ddda-41a0-8de3-dfdc73257842</child>
+			<parameter name="parentConnections" collection="" type="Connections"/>
+			<parameter name="homeGuidelines" collection="" type="HomeGuidelines"/>
+			<parameter name="auctionGuidelines" collection="Collection" type="Type"/>
+		</triggers>
+		<triggers name="beginAuction" min="" max="">
+			<child>3a5fef39-8dc8-4e52-b496-b35b786f8f3b</child>
+			<parameter name="auctionGuidelines" collection="" type="AuctionGuidelines"/>
+			<parameter name="brokerConnections" collection="" type="Connections"/>
+		</triggers>
+	</Goal>
+	<Goal id="4c14d43c-3dec-4106-93b5-d560f7f3851e" name="Manage Home" number="4" preference="1.0" x="706" y="194" width="-1" height="-1" definition="" description="" color="No">
+			<parameter name="homeGuidelines" collection="" type="HomeGuidelines"/>
+			<parameter name="gridConnections" collection="" type="Connections"/>
+			<parameter name="auctionConnections" collection="" type="Connections"/>
+	</Goal>
+	<Goal id="083d74c4-ddda-41a0-8de3-dfdc73257842" name="Be Holon" number="3" preference="1.0" x="164" y="473" width="-1" height="-1" definition="" description="" color="No">
+			<parameter name="parentConnections" collection="" type="Connections"/>
+			<parameter name="homeGuidelines" collection="" type="HomeGuidelines"/>
+			<parameter name="auctionGuidelines" collection="" type="AuctionGuidelines"/>
+	</Goal>
+	<Goal id="3a5fef39-8dc8-4e52-b496-b35b786f8f3b" name="Auction Power" number="5" preference="1.0" x="546" y="365" width="-1" height="-1" definition="" description="" color="No">
+			<parameter name="auctionGuidelines" collection="" type="AuctionGuidelines"/>
+			<parameter name="brokerConnections" collection="" type="Connections"/>
+	</Goal>
+</GoalDiagram>

@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RoleDiagram version="1.1" name="Lateral Agent Role Model" embedded="true">
+	<Capability id="a3b5fe89-2fc7-4769-b27e-c90f315623cd" name="GridParticipateCapability" x="54" y="1046" width="-1" height="-1">
+	</Capability>
+	<Capability id="5fe792f6-f2be-453d-bb5a-cb0d04e46ca5" name="IGridConnectCapability" x="32" y="499" width="-1" height="-1">
+	</Capability>
+	<Capability id="9f5e283f-64e5-4f4d-ad34-71c2d3e22e48" name="IInternalCommunicationCapability" x="437" y="934" width="-1" height="-1">
+	</Capability>
+	<Capability id="0a3f0b0e-20b2-4084-be48-082dd141ccb3" name="IPowerCommunicationCapability" x="211" y="792" width="-1" height="-1">
+	</Capability>
+	<Capability id="c7be348c-904b-46d8-86b0-55fd4302af7b" name="SelfControlCapability" x="8" y="332" width="-1" height="-1">
+	</Capability>
+	<Capability id="4518e4c6-4e1b-4df9-8b4d-a10c6f7e9e83" name="ParticipateCapability" x="462" y="781" width="-1" height="-1">
+	</Capability>
+	<Capability id="3210f02d-076d-498f-9854-76891829b082" name="DateTimeCapability" x="661" y="724" width="174" height="48">
+	</Capability>
+	<Capability id="50102f1b-a1e0-4944-aa50-dd62a6f7799b" name="ManageLateralCapability" x="737" y="37" width="-1" height="-1">
+	</Capability>
+	<Capability id="d8753337-cd24-4cff-aa51-1af360ec0898" name="GridAdminCapability" x="208" y="923" width="-1" height="-1">
+	</Capability>
+	<Capability id="7a7bb715-4ed5-4686-9d67-ec3d097bbefa" name="AggregatePowerCapability" x="644" y="979" width="-1" height="-1">
+	</Capability>
+	<Capability id="cfa12ad6-b1cf-4f7a-90e1-505b59b025ea" name="DistributeLoadCapability" x="278" y="984" width="-1" height="-1">
+	</Capability>
+	<Capability id="a9c97cba-799f-4be3-bfd5-b62fb6954091" name="GridControlHolonCapability" x="9" y="996" width="-1" height="-1">
+	</Capability>
+	<Capability id="6baca429-e637-4eb4-92fb-46719befbc0b" name="GridControlSuperHolonCapability" x="796" y="872" width="-1" height="-1">
+	</Capability>
+	<Capability id="b5e10fc5-6614-440d-a638-1ab4b73bfd5b" name="AutonomousOperationCapability" x="870" y="267" width="-1" height="-1">
+	</Capability>
+	<Capability id="bf1206d7-1634-4686-966c-72781ccb11f3" name="BrokerPowerCapability" x="1056" y="387" width="-1" height="-1">
+	</Capability>
+	<Capability id="c454614c-859b-402d-8efe-569a3b6b3f2c" name="MarketAdminCapability" x="874" y="732" width="-1" height="-1">
+	</Capability>
+	<Capability id="48f63228-1756-4dfc-9671-74bf9c09dec6" name="IAuctionCommunicationCapability" x="644" y="321" width="283" height="49">
+	</Capability>
+	<Capability id="f497137d-2afb-49ea-adb6-4df57b579741" name="IMarketConnectCapability" x="1072" y="311" width="161" height="57">
+	</Capability>
+	<Goal id="1ee959a7-47d6-46e3-9ad7-f8d198112be2" name="Manage Lateral" number="1" preference="1.0" x="370" y="17" width="-1" height="-1" definition="" description="" color="No">
+	</Goal>
+	<Goal id="2c8c1a06-a218-43ef-aba9-8a2810a9a17a" name="Self Control" number="3" preference="1.0" x="152" y="3" width="-1" height="-1" definition="" description="" color="No">
+	</Goal>
+	<Goal id="1d315cf2-c33a-4526-92a6-ba64bce3b983" name="Be Super Holon" number="0" preference="1.0" x="371" y="707" width="-1" height="-1" definition="" description="" color="No">
+	</Goal>
+	<Goal id="36e7874f-bcfe-4850-8b05-41582a487ec1" name="Be Holon" number="4" preference="1.0" x="90" y="648" width="98" height="55" definition="" description="" color="No">
+	</Goal>
+	<Goal id="5568b9d2-dcb9-4a6f-8a6d-1efdffd00cfe" name="Broker Power" number="2" preference="1.0" x="956" y="352" width="-1" height="-1" definition="" description="" color="No">
+	</Goal>
+	<Role id="a3180fd6-2726-4b19-8e91-4829afa8cd0b" name="Manage Lateral Role" x="438" y="109" width="271" height="160">
+		<achieves name="achieves" score="1.0">
+			<child>1ee959a7-47d6-46e3-9ad7-f8d198112be2</child>
+		</achieves>
+		<requires>
+			<child>9f5e283f-64e5-4f4d-ad34-71c2d3e22e48</child>
+		</requires>
+		<requires>
+			<child>0a3f0b0e-20b2-4084-be48-082dd141ccb3</child>
+		</requires>
+		<requires>
+			<child>4518e4c6-4e1b-4df9-8b4d-a10c6f7e9e83</child>
+		</requires>
+		<requires>
+			<child>3210f02d-076d-498f-9854-76891829b082</child>
+		</requires>
+		<requires>
+			<child>50102f1b-a1e0-4944-aa50-dd62a6f7799b</child>
+		</requires>
+		<requires>
+			<child>b5e10fc5-6614-440d-a638-1ab4b73bfd5b</child>
+		</requires>
+	</Role>
+	<Role id="5d79f874-415e-4eb5-956b-74edc8f78fcc" name="Self Control Role" x="93" y="118" width="269" height="203">
+		<requires>
+			<child>0a3f0b0e-20b2-4084-be48-082dd141ccb3</child>
+		</requires>
+		<achieves name="achieves" score="1.0">
+			<child>2c8c1a06-a218-43ef-aba9-8a2810a9a17a</child>
+		</achieves>
+		<requires>
+			<child>9f5e283f-64e5-4f4d-ad34-71c2d3e22e48</child>
+		</requires>
+		<requires>
+			<child>c7be348c-904b-46d8-86b0-55fd4302af7b</child>
+		</requires>
+		<requires>
+			<child>5fe792f6-f2be-453d-bb5a-cb0d04e46ca5</child>
+		</requires>
+		<requires>
+			<child>3210f02d-076d-498f-9854-76891829b082</child>
+		</requires>
+		<requires>
+			<child>48f63228-1756-4dfc-9671-74bf9c09dec6</child>
+		</requires>
+		<requires>
+			<child>f497137d-2afb-49ea-adb6-4df57b579741</child>
+		</requires>
+	</Role>
+	<Role id="430292c1-938c-4b14-9d98-e497d8b83e48" name="Be Super Holon Role" x="599" y="396" width="276" height="263">
+		<requires>
+			<child>5fe792f6-f2be-453d-bb5a-cb0d04e46ca5</child>
+		</requires>
+		<requires>
+			<child>d8753337-cd24-4cff-aa51-1af360ec0898</child>
+		</requires>
+		<requires>
+			<child>0a3f0b0e-20b2-4084-be48-082dd141ccb3</child>
+		</requires>
+		<requires>
+			<child>7a7bb715-4ed5-4686-9d67-ec3d097bbefa</child>
+		</requires>
+		<requires>
+			<child>3210f02d-076d-498f-9854-76891829b082</child>
+		</requires>
+		<requires>
+			<child>cfa12ad6-b1cf-4f7a-90e1-505b59b025ea</child>
+		</requires>
+		<achieves name="achieves" score="1.0">
+			<child>1d315cf2-c33a-4526-92a6-ba64bce3b983</child>
+		</achieves>
+		<requires>
+			<child>4518e4c6-4e1b-4df9-8b4d-a10c6f7e9e83</child>
+		</requires>
+		<requires>
+			<child>6baca429-e637-4eb4-92fb-46719befbc0b</child>
+		</requires>
+		<requires>
+			<child>9f5e283f-64e5-4f4d-ad34-71c2d3e22e48</child>
+		</requires>
+	</Role>
+	<Role id="a3b9cb55-9f3c-4bf1-8556-1b62642756b4" name="Be Holon Role" x="133" y="453" width="297" height="232">
+		<achieves name="achieves" score="1.0">
+			<child>36e7874f-bcfe-4850-8b05-41582a487ec1</child>
+		</achieves>
+		<requires>
+			<child>0a3f0b0e-20b2-4084-be48-082dd141ccb3</child>
+		</requires>
+		<requires>
+			<child>9f5e283f-64e5-4f4d-ad34-71c2d3e22e48</child>
+		</requires>
+		<requires>
+			<child>a3b5fe89-2fc7-4769-b27e-c90f315623cd</child>
+		</requires>
+		<requires>
+			<child>4518e4c6-4e1b-4df9-8b4d-a10c6f7e9e83</child>
+		</requires>
+		<requires>
+			<child>a9c97cba-799f-4be3-bfd5-b62fb6954091</child>
+		</requires>
+		<requires>
+			<child>3210f02d-076d-498f-9854-76891829b082</child>
+		</requires>
+		<requires>
+			<child>5fe792f6-f2be-453d-bb5a-cb0d04e46ca5</child>
+		</requires>
+		<requires>
+			<child>39ad6cca-1a2c-4f42-b78c-902b3542fe80</child>
+		</requires>
+		<requires>
+			<child>ee42779e-f941-45d5-ba7b-490022d8d846</child>
+		</requires>
+	</Role>
+	<Role id="ca764a71-f3db-42a9-bb1a-aa1beed3f699" name="Broker Power Role" x="975" y="487" width="282" height="183">
+		<achieves name="achieves" score="1.0">
+			<child>5568b9d2-dcb9-4a6f-8a6d-1efdffd00cfe</child>
+		</achieves>
+		<requires>
+			<child>bf1206d7-1634-4686-966c-72781ccb11f3</child>
+		</requires>
+		<requires>
+			<child>c454614c-859b-402d-8efe-569a3b6b3f2c</child>
+		</requires>
+		<requires>
+			<child>48f63228-1756-4dfc-9671-74bf9c09dec6</child>
+		</requires>
+		<requires>
+			<child>4518e4c6-4e1b-4df9-8b4d-a10c6f7e9e83</child>
+		</requires>
+		<requires>
+			<child>3210f02d-076d-498f-9854-76891829b082</child>
+		</requires>
+		<requires>
+			<child>9f5e283f-64e5-4f4d-ad34-71c2d3e22e48</child>
+		</requires>
+		<requires>
+			<child>f497137d-2afb-49ea-adb6-4df57b579741</child>
+		</requires>
+	</Role>
+	<Capability id="39ad6cca-1a2c-4f42-b78c-902b3542fe80" name="AssessReactivePowerCapability" x="44" y="735" width="-1" height="-1">
+	</Capability>
+	<Capability id="ee42779e-f941-45d5-ba7b-490022d8d846" name="AssessReactivePowerQualityCapability" x="43" y="803" width="-1" height="-1">
+	</Capability>
+</RoleDiagram>

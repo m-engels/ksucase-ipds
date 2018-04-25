@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<goalparameters>
+  <gridConnections expectedmaster="L533inL533" in="orgL533" to="L533inL533"/>
+  <gridConnections expectedmaster="L534inL534" in="orgL534" to="L535inL534"/>
+  <gridConnections expectedmaster="L534inL534" in="orgL534" to="N551inL534"/>
+  <brokerConnections expectedmaster="L533AinL533A" in="orgL533A" to="L533AinL533A"/>
+  <auctionConnections expectedmaster="L534AinL534A" in="orgL534A" to="L535AinL534A"/>
+  <auctionConnections expectedmaster="L534AinL534A" in="orgL534A" to="N551AinL534A"/>
+  <orgL534 combinedkw="160.0" orgModelFolder="grid" specpath="L534/orgL534"/>
+  <brokerGuidelines auctionAlgorithm="1" authorizedParticipants="0" iteration="0" maxIteration="1" openTimeSlice="1" purchaseTimeSlice="10" tierNumber="2"/>
+  <orgL534A combinedkw="160.0" orgModelFolder="market" specpath="L534/orgL534A"/>
+  <lateralGuidelines maxKW="160.0"/>
+</goalparameters>

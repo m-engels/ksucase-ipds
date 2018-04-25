@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component LANGUAGE_LEVEL="JDK_1_7" inherit-compiler-output="true" inheritJdk="true">
+	<output-test url="file://$MODULE_DIR$/../../out/test/main"/>
+	<exclude-output/>
+	<contentEntry url="file://$MODULE_DIR$">
+		<testFolder url="file://$MODULE_DIR$/groovy"/>
+	</contentEntry>
+	<levels>
+		<level name="rabbitmq1" value="project"/>
+		<level name="rabbitmq-java-client-bin-3.1.51" value="project"/>
+		<level name="rabbitmq3" value="project"/>
+		<level name="rabbitmq-java-client-bin-3.1.53" value="project"/>
+		<level name="openforecast" value="project"/>
+		<level name="openforecast3" value="project"/>
+		<level name="openforecast2" value="project"/>
+		<level name="rabbitmq-java-client-bin-3.1.5" value="project"/>
+		<level name="lib1" value="project"/>
+		<level name="rabbitmq" value="project"/>
+		<level name="lib2" value="project"/>
+		<level name="rabbitmq2" value="project"/>
+		<level name="lib4" value="project"/>
+		<level name="openforecast1" value="project"/>
+		<level name="rabbitmq-java-client-bin-3.1.52" value="project"/>
+		<level name="lib5" value="project"/>
+	</levels>
+</component>

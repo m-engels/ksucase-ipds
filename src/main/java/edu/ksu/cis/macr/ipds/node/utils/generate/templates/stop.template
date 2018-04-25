@@ -1,0 +1,56 @@
+/**
+ * 
+ * Copyright 2012 Denise Case
+ * Kansas State University MACR Laboratory http://macr.cis.ksu.edu/
+ * Department of Computing & Information Sciences
+ * 
+ * See License.txt file for the license agreement. 
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+package edu.ksu.cis.macr.ipds.plans.[[[NAMEHERE]]];
+
+import edu.ksu.cis.macr.obaa.agent.architecture.ExecutionComponent;
+import edu.ksu.cis.macr.organization.model.InstanceGoal;
+import edu.ksu.cis.macr.ipds.plan.PlanState;
+
+public class Stop extends PlanState<[[[NAMEHERE]]]Plan>{
+
+	private static final Stop instance = new Stop();
+	
+	private Stop() {}
+	
+	/**
+	 * @return the singleton instance 
+	 */
+	public static Stop Instance(){
+		return instance;
+	}
+	
+	@Override
+	public void Enter([[[NAMEHERE]]]Plan plan,
+			ExecutionComponent executionComponent, InstanceGoal<?> instanceGoal) {
+		// Nothing 
+		
+	}
+
+	@Override
+	public void Execute([[[NAMEHERE]]]Plan plan,
+			ExecutionComponent executionComponent, InstanceGoal<?> instanceGoal) {
+		plan.setDone(true);
+		
+	}
+
+	@Override
+	public void Exit([[[NAMEHERE]]]Plan plan, ExecutionComponent executionComponent,
+			InstanceGoal<?> instanceGoal) {
+		// Nothing 
+		
+	}
+
+}

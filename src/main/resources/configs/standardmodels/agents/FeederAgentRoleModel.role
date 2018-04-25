@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RoleDiagram version="1.1" name="Feeder Agent Role Model" embedded="true">
+	<Capability id="a3b5fe89-2fc7-4769-b27e-c90f315623cd" name="GridParticipateCapability" x="160" y="865" width="-1" height="-1">
+	</Capability>
+	<Capability id="5fe792f6-f2be-453d-bb5a-cb0d04e46ca5" name="IGridConnectCapability" x="32" y="499" width="-1" height="-1">
+	</Capability>
+	<Capability id="9f5e283f-64e5-4f4d-ad34-71c2d3e22e48" name="IInternalCommunicationCapability" x="137" y="423" width="-1" height="-1">
+	</Capability>
+	<Capability id="0a3f0b0e-20b2-4084-be48-082dd141ccb3" name="IPowerCommunicationCapability" x="309" y="493" width="-1" height="-1">
+	</Capability>
+	<Capability id="c7be348c-904b-46d8-86b0-55fd4302af7b" name="SelfControlCapability" x="8" y="332" width="-1" height="-1">
+	</Capability>
+	<Capability id="4518e4c6-4e1b-4df9-8b4d-a10c6f7e9e83" name="ParticipateCapability" x="518" y="501" width="-1" height="-1">
+	</Capability>
+	<Capability id="3210f02d-076d-498f-9854-76891829b082" name="DateTimeCapability" x="687" y="550" width="174" height="48">
+	</Capability>
+	<Capability id="50102f1b-a1e0-4944-aa50-dd62a6f7799b" name="ManageFeederCapability" x="737" y="37" width="-1" height="-1">
+	</Capability>
+	<Capability id="d8753337-cd24-4cff-aa51-1af360ec0898" name="GridAdminCapability" x="367" y="859" width="-1" height="-1">
+	</Capability>
+	<Capability id="7a7bb715-4ed5-4686-9d67-ec3d097bbefa" name="AggregatePowerCapability" x="562" y="873" width="-1" height="-1">
+	</Capability>
+	<Capability id="cfa12ad6-b1cf-4f7a-90e1-505b59b025ea" name="DistributeLoadCapability" x="468" y="935" width="-1" height="-1">
+	</Capability>
+	<Capability id="a9c97cba-799f-4be3-bfd5-b62fb6954091" name="GridControlHolonCapability" x="15" y="794" width="-1" height="-1">
+	</Capability>
+	<Capability id="6baca429-e637-4eb4-92fb-46719befbc0b" name="GridControlSuperHolonCapability" x="675" y="795" width="-1" height="-1">
+	</Capability>
+	<Capability id="5defef16-9ecc-4cea-b38d-190403a22b25" name="AutonomousOperationCapability" x="876" y="221" width="-1" height="-1">
+	</Capability>
+	<Goal id="1ee959a7-47d6-46e3-9ad7-f8d198112be2" name="Manage Feeder" number="1" preference="1.0" x="370" y="17" width="-1" height="-1" definition="" description="" color="No">
+	</Goal>
+	<Goal id="2c8c1a06-a218-43ef-aba9-8a2810a9a17a" name="Self Control" number="3" preference="1.0" x="152" y="3" width="-1" height="-1" definition="" description="" color="No">
+	</Goal>
+	<Goal id="1d315cf2-c33a-4526-92a6-ba64bce3b983" name="Be Super Holon" number="0" preference="1.0" x="371" y="707" width="-1" height="-1" definition="" description="" color="No">
+	</Goal>
+	<Goal id="36e7874f-bcfe-4850-8b05-41582a487ec1" name="Be Holon" number="4" preference="1.0" x="90" y="648" width="98" height="55" definition="" description="" color="No">
+	</Goal>
+	<Role id="a3180fd6-2726-4b19-8e91-4829afa8cd0b" name="Manage Feeder Role" x="438" y="109" width="265" height="176">
+		<achieves name="achieves" score="1.0">
+			<child>1ee959a7-47d6-46e3-9ad7-f8d198112be2</child>
+		</achieves>
+		<requires>
+			<child>9f5e283f-64e5-4f4d-ad34-71c2d3e22e48</child>
+		</requires>
+		<requires>
+			<child>0a3f0b0e-20b2-4084-be48-082dd141ccb3</child>
+		</requires>
+		<requires>
+			<child>4518e4c6-4e1b-4df9-8b4d-a10c6f7e9e83</child>
+		</requires>
+		<requires>
+			<child>3210f02d-076d-498f-9854-76891829b082</child>
+		</requires>
+		<requires>
+			<child>50102f1b-a1e0-4944-aa50-dd62a6f7799b</child>
+		</requires>
+		<requires>
+			<child>5defef16-9ecc-4cea-b38d-190403a22b25</child>
+		</requires>
+	</Role>
+	<Role id="5d79f874-415e-4eb5-956b-74edc8f78fcc" name="Self Control Role" x="93" y="118" width="255" height="153">
+		<requires>
+			<child>0a3f0b0e-20b2-4084-be48-082dd141ccb3</child>
+		</requires>
+		<achieves name="achieves" score="1.0">
+			<child>2c8c1a06-a218-43ef-aba9-8a2810a9a17a</child>
+		</achieves>
+		<requires>
+			<child>9f5e283f-64e5-4f4d-ad34-71c2d3e22e48</child>
+		</requires>
+		<requires>
+			<child>c7be348c-904b-46d8-86b0-55fd4302af7b</child>
+		</requires>
+		<requires>
+			<child>5fe792f6-f2be-453d-bb5a-cb0d04e46ca5</child>
+		</requires>
+		<requires>
+			<child>3210f02d-076d-498f-9854-76891829b082</child>
+		</requires>
+	</Role>
+	<Role id="430292c1-938c-4b14-9d98-e497d8b83e48" name="Be Super Holon Role" x="560" y="402" width="276" height="263">
+		<requires>
+			<child>5fe792f6-f2be-453d-bb5a-cb0d04e46ca5</child>
+		</requires>
+		<requires>
+			<child>d8753337-cd24-4cff-aa51-1af360ec0898</child>
+		</requires>
+		<requires>
+			<child>0a3f0b0e-20b2-4084-be48-082dd141ccb3</child>
+		</requires>
+		<requires>
+			<child>7a7bb715-4ed5-4686-9d67-ec3d097bbefa</child>
+		</requires>
+		<requires>
+			<child>3210f02d-076d-498f-9854-76891829b082</child>
+		</requires>
+		<requires>
+			<child>cfa12ad6-b1cf-4f7a-90e1-505b59b025ea</child>
+		</requires>
+		<achieves name="achieves" score="1.0">
+			<child>1d315cf2-c33a-4526-92a6-ba64bce3b983</child>
+		</achieves>
+		<requires>
+			<child>4518e4c6-4e1b-4df9-8b4d-a10c6f7e9e83</child>
+		</requires>
+		<requires>
+			<child>6baca429-e637-4eb4-92fb-46719befbc0b</child>
+		</requires>
+		<requires>
+			<child>9f5e283f-64e5-4f4d-ad34-71c2d3e22e48</child>
+		</requires>
+	</Role>
+	<Role id="a3b9cb55-9f3c-4bf1-8556-1b62642756b4" name="Be Holon Role" x="79" y="440" width="292" height="194">
+		<achieves name="achieves" score="1.0">
+			<child>36e7874f-bcfe-4850-8b05-41582a487ec1</child>
+		</achieves>
+		<requires>
+			<child>0a3f0b0e-20b2-4084-be48-082dd141ccb3</child>
+		</requires>
+		<requires>
+			<child>9f5e283f-64e5-4f4d-ad34-71c2d3e22e48</child>
+		</requires>
+		<requires>
+			<child>a3b5fe89-2fc7-4769-b27e-c90f315623cd</child>
+		</requires>
+		<requires>
+			<child>4518e4c6-4e1b-4df9-8b4d-a10c6f7e9e83</child>
+		</requires>
+		<requires>
+			<child>a9c97cba-799f-4be3-bfd5-b62fb6954091</child>
+		</requires>
+		<requires>
+			<child>3210f02d-076d-498f-9854-76891829b082</child>
+		</requires>
+		<requires>
+			<child>5fe792f6-f2be-453d-bb5a-cb0d04e46ca5</child>
+		</requires>
+	</Role>
+</RoleDiagram>

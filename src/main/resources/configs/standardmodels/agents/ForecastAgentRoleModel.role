@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RoleDiagram version="1.1" name="Home Forecaster Agent Role Model" embedded="true">
+	<Capability id="a3b5fe89-2fc7-4769-b27e-c90f315623cd" name="GridParticipateCapability" x="912" y="16" width="-1" height="-1">
+	</Capability>
+	<Capability id="5fe792f6-f2be-453d-bb5a-cb0d04e46ca5" name="IGridConnectCapability" x="282" y="361" width="-1" height="-1">
+	</Capability>
+	<Capability id="9f5e283f-64e5-4f4d-ad34-71c2d3e22e48" name="IInternalCommunicationCapability" x="799" y="459" width="-1" height="-1">
+	</Capability>
+	<Capability id="0a3f0b0e-20b2-4084-be48-082dd141ccb3" name="IPowerCommunicationCapability" x="416" y="321" width="-1" height="-1">
+	</Capability>
+	<Capability id="c7be348c-904b-46d8-86b0-55fd4302af7b" name="SelfControlCapability" x="78" y="351" width="-1" height="-1">
+	</Capability>
+	<Capability id="4518e4c6-4e1b-4df9-8b4d-a10c6f7e9e83" name="ParticipateCapability" x="412" y="426" width="-1" height="-1">
+	</Capability>
+	<Capability id="3210f02d-076d-498f-9854-76891829b082" name="DateTimeCapability" x="909" y="320" width="174" height="48">
+	</Capability>
+	<Capability id="50102f1b-a1e0-4944-aa50-dd62a6f7799b" name="ManageHomeCapability" x="953" y="401" width="-1" height="-1">
+	</Capability>
+	<Goal id="1ee959a7-47d6-46e3-9ad7-f8d198112be2" name="Forecast Home" number="1" preference="1.0" x="1046" y="9" width="-1" height="-1" definition="" description="" color="No">
+	</Goal>
+	<Goal id="42bd7a43-fad3-4879-94e1-9cf250073944" name="Connect" number="2" preference="1.0" x="293" y="3" width="-1" height="-1" definition="" description="" color="No">
+	</Goal>
+	<Goal id="2c8c1a06-a218-43ef-aba9-8a2810a9a17a" name="Self Control" number="3" preference="1.0" x="115" y="1" width="-1" height="-1" definition="" description="" color="No">
+	</Goal>
+	<Role id="a3180fd6-2726-4b19-8e91-4829afa8cd0b" name="Forecast Home Role" x="634" y="87" width="277" height="162">
+		<achieves name="achieves" score="1.0">
+			<child>1ee959a7-47d6-46e3-9ad7-f8d198112be2</child>
+		</achieves>
+		<requires>
+			<child>a3b5fe89-2fc7-4769-b27e-c90f315623cd</child>
+		</requires>
+		<requires>
+			<child>9f5e283f-64e5-4f4d-ad34-71c2d3e22e48</child>
+		</requires>
+		<requires>
+			<child>0a3f0b0e-20b2-4084-be48-082dd141ccb3</child>
+		</requires>
+		<requires>
+			<child>4518e4c6-4e1b-4df9-8b4d-a10c6f7e9e83</child>
+		</requires>
+		<requires>
+			<child>3210f02d-076d-498f-9854-76891829b082</child>
+		</requires>
+		<requires>
+			<child>50102f1b-a1e0-4944-aa50-dd62a6f7799b</child>
+		</requires>
+		<requires>
+			<child>8f9541df-ef41-4112-93b7-7e25e76d5660</child>
+		</requires>
+		<requires>
+			<child>834a6134-0c3e-40b3-a0f4-5f67df06909e</child>
+		</requires>
+		<requires>
+			<child>d6e9292a-47b9-42e1-8155-eeccfff72ec1</child>
+		</requires>
+	</Role>
+	<Role id="1db9c94c-9c19-48ee-9ef2-c17e3ad800aa" name="Connect Role" x="316" y="91" width="294" height="157">
+		<achieves name="achieves" score="1.0">
+			<child>42bd7a43-fad3-4879-94e1-9cf250073944</child>
+		</achieves>
+		<requires>
+			<child>5fe792f6-f2be-453d-bb5a-cb0d04e46ca5</child>
+		</requires>
+		<requires>
+			<child>9f5e283f-64e5-4f4d-ad34-71c2d3e22e48</child>
+		</requires>
+		<requires>
+			<child>0a3f0b0e-20b2-4084-be48-082dd141ccb3</child>
+		</requires>
+		<requires>
+			<child>4518e4c6-4e1b-4df9-8b4d-a10c6f7e9e83</child>
+		</requires>
+	</Role>
+	<Role id="5d79f874-415e-4eb5-956b-74edc8f78fcc" name="Self Control Role" x="38" y="92" width="255" height="153">
+		<requires>
+			<child>0a3f0b0e-20b2-4084-be48-082dd141ccb3</child>
+		</requires>
+		<achieves name="achieves" score="1.0">
+			<child>2c8c1a06-a218-43ef-aba9-8a2810a9a17a</child>
+		</achieves>
+		<requires>
+			<child>9f5e283f-64e5-4f4d-ad34-71c2d3e22e48</child>
+		</requires>
+		<requires>
+			<child>c7be348c-904b-46d8-86b0-55fd4302af7b</child>
+		</requires>
+		<requires>
+			<child>5fe792f6-f2be-453d-bb5a-cb0d04e46ca5</child>
+		</requires>
+	</Role>
+	<Capability id="834a6134-0c3e-40b3-a0f4-5f67df06909e" name="ForecastWeatherCapability" x="618" y="468" width="-1" height="-1">
+	</Capability>
+	<Capability id="8f9541df-ef41-4112-93b7-7e25e76d5660" name="ForecastLoadCapability" x="422" y="507" width="-1" height="-1">
+	</Capability>
+	<Capability id="d6e9292a-47b9-42e1-8155-eeccfff72ec1" name="ForecastGenerationCapability" x="653" y="534" width="-1" height="-1">
+	</Capability>
+</RoleDiagram>
