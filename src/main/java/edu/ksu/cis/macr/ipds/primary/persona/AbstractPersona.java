@@ -1,18 +1,14 @@
 package edu.ksu.cis.macr.ipds.primary.persona;
 
-
 import edu.ksu.cis.macr.aasis.agent.cc_a.IAbstractControlComponent;
 import edu.ksu.cis.macr.aasis.agent.persona.*;
 import edu.ksu.cis.macr.aasis.spec.OrganizationFocus;
 import edu.ksu.cis.macr.goal.model.InstanceParameters;
 import edu.ksu.cis.macr.obaa_pp.cc.om.IXMLFormattableKnowledge;
 import edu.ksu.cis.macr.obaa_pp.ec.AgentDisabledException;
-import edu.ksu.cis.macr.obaa_pp.ec_ps.IPlanSelector;
 import edu.ksu.cis.macr.obaa_pp.ec_task.ITask;
-import edu.ksu.cis.macr.obaa_pp.ec_task.TaskManager;
 import edu.ksu.cis.macr.obaa_pp.events.IEventManager;
 import edu.ksu.cis.macr.obaa_pp.events.IOrganizationEvent;
-import edu.ksu.cis.macr.obaa_pp.events.OrganizationEvents;
 import edu.ksu.cis.macr.obaa_pp.events.OrganizationEvents;
 import edu.ksu.cis.macr.obaa_pp.objects.AbstractObject;
 import edu.ksu.cis.macr.obaa_pp.objects.IDisplayInformation;
@@ -27,7 +23,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
@@ -36,23 +31,24 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
- The {@code AbstractAgent} class provides the necessary functionality for creating a {@code
-IPersona}.
-
- @author Christopher Zhong Revision: 1.27.4.9 Date: 2011/11/04 14:31:58
- @see edu.ksu.cis.macr.aasis.agent.persona.IPersona */
+ * The {@code AbstractAgent} class provides the necessary functionality for creating a {@code
+ * IPersona}.
+ *
+ * @author Christopher Zhong Revision: 1.27.4.9 Date: 2011/11/04 14:31:58
+ * @see edu.ksu.cis.macr.aasis.agent.persona.IPersona
+ */
 public abstract class AbstractPersona extends AbstractObject implements IPersona {
     private static final Logger LOG = LoggerFactory.getLogger(AbstractPersona.class);
     private static final boolean debug = false;
     /**
      * {@code ELEMENT_AGENTS} is the description of agent(s).
      */
-    public static final String ELEMENT_AGENTS = "agents";
+    private static final String ELEMENT_AGENTS = "agents";
     /**
      * {@code ELEMENT_AGENT}
      */
-    public static final String ELEMENT_AGENT = "agent";
-     /**
+    private static final String ELEMENT_AGENT = "agent";
+    /**
      * The {@code UniqueIdentifier} that uniquely identifies the {@code AbstractAgent}.
      */
     private final UniqueIdentifier agentIdentifier;
@@ -65,16 +61,15 @@ public abstract class AbstractPersona extends AbstractObject implements IPersona
     /**
      * The {@code BlockingQueue} of {@code Assignments} that the {@code IAgent} needs to stop working on.
      */
-    protected final BlockingQueue<Assignment> deAssignments = new LinkedBlockingQueue<>();
+    private final BlockingQueue<Assignment> deAssignments = new LinkedBlockingQueue<>();
     /**
      * The {@code BlockingQueue} of {@code UniqueIdentifier} of {@code InstanceGoals} that has been changed.
      */
-    protected final BlockingQueue<InstanceGoal<InstanceParameters>> modifiedGoals = new LinkedBlockingQueue<>();
-
+    private final BlockingQueue<InstanceGoal<InstanceParameters>> modifiedGoals = new LinkedBlockingQueue<>();
 
     public OrganizationFocus focus;
-    protected CapabilityManager capabilityManager;
-    protected TaskManager taskManager;
+    CapabilityManager capabilityManager;
+    protected ITask taskAssignment;
     /**
      * The {@code Organization} in which the {@code IAgent} exists.
      */
@@ -83,7 +78,6 @@ public abstract class AbstractPersona extends AbstractObject implements IPersona
      * The organization-based reasoning component of the {@code IAgent}.
      */
     protected IAbstractControlComponent controlComponent;
-    protected String agentfile;
     /**
      * The {@code IInternalCommunicationCapability} capability of this {@code IAgent}.
      */
@@ -95,14 +89,13 @@ public abstract class AbstractPersona extends AbstractObject implements IPersona
      */
     private boolean alive = true;
 
-
     /**
-     Constructs a new instance of {@code AbstractAgent}.
-
-     @param organization the {@code Organization} in which the {@code IAgent} will exist.
-     @param identifier the unique name to identify the {@code IAgent}.
-     @param knowledge the {@code DOM} {@code Element} that contains information about the {@code Organization}.
-     @param focus the {@code Enum} that show what focus the current organization is.
+     * Constructs a new instance of {@code AbstractAgent}.
+     *
+     * @param organization the {@code Organization} in which the {@code IAgent} will exist.
+     * @param identifier   the unique name to identify the {@code IAgent}.
+     * @param knowledge    the {@code DOM} {@code Element} that contains information about the {@code Organization}.
+     * @param focus        the {@code Enum} that show what focus the current organization is.
      */
     protected AbstractPersona(final IOrganization organization, final String identifier, final Element knowledge, final OrganizationFocus focus) {
         super(identifier);
@@ -129,21 +122,15 @@ public abstract class AbstractPersona extends AbstractObject implements IPersona
 
         setInternalCommunicationCapability(c);
 
-
         // The following has been broken out .....false means run them in the launcher
         // boolean intiializeGoalsInConstructors = true;
         //  if (intiializeGoalsInConstructors) {
 
         //==============================================================================================
-        this.taskManager = new TaskManager(this.getUniqueIdentifier().toString());
-        if (debug) LOG.debug("\t New TaskManager={}.", this.taskManager);
-
-
         this.setOrganizationEvents(controlComponent.getOrganizationEvents());
         if (debug)
             LOG.debug("Setting the {} EC initial organization events from the CC Organization Events. They are {}.",
                     this.getOrganizationEvents().numberOfQueuedEvents(), this.getOrganizationEvents());
-//   }
 
         /*
          * if loading of agents was successful AND debugging is enable then log
@@ -160,9 +147,9 @@ public abstract class AbstractPersona extends AbstractObject implements IPersona
     }
 
     /**
-     Constructs a new instance of {@code AbstractAgent}.
-
-     @param identifierString the unique name to identify the {@code IAgent}.
+     * Constructs a new instance of {@code AbstractAgent}.
+     *
+     * @param identifierString the unique name to identify the {@code IAgent}.
      */
     protected AbstractPersona(final String identifierString) {
         super(identifierString);
@@ -173,22 +160,18 @@ public abstract class AbstractPersona extends AbstractObject implements IPersona
         this.organization = new Organization();
         this.capabilityManager = new CapabilityManager(agentIdentifier);
         this.organizationEvents = new OrganizationEvents(agentIdentifier.toString());
-        this.taskManager = new TaskManager(this.getUniqueIdentifier().toString());
-        if (debug) LOG.debug("\t New TaskManager={}.", this.taskManager);
-
-
     }
 
     /**
-     Initialize the {@code IAbstractControlComponent}.
-
-     @param identifier the {@code String} identifying the {@code IAbstractControlComponent}.
-     @param persona the {@code IAgent} for the {@code IAbstractControlComponent}.
-     @param knowledge the {@code Element} that contains the necessary information for initializing the {@code IAbstractControlComponent}.
-     @param focus the (@code OrganizationFocus) that contains what kind of focus the object is (Agent or External).
-     @return the initialized {@code IAbstractControlComponent}.
+     * Initialize the {@code IAbstractControlComponent}.
+     *
+     * @param identifier the {@code String} identifying the {@code IAbstractControlComponent}.
+     * @param persona    the {@code IAgent} for the {@code IAbstractControlComponent}.
+     * @param knowledge  the {@code Element} that contains the necessary information for initializing the {@code IAbstractControlComponent}.
+     * @param focus      the (@code OrganizationFocus) that contains what kind of focus the object is (Agent or External).
+     * @return the initialized {@code IAbstractControlComponent}.
      */
-    public static IAbstractControlComponent setupControlComponent(
+    private static IAbstractControlComponent setupControlComponent(
             final String identifier,
             final IPersona persona,
             final Element knowledge, final OrganizationFocus focus) {
@@ -197,27 +180,25 @@ public abstract class AbstractPersona extends AbstractObject implements IPersona
                 + "." + knowledge.getAttribute(IXMLFormattableKnowledge.ATTRIBUTE_TYPE);
         LOG.info("Setting up new control component class={}. Identifier={}, persona={}, knowledge={}, focus={}. ", className, identifier, persona, knowledge, focus);
 
-
         final Class<? extends IAbstractControlComponent> controlComponentClass = getControlComponentClass(className);
         if (debug) LOG.debug("Constructing new control component. Class ={}", controlComponentClass.getSimpleName());
         final Constructor<? extends IAbstractControlComponent> controlComponentConstructor = getControlComponentConstructor(controlComponentClass);
         if (debug) LOG.debug("Constructing new control component {}", controlComponentConstructor.getName());
         return newControlComponent(controlComponentConstructor, identifier, persona, knowledge, focus);
-
     }
 
     /**
-     Instantiates a new instance of {@code IAbstractControlComponent} with the given {@code Constructor}, identifier,
-     robot, and knowledge.
-
-     @param constructor the {@code Constructor} for the new instance.
-     @param identifier the name by which to identify the new instance.
-     @param executionComponent the robot where the new instance goes.
-     @param knowledge the knowledge for the new instance.
-     @param focus the enum that contains what kind of focus the object is (Agent or External).
-     @return a new instance of {@code IAbstractControlComponent}.
+     * Instantiates a new instance of {@code IAbstractControlComponent} with the given {@code Constructor}, identifier,
+     * robot, and knowledge.
+     *
+     * @param constructor        the {@code Constructor} for the new instance.
+     * @param identifier         the name by which to identify the new instance.
+     * @param executionComponent the robot where the new instance goes.
+     * @param knowledge          the knowledge for the new instance.
+     * @param focus              the enum that contains what kind of focus the object is (Agent or External).
+     * @return a new instance of {@code IAbstractControlComponent}.
      */
-    public static IAbstractControlComponent newControlComponent(
+    private static IAbstractControlComponent newControlComponent(
             final Constructor<? extends IAbstractControlComponent> constructor,
             final String identifier,
             final IPersona executionComponent,
@@ -229,12 +210,12 @@ public abstract class AbstractPersona extends AbstractObject implements IPersona
     }
 
     /**
-     Returns the {@code Constructor} of the {@code IAbstractControlComponent} {@code Class}.
-
-     @param controlComponentClass the {@code Class} of the {@code IAbstractControlComponent} to get the {@code Constructor}.
-     @return the {@code Constructor} of the {@code IAbstractControlComponent}.
+     * Returns the {@code Constructor} of the {@code IAbstractControlComponent} {@code Class}.
+     *
+     * @param controlComponentClass the {@code Class} of the {@code IAbstractControlComponent} to get the {@code Constructor}.
+     * @return the {@code Constructor} of the {@code IAbstractControlComponent}.
      */
-    public static Constructor<? extends IAbstractControlComponent> getControlComponentConstructor(
+    private static Constructor<? extends IAbstractControlComponent> getControlComponentConstructor(
             final Class<? extends IAbstractControlComponent> controlComponentClass) {
         LOG.debug("Entering getControlComponentConstructor(controlComponentClass={}).", controlComponentClass);
         Constructor<? extends IAbstractControlComponent> constructor = null;
@@ -259,12 +240,12 @@ public abstract class AbstractPersona extends AbstractObject implements IPersona
     }
 
     /**
-     Returns the {@code Class} of an {@code IAbstractControlComponent}.
-
-     @param className the {@code String} representing the {@code Class} of an {@code IAbstractControlComponent}.
-     @return the {@code Class} of an {@code IAbstractControlComponent}.
+     * Returns the {@code Class} of an {@code IAbstractControlComponent}.
+     *
+     * @param className the {@code String} representing the {@code Class} of an {@code IAbstractControlComponent}.
+     * @return the {@code Class} of an {@code IAbstractControlComponent}.
      */
-    public static Class<? extends IAbstractControlComponent> getControlComponentClass(
+    private static Class<? extends IAbstractControlComponent> getControlComponentClass(
             final String className) {
         try {
             LOG.debug("Entering getControlComponentClass(className={}).", className);
@@ -279,12 +260,12 @@ public abstract class AbstractPersona extends AbstractObject implements IPersona
     }
 
     /**
-     Instantiates a new instance of the object with the given {@code Constructor} and parameters.
-
-     @param <T> the type of the new instance.
-     @param constructor the {@code Constructor} for the new instance.
-     @param parameters the parameters for the {@code Constructor}.
-     @return a new instance of the object.
+     * Instantiates a new instance of the object with the given {@code Constructor} and parameters.
+     *
+     * @param <T>         the type of the new instance.
+     * @param constructor the {@code Constructor} for the new instance.
+     * @param parameters  the parameters for the {@code Constructor}.
+     * @return a new instance of the object.
      */
     private static <T> T instantiate(final Constructor<T> constructor, final Object... parameters) {
         LOG.debug("Entering instantiate(constructor={}, parameters={}).", constructor, parameters);
@@ -307,54 +288,20 @@ public abstract class AbstractPersona extends AbstractObject implements IPersona
         return null;
     }
 
-    /**
-     Log the error.
-
-     @param e - exeception object
-     */
-    private static void logError(Exception e) {
-        LOG.error("ERROR: {} {}", e.getClass(), e.getMessage());
-        System.exit(-70);
-    }
-
-    private static boolean checkFile(final File file) {
-        if (file.exists()) {
-            if (file.isFile()) {
-                if (file.canRead()) {
-                    return true;
-                } else {
-                    LOG.error(String.format("File (%s) cannot be read", file));
-                }
-            } else {
-                LOG.error(String.format("File (%s) is not a file", file));
-            }
-        } else {
-            LOG.error(String.format("File (%s) does not exist", file));
-        }
-        return false;
-    }
-
     @Override
     public void addAssignment(final Assignment assignment) {
         assignments.add(assignment);
     }
 
-
+    /**
+     * Adds a new {@code ICapability} to the {@code IAgent}. If the {@code replace} parameter is {@code true}, then a
+     * replacement operation will be done to ensure that all appropriate instances are replaced with the given {@code ICapability}.
+     *
+     * @param capability the {@code ICapability} to be added.
+     */
     public void addCapability(final ICapability capability) {
         if (debug) LOG.debug("Adding capability: {}", capability);
         this.capabilityManager.addCapability(capability, true);
-    }
-
-    /**
-     Adds a new {@code ICapability} to the {@code IAgent}. If the {@code replace} parameter is {@code true}, then a
-     replacement operation will be done to ensure that all appropriate instances are replaced with the given {@code ICapability}.
-
-     @param capability the {@code ICapability} to be added.
-     @param replace {@code true} if a replacement is to be executed, {@code false} otherwise.
-     */
-    protected void addCapability(final ICapability capability,
-                                 final boolean replace) {
-        this.capabilityManager.addCapability(capability, replace);
     }
 
     @Override
@@ -368,20 +315,20 @@ public abstract class AbstractPersona extends AbstractObject implements IPersona
     }
 
     /**
-     Returns the number of {@code Task} waiting to be processed.
-
-     @return the number of {@code Task} waiting to be processed.
+     * Returns the number of {@code Task} waiting to be processed.
+     *
+     * @return the number of {@code Task} waiting to be processed.
      */
     protected int assignments() {
         return assignments.size();
     }
 
     /**
-     Returns the number of {@code Assignment} waiting to be removed.
-
-     @return the number of {@code Task} waiting to be removed.
+     * Returns the number of {@code Assignment} waiting to be removed.
+     *
+     * @return the number of {@code Task} waiting to be removed.
      */
-    protected int deAssignments() {
+    int deAssignments() {
         return deAssignments.size();
     }
 
@@ -392,10 +339,7 @@ public abstract class AbstractPersona extends AbstractObject implements IPersona
 
     @Override
     public void endTurn() {
-        //if (debug) LOG.debug("Entering endTurn()");
         organization.endTurn();
-
-        //if (debug) LOG.debug("***** Calling executeControlComponentPlan()");
         controlComponent.executeControlComponentPlan();
     }
 
@@ -417,8 +361,6 @@ public abstract class AbstractPersona extends AbstractObject implements IPersona
 
     @Override
     public double getCapabilityScore(final Capability capability) {
-        //return iExecutableCapability == null ? PossessesRelation.MIN_SCORE
-        //        : PossessesRelation.MAX_SCORE - iExecutableCapability.getFailure();
         return this.capabilityManager.getCapabilityScore(capability);
     }
 
@@ -464,7 +406,7 @@ public abstract class AbstractPersona extends AbstractObject implements IPersona
     @Override
     public String getOrganizationFromPersonaName(String personaName) {
         // e.g. H44_FinN43
-        String org = "";
+        String org;
 
         // if in an organization, get the name
         if (personaName.contains("in")) {
@@ -486,7 +428,6 @@ public abstract class AbstractPersona extends AbstractObject implements IPersona
     @Override
     public double getPossessesScore(final UniqueIdentifier capabilityIdentifier) {
         return this.getPersonaControlComponent().getOrganizationModel().getAgent(this.getUniqueIdentifier()).getPossessesScore(capabilityIdentifier);
-//   return 0;
     }
 
     @Override
@@ -495,11 +436,11 @@ public abstract class AbstractPersona extends AbstractObject implements IPersona
     }
 
     /**
-     Informs the {@code IControlComponent} of an {@code OrganizationEvent}.
-
-     @param events the {@code OrganizationEvent} to inform the {@code IControlComponent}.
+     * Informs the {@code IControlComponent} of an {@code OrganizationEvent}.
+     *
+     * @param events the {@code OrganizationEvent} to inform the {@code IControlComponent}.
      */
-    protected void informControlComponent(final List<IOrganizationEvent> events) {
+    void informControlComponent(final List<IOrganizationEvent> events) {
         this.controlComponent.getOrganizationEvents().addEventListToQueue(events);
     }
 
@@ -509,38 +450,28 @@ public abstract class AbstractPersona extends AbstractObject implements IPersona
     }
 
     /**
-     Returns the next {@code Task}.
-
-     @return the next {@code Task} if it exists, {@code null} otherwise.
+     * Returns the next {@code Task}.
+     *
+     * @return the next {@code Task} if it exists, {@code null} otherwise.
      */
-    protected Assignment pollAssignment() {
+    Assignment pollAssignment() {
         return assignments.poll();
     }
 
     /**
-     Returns the next {@code Assignment} to be removed.
-
-     @return the next {@code Assignment} to be removed if it exists, {@code null} otherwise.
+     * Returns the next {@code Assignment} to be removed.
+     *
+     * @return the next {@code Assignment} to be removed if it exists, {@code null} otherwise.
      */
-    protected Assignment pollDeAssignment() {
+    Assignment pollDeAssignment() {
         return deAssignments.poll();
     }
 
     /**
-     Returns the next {@code UniqueIdentifier} indicating a goal modification, waiting of necessary until one becomes
-     available.
-
-     @return the next {@code UniqueIdentifier}.
-     */
-    protected InstanceGoal<InstanceParameters> pollGoalModification() {
-        return modifiedGoals.poll();
-    }
-
-    /**
-     Receives a messages that was sent to the {@code IAgent}.
-
-     @return the {@code Object} that was received, {@code null} otherwise.
-     @see IInternalCommunicationCapability#receive()
+     * Receives a messages that was sent to the {@code IAgent}.
+     *
+     * @return the {@code Object} that was received, {@code null} otherwise.
+     * @see IInternalCommunicationCapability#receive()
      */
     protected Object receive() {
         return internalCommunicationCapability.receive();
@@ -552,19 +483,17 @@ public abstract class AbstractPersona extends AbstractObject implements IPersona
         this.capabilityManager.reset();
     }
 
-
     /**
-     Calls the {@code IAbstractControlComponent#executeControlComponentPlan()}
-     and the {@code #execute()} method.
-
-     @see Runnable#run()
+     * Calls the {@code IAbstractControlComponent#executeControlComponentPlan()}
+     * and the {@code #execute()} method.
+     *
+     * @see Runnable#run()
      */
     @Override
     public void run() {
         if (debug) LOG.debug("Entering run(). Will call organization.enableAgent()");
         this.organization.enableAgent();
         try {
-
             // first we call the cc execute which runs the cc plan
 
             if (debug) LOG.debug("***** Calling initial executeControlComponentPlan()");
@@ -579,34 +508,17 @@ public abstract class AbstractPersona extends AbstractObject implements IPersona
                     .toString(ex.getStackTrace()));
             System.exit(-11);
         }
-//        try {
-//            // then we call the ec execute which runs the ec plan
-//            if (debug) LOG.debug("******** Calling execute(). ");
-//            execute();  // See Agent
-//
-//        } catch (final AgentDisabledException e) {
-//            /* agent has been disabled for some reason */
-//            organization.disableAgent();  // Denise - moved to inside catch
-//        } catch (final IllegalArgumentException ex) {
-//
-//            LOG.error("ERROR in run() {}. Illegal arg execption: {}  {}", this.agentIdentifier.toString(), ex.getMessage(), Arrays
-//                    .toString(ex.getStackTrace()));
-//            System.exit(-12);
-//        } catch (final Exception e) {
-//            LOG.error("ERROR in run().", e);
-//            System.exit(-12);
-//        }
 
         if (debug) LOG.debug("Exiting ap.run().");
     }
 
     /**
-     Sends a messages to the given {@code IAgent}, only if the {@code IAgent} is within range.
-
-     @param toAgent the {@code IAgent} to receive the messages.
-     @param channelID the type of messages, used * * * * * * * * * * * * * * * by {@code ICommunicationChannel} .
-     @param content the messages to be sent.
-     @return {@code true} if the messages was sent successfully, {@code false} otherwise.
+     * Sends a messages to the given {@code IAgent}, only if the {@code IAgent} is within range.
+     *
+     * @param toAgent   the {@code IAgent} to receive the messages.
+     * @param channelID the type of messages, used * * * * * * * * * * * * * * * by {@code ICommunicationChannel} .
+     * @param content   the messages to be sent.
+     * @return {@code true} if the messages was sent successfully, {@code false} otherwise.
      */
     protected boolean send(final UniqueIdentifier toAgent,
                            final String channelID, final Object content) {
@@ -614,11 +526,11 @@ public abstract class AbstractPersona extends AbstractObject implements IPersona
     }
 
     /**
-     Sets the {@code IInternalCommunicationCapability} to the given {@code IInternalCommunicationCapability}.
-
-     @param internalCommunicationCapability the new {@code IInternalCommunicationCapability} to set.
+     * Sets the {@code IInternalCommunicationCapability} to the given {@code IInternalCommunicationCapability}.
+     *
+     * @param internalCommunicationCapability the new {@code IInternalCommunicationCapability} to set.
      */
-    protected final <CommunicationType extends IInternalCommunicationCapability & ICapability> void setInternalCommunicationCapability(CommunicationType internalCommunicationCapability) {
+    private <CommunicationType extends IInternalCommunicationCapability & ICapability> void setInternalCommunicationCapability(CommunicationType internalCommunicationCapability) {
         LOG.debug("Entering setInternalCommunicationCapability(internalCommunicationCapability={})", internalCommunicationCapability);
         if (this.internalCommunicationCapability == null) {
             controlComponent = Objects.requireNonNull(controlComponent, "controlComponent cannot be null");
@@ -651,41 +563,9 @@ public abstract class AbstractPersona extends AbstractObject implements IPersona
     }
 
     /**
-     Returns the next {@code Task}, waiting if necessary until one becomes available.
-
-     @return the next {@code Task}.
-     @throws InterruptedException if interrupted while waiting.
-     */
-    protected Assignment takeAssignment() throws InterruptedException {
-        return assignments.take();
-    }
-
-    /**
-     Returns the next {@code Assignment} to be removed, waiting if necessary until one becomes available.
-
-     @return the next {@code Assignment}.
-     @throws InterruptedException if interrupted while waiting.
-     */
-    protected Assignment takeDeAssignment() throws InterruptedException {
-        return deAssignments.take();
-    }
-
-    /**
-     Returns the next {@code UniqueIdentifier} indicating a goal modification, waiting of necessary until one becomes
-     available.
-
-     @return the next {@code UniqueIdentifier}.
-     @throws InterruptedException if interrupted while waiting.
-     */
-    protected InstanceGoal<InstanceParameters> takeGoalModification()
-            throws InterruptedException {
-        return modifiedGoals.take();
-    }
-
-    /**
-     Returns the {@code DisplayInformation} representation of the {@code IAttributable} or {@code ICapability}.
-
-     @return the {@code DisplayInformation} for visual display base.
+     * Returns the {@code DisplayInformation} representation of the {@code IAttributable} or {@code ICapability}.
+     *
+     * @return the {@code DisplayInformation} for visual display base.
      */
     @Override
     public IDisplayInformation toDisplayInformation() {
@@ -696,14 +576,13 @@ public abstract class AbstractPersona extends AbstractObject implements IPersona
         }
 
         return displayInformation;
-
     }
 
     /**
-     Returns the {@code DOM} {@code Element} of the {@code AbstractAgent}.
-
-     @param document the document in which to create the {@code DOM} {@code Element}s.
-     @return the {@code DOM} {@code Element} of the {@code AbstractAgent}.
+     * Returns the {@code DOM} {@code Element} of the {@code AbstractAgent}.
+     *
+     * @param document the document in which to create the {@code DOM} {@code Element}s.
+     * @return the {@code DOM} {@code Element} of the {@code AbstractAgent}.
      */
     @Override
     public Element toElement(final Document document) {
@@ -731,8 +610,6 @@ public abstract class AbstractPersona extends AbstractObject implements IPersona
 
     protected abstract void executeTask(ITask task);
 
-    public abstract void setPlanSelector(IPlanSelector planSelector);
-
     @Override
     public edu.ksu.cis.macr.obaa_pp.ec.IControlComponent getControlComponent() {
         return null;
@@ -745,6 +622,6 @@ public abstract class AbstractPersona extends AbstractObject implements IPersona
 
     @Override
     public void setOrganizationEvents(IEventManager organizationEvents) {
-        this.organizationEvents = (OrganizationEvents)organizationEvents;
+        this.organizationEvents = (OrganizationEvents) organizationEvents;
     }
 }

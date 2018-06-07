@@ -1,4 +1,4 @@
-/**
+/*
  *
  * Copyright 2012 Kansas State University MACR Laboratory
  * http://macr.cis.ksu.edu/ Department of Computing & Information Sciences
@@ -33,7 +33,6 @@ import edu.ksu.cis.macr.obaa_pp.events.IOrganizationEvent;
 import edu.ksu.cis.macr.obaa_pp.events.OrganizationEvent;
 import edu.ksu.cis.macr.obaa_pp.events.OrganizationEventType;
 import edu.ksu.cis.macr.organization.model.Agent;
-import edu.ksu.cis.macr.organization.model.Capability;
 import edu.ksu.cis.macr.organization.model.InstanceGoal;
 import edu.ksu.cis.macr.organization.model.RoleGoodnessFunction;
 import edu.ksu.cis.macr.organization.model.identifiers.UniqueIdentifier;
@@ -53,14 +52,13 @@ import java.util.Objects;
  * the agents list of connections provided with its "Self Control" goal.
  */
 public class Persona extends AbstractPersona {
-    protected static final UniqueIdentifier ACHIEVED_EVENT = SpecificationEvent.ACHIEVED_EVENT.getIdentifier();
+    private static final UniqueIdentifier ACHIEVED_EVENT = SpecificationEvent.ACHIEVED_EVENT.getIdentifier();
     private static final Logger LOG = LoggerFactory.getLogger(Persona.class);
     private static final boolean debug = false;
     protected String identifierString;
-    protected PowerCommunicationCapability localPowerCommunicationCapability;
-    protected PlayableCapability playerCapability;
+    private PowerCommunicationCapability localPowerCommunicationCapability;
+    private PlayableCapability playerCapability;
     protected IPlanSelector planSelector = new PlanSelector();
-
 
     /**
      * Constructs a new instance of an agent using the organization-based agent architecture. Each prosumer agent will have
@@ -69,7 +67,7 @@ public class Persona extends AbstractPersona {
      *
      * @param identifierString a string containing a name that uniquely
      */
-    public Persona(final String identifierString)  {
+    public Persona(final String identifierString) {
         super(identifierString);
         LOG.info("\t..................CONSTRUCTING PERSONA {}.", identifierString);
         this.identifierString = identifierString;
@@ -77,21 +75,14 @@ public class Persona extends AbstractPersona {
         this.playerCapability = new PlayableCapability(this.identifierString);
         if (debug) LOG.debug("\t New playable capability={}.", this.playerCapability);
 
-
         this.localPowerCommunicationCapability = new PowerCommunicationCapability(this, organization);
         if (debug) LOG.debug("\t New PowerCommunicationCapability={}", this.localPowerCommunicationCapability);
         addCapability(localPowerCommunicationCapability);
         if (debug) LOG.debug("\t Added PowerCommunicationCapability={}.", this.localPowerCommunicationCapability);
 
-
-//        this.internalCommunicationCapability = getCapability(IInternalCommunicationCapability.class);
-//        if (debug) LOG.debug("\t Added internalCommunicationCapability={}.", this.internalCommunicationCapability);
-
         this.internalCommunicationCapability.addChannel(localPowerCommunicationCapability.getCommunicationChannelID(),
-                    this.localPowerCommunicationCapability);
-            if (debug) LOG.debug("\t Added localPowerCommunicationCapability internally to add the channel.");
-
-
+                this.localPowerCommunicationCapability);
+        if (debug) LOG.debug("\t Added localPowerCommunicationCapability internally to add the channel.");
 
         LOG.info("\t..................EXITING PERSONA(identifier={})", identifierString);
     }
@@ -115,8 +106,6 @@ public class Persona extends AbstractPersona {
 
         this.playerCapability = new PlayableCapability(this.identifierString);
         if (debug) LOG.debug("\t New playable capability={}.", this.playerCapability);
-
-
 
         this.localPowerCommunicationCapability = new PowerCommunicationCapability(this, org);
         if (debug) LOG.debug("\t New PowerCommunicationCapability={}", this.localPowerCommunicationCapability);
@@ -149,16 +138,15 @@ public class Persona extends AbstractPersona {
 
     }
 
-    //@Override
     public IEventManager getEventManager() {
-        return (IEventManager) this.getOrganizationEvents();
+        return this.getOrganizationEvents();
     }
 
     /**
      * @return the identifierString
      */
     @Override
-    public  String getIdentifierString() {
+    public String getIdentifierString() {
         return identifierString;
     }
 
@@ -170,25 +158,20 @@ public class Persona extends AbstractPersona {
     }
 
     @Override
-    public synchronized void setPlanSelector(IPlanSelector planSelector) {
-        this.planSelector = planSelector;
-    }
-
-    @Override
-    public  String toString() {
+    public String toString() {
         return "Persona [identifierString=" + this.identifierString + "]";
     }
 
     @Override
-    public  void execute() {
-        if (debug) LOG.debug("**** Entering EC Execution Algorithm execute(). {} assignments.",  assignments());
+    public void execute() {
+        if (debug) LOG.debug("**** Entering EC Execution Algorithm execute(). {} assignments.", assignments());
         while (isAlive()) {
             Player.step();
             /* first: update the ec */
             try {
                 while (assignments() > 0) {
                     if (debug) LOG.debug("Number of Assignments = {}", assignments());
-                    this.taskManager.addAssignedTask(new Task(this.pollAssignment()));
+                    taskAssignment = new Task(this.pollAssignment());
                 }
             } catch (Exception ex) {
                 LOG.error("ERROR in EC EXECUTE Assignment processing {}. Illegal arg execption: {}  {}{}", this.getIdentifierString(), ex.getMessage(), Arrays.toString(
@@ -196,10 +179,10 @@ public class Persona extends AbstractPersona {
                 System.exit(-14);
             }
             try {
-            /* second: remove the deassignments */
+                /* second: remove the deassignments */
                 while (deAssignments() > 0) {
                     if (debug) LOG.debug("Number of DeAssignments = {}", deAssignments());
-                    this.taskManager.removeAssignments(this.pollDeAssignment());
+                    if (taskAssignment.getAssignment().equals(this.pollDeAssignment())) taskAssignment = null;
                 }
             } catch (Exception ex) {
                 LOG.error("ERROR in EC EXECUTE deassignment processing {}. Illegal arg execption: {}  {}{}", this.getIdentifierString(), ex.getMessage(), Arrays.toString(
@@ -208,9 +191,9 @@ public class Persona extends AbstractPersona {
             }
             ITask assignedTask = null;
             try {
-            /* third: select & execute the highest priority task from queues */
+                /* third: select & execute the highest priority task from queues */
                 if (debug) LOG.debug("ASSIGNED TASK: Getting next assigned task.");
-                assignedTask = this.taskManager.getNextAssignedTask();
+                assignedTask = taskAssignment;
                 if (debug) LOG.debug("Assigned task is {}.", assignedTask);
             } catch (Exception ex) {
                 LOG.error("ERROR in EC EXECUTE getNextAssignedTask {}.Exception: {}  {}{}", this.getIdentifierString(), ex
@@ -220,9 +203,8 @@ public class Persona extends AbstractPersona {
             }
             try {
                 if (assignedTask == null) {
-                 //   if (debug) LOG.debug("ASSIGNED TASK IS NULL: No assignment, calling endTurn() and executing CC plan()");
                     endTurn();
-                } else if (assignedTask != null) {
+                } else {
                     LOG.info("Executing assigned task: {}", assignedTask);
                     this.executeTask(assignedTask);
                 }
@@ -233,7 +215,6 @@ public class Persona extends AbstractPersona {
         }
         if (debug) LOG.debug("exiting EC execute()..............................");
     }
-
 
     /**
      * Execute the given task.
@@ -255,8 +236,6 @@ public class Persona extends AbstractPersona {
             if (debug) LOG.debug("executeTask() Inside real execution");
             IExecutablePlan executablePlan = task.getPlan();
             if (executablePlan == null) {
-                // iExecutablePlan = this.taskManager.getTaskPlan(task);
-
                 UniqueIdentifier roleIdentifier = Objects.requireNonNull(task.getAssignment().getRole().getIdentifier());
                 if (debug) LOG.debug("Task role is {}.", roleIdentifier);
                 UniqueIdentifier goalIdentifier = Objects.requireNonNull(task.getAssignment().getInstanceGoal().getSpecificationIdentifier());
@@ -268,11 +247,6 @@ public class Persona extends AbstractPersona {
                 } catch (Exception e) {
                     LOG.error("Error getting plan from AgentPlanSelector.getPlan when role={} and goal={}", roleIdentifier.toString(), goalIdentifier.toString());
                     System.exit(-44);
-                }
-                if (executablePlan == null) {
-                    LOG.error("Error: Plan is still null. Please create a plan for goal={}, role={}, task={}.",
-                            task.getAssignment().getInstanceGoal(), task.getAssignment().getRole(), task.toString());
-                    System.exit(-797);
                 }
                 try {
                     task.setExecutionPlan(executablePlan);
@@ -294,7 +268,7 @@ public class Persona extends AbstractPersona {
             if (executablePlan.isDone()) {
                 doAssignmentTaskCompleted(this, task);
             } else {
-                this.taskManager.addAssignedTask(task);
+                taskAssignment = task;
             }
         } else {
             doTaskFailed(task);
@@ -312,10 +286,10 @@ public class Persona extends AbstractPersona {
         Objects.requireNonNull(agent, "IExecutionComponent cannot be null");
         Objects.requireNonNull(assignedTask, "assignmentTask cannot be null");
 
-        this.taskManager.getTaskQueue().remove(assignedTask);
+        if (taskAssignment.equals(assignedTask)) taskAssignment = null;
         final IOrganizationEvent organizationEvent = new OrganizationEvent(OrganizationEventType.EVENT,
                 ACHIEVED_EVENT, assignedTask.getAssignment().getInstanceGoal(), null);
-        List<IOrganizationEvent> organizationEvents = new ArrayList<IOrganizationEvent>();
+        List<IOrganizationEvent> organizationEvents = new ArrayList<>();
         organizationEvents.add(organizationEvent);
         informControlComponent(organizationEvents);
     }
@@ -327,29 +301,11 @@ public class Persona extends AbstractPersona {
      */
     public synchronized void doTaskFailed(final ITask task) {
         if (debug) LOG.debug("Entering assignmentTaskFailed() {}", String.format("Task \"%s\" Failed", task));
-        this.taskManager.getTaskQueue().remove(task);
+        if (taskAssignment.equals(task)) taskAssignment = null;
         final IOrganizationEvent organizationEvent = new OrganizationEvent(OrganizationEventType.TASK_FAILURE_EVENT,
                 null, task.getAssignment().getInstanceGoal(), null);
         final List<IOrganizationEvent> organizationEvents = new ArrayList<>();
         organizationEvents.add(organizationEvent);
         informControlComponent(organizationEvents);
     }
-
-    /**
-     * @return a string containing a more detailed summary of this agent.
-     */
-    public synchronized String toVerboseString() {
-        try {
-            String s = "";
-            s.concat(this.identifierString + " with ");
-            for (final Capability cap : this.getCapabilities()) {
-                s.concat(cap + " ");
-            }
-            return s;
-        } catch (final Exception e) {
-            return "";
-        }
-    }
-
-
 }
