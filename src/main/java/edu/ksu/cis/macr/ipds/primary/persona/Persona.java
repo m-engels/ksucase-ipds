@@ -34,6 +34,7 @@ import edu.ksu.cis.macr.obaa_pp.events.IOrganizationEvent;
 import edu.ksu.cis.macr.obaa_pp.events.OrganizationEvent;
 import edu.ksu.cis.macr.obaa_pp.events.OrganizationEventType;
 import edu.ksu.cis.macr.organization.model.Agent;
+import edu.ksu.cis.macr.organization.model.Assignment;
 import edu.ksu.cis.macr.organization.model.InstanceGoal;
 import edu.ksu.cis.macr.organization.model.RoleGoodnessFunction;
 import edu.ksu.cis.macr.organization.model.identifiers.UniqueIdentifier;
@@ -60,6 +61,8 @@ public class Persona extends AbstractPersona {
     private PowerCommunicationCapability localPowerCommunicationCapability;
     private PlayableCapability playerCapability;
     protected IPlanSelector planSelector = new PlanSelector();
+    private Assignment assignment;
+    private Assignment deassignment;
     private ITask taskAssignment;
 
     /**
@@ -135,12 +138,10 @@ public class Persona extends AbstractPersona {
         this.capabilityManager.addCapability(capability, true);
     }
 
-    @Override
     public void addCapability(edu.ksu.cis.macr.obaa_pp.ec.ICapability capability) {
         // must override abstract method in IPersonaExecutionComponent
     }
 
-    @Override
     public void addGoalModification(InstanceGoal<InstanceParameters> modification) {
         // must override abstract method in IPersonaExecutionComponent
     }
@@ -171,47 +172,25 @@ public class Persona extends AbstractPersona {
 
     @Override
     public void execute() {
-        if (debug) LOG.debug("**** Entering EC Execution Algorithm execute(). {} assignments.", assignments());
+        if (debug)
+            LOG.debug("**** Entering EC Execution Algorithm execute(). {} assignments.", assignment != null ? 1 : 0);
         while (isAlive()) {
             Player.step();
-            /* first: update the ec */
             try {
-                while (assignments() > 0) {
-                    if (debug) LOG.debug("Number of Assignments = {}", assignments());
-                    setTaskAssignment(new Task(this.pollAssignment()));
-                }
-            } catch (Exception ex) {
-                LOG.error("ERROR in EC EXECUTE Assignment processing {}. Illegal arg execption: {}  {}{}", this.getIdentifierString(), ex.getMessage(), Arrays.toString(
-                        ex.getStackTrace()));
-                System.exit(-14);
-            }
-            try {
-                /* second: remove the deassignments */
-                while (deAssignments() > 0) {
-                    if (debug) LOG.debug("Number of DeAssignments = {}", deAssignments());
-                    if (taskAssignment.getAssignment().equals(this.pollDeAssignment())) taskAssignment = null;
-                }
-            } catch (Exception ex) {
-                LOG.error("ERROR in EC EXECUTE deassignment processing {}. Illegal arg execption: {}  {}{}", this.getIdentifierString(), ex.getMessage(), Arrays.toString(
-                        ex.getStackTrace()));
-                System.exit(-15);
-            }
-            ITask assignedTask = null;
-            try {
-                /* third: select & execute the highest priority task from queues */
-                if (debug) LOG.debug("ASSIGNED TASK: Getting next assigned task.");
-                assignedTask = getTaskAssignment();
-                if (debug) LOG.debug("Assigned task is {}.", assignedTask);
-            } catch (Exception ex) {
-                LOG.error("ERROR in EC EXECUTE getNextAssignedTask {}.Exception: {}  {}{}", this.getIdentifierString(), ex
-                        .getMessage(), Arrays.toString(
-                        ex.getStackTrace()));
+                // 1. Set a new task if there is a new assignment.
+                if (assignment != null) setTaskAssignment(new Task(getAssignment()));
+                // 2. Unset the task if there is a deassignment.
+                if (taskAssignment != null && taskAssignment.getAssignment().equals(getDeassignment()))
+                    taskAssignment = null;
+            } catch (Exception e) {
+                LOG.error("ERROR in EC EXECUTE getNextAssignedTask {}.Exception: {}  {}{}", this.getIdentifierString(), e.getMessage(), Arrays.toString(e.getStackTrace()));
                 System.exit(-16);
             }
+            // 3. Select the task to execute.
+            ITask assignedTask = getTaskAssignment();
             try {
-                if (assignedTask == null) {
-                    endTurn();
-                } else {
+                if (assignedTask == null) endTurn();
+                else {
                     LOG.info("Executing assigned task: {}", assignedTask);
                     this.executeTask(assignedTask);
                 }
@@ -316,16 +295,44 @@ public class Persona extends AbstractPersona {
         informControlComponent(organizationEvents);
     }
 
-    ITask getTaskAssignment() {
+    private Assignment getAssignment() {
+        Assignment a = assignment;
+        assignment = null;
+        return a;
+    }
+
+    public void addAssignment(Assignment a) {
+        if (assignment != null) {
+            LOG.error("ERROR in EC execute: tried to add another assignment");
+            System.exit(-1);
+        }
+        assignment = a;
+    }
+
+    private Assignment getDeassignment() {
+        Assignment d = deassignment;
+        deassignment = null;
+        return d;
+    }
+
+    public void addDeAssignment(Assignment d) {
+        if (deassignment != null) {
+            LOG.error("ERROR in EC execute: tried to add another deassignment");
+            System.exit(-1);
+        }
+        deassignment = d;
+    }
+
+    private ITask getTaskAssignment() {
         ITask task = taskAssignment;
         taskAssignment = null;
         return task;
     }
 
-    void setTaskAssignment(ITask task) {
+    private void setTaskAssignment(ITask task) {
         if (taskAssignment != null) {
             LOG.error("ERROR in EC execute: tried to assign another task");
-            System.exit(-13);
+            System.exit(-1);
         }
         taskAssignment = task;
     }

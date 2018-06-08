@@ -11,7 +11,6 @@ import edu.ksu.cis.macr.obaa_pp.events.IOrganizationEvent;
 import edu.ksu.cis.macr.obaa_pp.events.OrganizationEvents;
 import edu.ksu.cis.macr.obaa_pp.objects.AbstractObject;
 import edu.ksu.cis.macr.obaa_pp.objects.IDisplayInformation;
-import edu.ksu.cis.macr.organization.model.Assignment;
 import edu.ksu.cis.macr.organization.model.Capability;
 import edu.ksu.cis.macr.organization.model.identifiers.StringIdentifier;
 import edu.ksu.cis.macr.organization.model.identifiers.UniqueIdentifier;
@@ -25,8 +24,6 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.Map.Entry;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * The {@code AbstractAgent} class provides the necessary functionality for creating a {@code
@@ -50,16 +47,6 @@ public abstract class AbstractPersona extends AbstractObject implements IPersona
      * The {@code UniqueIdentifier} that uniquely identifies the {@code AbstractAgent}.
      */
     private final UniqueIdentifier agentIdentifier;
-
-    /**
-     * The {@code BlockingQueue} of {@code Assignment} that the {@code IAgent} has been assigned currently playing.
-     */
-    protected BlockingQueue<Assignment> assignments = new LinkedBlockingQueue<>();
-
-    /**
-     * The {@code BlockingQueue} of {@code Assignments} that the {@code IAgent} needs to stop working on.
-     */
-    private final BlockingQueue<Assignment> deAssignments = new LinkedBlockingQueue<>();
 
     public OrganizationFocus focus;
     CapabilityManager capabilityManager;
@@ -281,11 +268,6 @@ public abstract class AbstractPersona extends AbstractObject implements IPersona
         return null;
     }
 
-    @Override
-    public void addAssignment(final Assignment assignment) {
-        assignments.add(assignment);
-    }
-
     /**
      * Adds a new {@code ICapability} to the {@code IAgent}. If the {@code replace} parameter is {@code true}, then a
      * replacement operation will be done to ensure that all appropriate instances are replaced with the given {@code ICapability}.
@@ -295,29 +277,6 @@ public abstract class AbstractPersona extends AbstractObject implements IPersona
     public void addCapability(final ICapability capability) {
         if (debug) LOG.debug("Adding capability: {}", capability);
         this.capabilityManager.addCapability(capability, true);
-    }
-
-    @Override
-    public void addDeAssignment(final Assignment assignment) {
-        deAssignments.add(assignment);
-    }
-
-    /**
-     * Returns the number of {@code Task} waiting to be processed.
-     *
-     * @return the number of {@code Task} waiting to be processed.
-     */
-    protected int assignments() {
-        return assignments.size();
-    }
-
-    /**
-     * Returns the number of {@code Assignment} waiting to be removed.
-     *
-     * @return the number of {@code Task} waiting to be removed.
-     */
-    int deAssignments() {
-        return deAssignments.size();
     }
 
     @Override
@@ -435,24 +394,6 @@ public abstract class AbstractPersona extends AbstractObject implements IPersona
     @Override
     public boolean isAlive() {
         return alive;
-    }
-
-    /**
-     * Returns the next {@code Task}.
-     *
-     * @return the next {@code Task} if it exists, {@code null} otherwise.
-     */
-    Assignment pollAssignment() {
-        return assignments.poll();
-    }
-
-    /**
-     * Returns the next {@code Assignment} to be removed.
-     *
-     * @return the next {@code Assignment} to be removed if it exists, {@code null} otherwise.
-     */
-    Assignment pollDeAssignment() {
-        return deAssignments.poll();
     }
 
     /**
