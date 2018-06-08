@@ -3,7 +3,6 @@ package edu.ksu.cis.macr.ipds.primary.persona;
 import edu.ksu.cis.macr.aasis.agent.cc_a.IAbstractControlComponent;
 import edu.ksu.cis.macr.aasis.agent.persona.*;
 import edu.ksu.cis.macr.aasis.spec.OrganizationFocus;
-import edu.ksu.cis.macr.goal.model.InstanceParameters;
 import edu.ksu.cis.macr.obaa_pp.cc.om.IXMLFormattableKnowledge;
 import edu.ksu.cis.macr.obaa_pp.ec.AgentDisabledException;
 import edu.ksu.cis.macr.obaa_pp.ec_task.ITask;
@@ -14,7 +13,6 @@ import edu.ksu.cis.macr.obaa_pp.objects.AbstractObject;
 import edu.ksu.cis.macr.obaa_pp.objects.IDisplayInformation;
 import edu.ksu.cis.macr.organization.model.Assignment;
 import edu.ksu.cis.macr.organization.model.Capability;
-import edu.ksu.cis.macr.organization.model.InstanceGoal;
 import edu.ksu.cis.macr.organization.model.identifiers.StringIdentifier;
 import edu.ksu.cis.macr.organization.model.identifiers.UniqueIdentifier;
 import org.slf4j.Logger;
@@ -62,14 +60,9 @@ public abstract class AbstractPersona extends AbstractObject implements IPersona
      * The {@code BlockingQueue} of {@code Assignments} that the {@code IAgent} needs to stop working on.
      */
     private final BlockingQueue<Assignment> deAssignments = new LinkedBlockingQueue<>();
-    /**
-     * The {@code BlockingQueue} of {@code UniqueIdentifier} of {@code InstanceGoals} that has been changed.
-     */
-    private final BlockingQueue<InstanceGoal<InstanceParameters>> modifiedGoals = new LinkedBlockingQueue<>();
 
     public OrganizationFocus focus;
     CapabilityManager capabilityManager;
-    protected ITask taskAssignment;
     /**
      * The {@code Organization} in which the {@code IAgent} exists.
      */
@@ -307,11 +300,6 @@ public abstract class AbstractPersona extends AbstractObject implements IPersona
     @Override
     public void addDeAssignment(final Assignment assignment) {
         deAssignments.add(assignment);
-    }
-
-    @Override
-    public void addGoalModification(final InstanceGoal<InstanceParameters> instanceGoal) {
-        modifiedGoals.add(instanceGoal);
     }
 
     /**

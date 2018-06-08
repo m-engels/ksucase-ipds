@@ -21,6 +21,7 @@ import edu.ksu.cis.macr.aasis.agent.persona.IPersona;
 import edu.ksu.cis.macr.aasis.simulator.player.PlayableCapability;
 import edu.ksu.cis.macr.aasis.simulator.player.Player;
 import edu.ksu.cis.macr.aasis.spec.OrganizationFocus;
+import edu.ksu.cis.macr.goal.model.InstanceParameters;
 import edu.ksu.cis.macr.goal.model.SpecificationEvent;
 import edu.ksu.cis.macr.ipds.primary.capabilities.participate.PowerCommunicationCapability;
 import edu.ksu.cis.macr.ipds.primary.plan_selector.PlanSelector;
@@ -59,6 +60,7 @@ public class Persona extends AbstractPersona {
     private PowerCommunicationCapability localPowerCommunicationCapability;
     private PlayableCapability playerCapability;
     protected IPlanSelector planSelector = new PlanSelector();
+    private ITask taskAssignment;
 
     /**
      * Constructs a new instance of an agent using the organization-based agent architecture. Each prosumer agent will have
@@ -135,7 +137,12 @@ public class Persona extends AbstractPersona {
 
     @Override
     public void addCapability(edu.ksu.cis.macr.obaa_pp.ec.ICapability capability) {
+        // must override abstract method in IPersonaExecutionComponent
+    }
 
+    @Override
+    public void addGoalModification(InstanceGoal<InstanceParameters> modification) {
+        // must override abstract method in IPersonaExecutionComponent
     }
 
     public IEventManager getEventManager() {
@@ -171,7 +178,7 @@ public class Persona extends AbstractPersona {
             try {
                 while (assignments() > 0) {
                     if (debug) LOG.debug("Number of Assignments = {}", assignments());
-                    taskAssignment = new Task(this.pollAssignment());
+                    setTaskAssignment(new Task(this.pollAssignment()));
                 }
             } catch (Exception ex) {
                 LOG.error("ERROR in EC EXECUTE Assignment processing {}. Illegal arg execption: {}  {}{}", this.getIdentifierString(), ex.getMessage(), Arrays.toString(
@@ -268,7 +275,7 @@ public class Persona extends AbstractPersona {
             if (executablePlan.isDone()) {
                 doAssignmentTaskCompleted(this, task);
             } else {
-                taskAssignment = task;
+                setTaskAssignment(task);
             }
         } else {
             doTaskFailed(task);
@@ -307,5 +314,13 @@ public class Persona extends AbstractPersona {
         final List<IOrganizationEvent> organizationEvents = new ArrayList<>();
         organizationEvents.add(organizationEvent);
         informControlComponent(organizationEvents);
+    }
+
+    private void setTaskAssignment(ITask task) {
+        if(taskAssignment != null) {
+            LOG.error("ERROR in EC execute: tried to assign another task");
+            System.exit(-13);
+        }
+        taskAssignment = task;
     }
 }
