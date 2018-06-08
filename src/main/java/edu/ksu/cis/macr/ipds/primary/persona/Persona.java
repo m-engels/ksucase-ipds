@@ -200,7 +200,7 @@ public class Persona extends AbstractPersona {
             try {
                 /* third: select & execute the highest priority task from queues */
                 if (debug) LOG.debug("ASSIGNED TASK: Getting next assigned task.");
-                assignedTask = taskAssignment;
+                assignedTask = getTaskAssignment();
                 if (debug) LOG.debug("Assigned task is {}.", assignedTask);
             } catch (Exception ex) {
                 LOG.error("ERROR in EC EXECUTE getNextAssignedTask {}.Exception: {}  {}{}", this.getIdentifierString(), ex
@@ -316,8 +316,14 @@ public class Persona extends AbstractPersona {
         informControlComponent(organizationEvents);
     }
 
-    private void setTaskAssignment(ITask task) {
-        if(taskAssignment != null) {
+    ITask getTaskAssignment() {
+        ITask task = taskAssignment;
+        taskAssignment = null;
+        return task;
+    }
+
+    void setTaskAssignment(ITask task) {
+        if (taskAssignment != null) {
             LOG.error("ERROR in EC execute: tried to assign another task");
             System.exit(-13);
         }
