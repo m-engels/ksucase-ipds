@@ -33,17 +33,14 @@ import edu.ksu.cis.macr.obaa_pp.events.IEventManager;
 import edu.ksu.cis.macr.obaa_pp.events.IOrganizationEvent;
 import edu.ksu.cis.macr.obaa_pp.events.OrganizationEvent;
 import edu.ksu.cis.macr.obaa_pp.events.OrganizationEventType;
-import edu.ksu.cis.macr.organization.model.Agent;
 import edu.ksu.cis.macr.organization.model.Assignment;
 import edu.ksu.cis.macr.organization.model.InstanceGoal;
-import edu.ksu.cis.macr.organization.model.RoleGoodnessFunction;
 import edu.ksu.cis.macr.organization.model.identifiers.UniqueIdentifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -63,7 +60,6 @@ public class Persona extends AbstractPersona {
     protected IPlanSelector planSelector = new PlanSelector();
     private Assignment assignment;
     private Assignment deassignment;
-    private ITask taskAssignment;
 
     /**
      * Constructs a new instance of an agent using the organization-based agent architecture. Each prosumer agent will have
@@ -172,34 +168,18 @@ public class Persona extends AbstractPersona {
 
     @Override
     public void execute() {
-        if (debug)
-            LOG.debug("**** Entering EC Execution Algorithm execute(). {} assignments.", assignment != null ? 1 : 0);
         while (isAlive()) {
             Player.step();
-            try {
-                // 1. Set a new task if there is a new assignment.
-                if (assignment != null) setTaskAssignment(new Task(getAssignment()));
-                // 2. Unset the task if there is a deassignment.
-                if (taskAssignment != null && taskAssignment.getAssignment().equals(getDeassignment()))
-                    taskAssignment = null;
-            } catch (Exception e) {
-                LOG.error("ERROR in EC EXECUTE getNextAssignedTask {}.Exception: {}  {}{}", this.getIdentifierString(), e.getMessage(), Arrays.toString(e.getStackTrace()));
-                System.exit(-16);
-            }
-            // 3. Select the task to execute.
-            ITask assignedTask = getTaskAssignment();
-            try {
-                if (assignedTask == null) endTurn();
-                else {
-                    LOG.info("Executing assigned task: {}", assignedTask);
-                    this.executeTask(assignedTask);
-                }
-            } catch (Exception e) {
-                LOG.error("ERROR EXECUTING ASSIGNED TASK assignedTask={}", assignedTask, e);
-                System.exit(-17);
+            if (assignment != null && assignment.equals(deassignment)) assignment = null;
+            deassignment = null;
+            if (assignment == null) endTurn();
+            else {
+                Task task = new Task(assignment);
+                LOG.info("Executing assigned task: {}", task);
+                this.executeTask(task);
+                assignment = null;
             }
         }
-        if (debug) LOG.debug("exiting EC execute()..............................");
     }
 
     /**
@@ -209,57 +189,17 @@ public class Persona extends AbstractPersona {
      */
     @Override
     public synchronized void executeTask(ITask task) {
-        if (debug) LOG.debug("Entering executeTask() {}",
-                String.format("%s plays %s to achieve %s",
-                        task.getAssignment().getAgent().getIdentifier(),
-                        task.getAssignment().getRole()
-                                .getIdentifier(), task.getAssignment().getInstanceGoal().getIdentifier()));
-
-        final Agent<?> agent = task.getAssignment().getAgent();
         final InstanceGoal<?> goal = task.getAssignment().getInstanceGoal();
-        final double goodnessScore = task.getAssignment().getRole().goodness(agent, goal, null);
-        if (goodnessScore > RoleGoodnessFunction.MIN_SCORE) {
-            if (debug) LOG.debug("executeTask() Inside real execution");
-            IExecutablePlan executablePlan = task.getPlan();
-            if (executablePlan == null) {
-                UniqueIdentifier roleIdentifier = Objects.requireNonNull(task.getAssignment().getRole().getIdentifier());
-                if (debug) LOG.debug("Task role is {}.", roleIdentifier);
-                UniqueIdentifier goalIdentifier = Objects.requireNonNull(task.getAssignment().getInstanceGoal().getSpecificationIdentifier());
-                if (debug) LOG.debug("Task goal is {}.", goalIdentifier.toString());
-
-                try {
-                    executablePlan = planSelector.getPlan(roleIdentifier, goalIdentifier);
-                    LOG.info("Selected plan for {} to achieve {} is {}.", roleIdentifier, goalIdentifier.toString(), executablePlan.toString());
-                } catch (Exception e) {
-                    LOG.error("Error getting plan from AgentPlanSelector.getPlan when role={} and goal={}", roleIdentifier.toString(), goalIdentifier.toString());
-                    System.exit(-44);
-                }
-                try {
-                    task.setExecutionPlan(executablePlan);
-                } catch (Exception e) {
-                    LOG.error("Error setting execution plan.");
-                    System.exit(-4);
-                }
-            }
-            do {
-                try {
-                    executablePlan.execute(this, task.getAssignment().getInstanceGoal());
-                    endTurn();
-                } catch (Exception e) {
-                    LOG.error("ERROR EXECUTING ASSIGNED TASK task={}", task, e);
-                    System.exit(-27);
-                }
-            } while (!executablePlan.isPreemptible(this));
-
-            if (executablePlan.isDone()) {
-                doAssignmentTaskCompleted(this, task);
-            } else {
-                setTaskAssignment(task);
-            }
-        } else {
-            doTaskFailed(task);
-        }
-        if (debug) LOG.debug("Exiting executeTask().");
+        UniqueIdentifier roleIdentifier = Objects.requireNonNull(assignment.getRole().getIdentifier());
+        UniqueIdentifier goalIdentifier = Objects.requireNonNull(goal.getSpecificationIdentifier());
+        IExecutablePlan executablePlan = planSelector.getPlan(roleIdentifier, goalIdentifier);
+        task.setExecutionPlan(executablePlan);
+        LOG.info("Selected plan for {} to achieve {} is {}.", roleIdentifier, goalIdentifier, executablePlan);
+        do {
+            executablePlan.execute(this, goal);
+            endTurn();
+        } while (!executablePlan.isDone());
+        doAssignmentTaskCompleted(this, task);
     }
 
     /**
@@ -271,8 +211,7 @@ public class Persona extends AbstractPersona {
     public synchronized void doAssignmentTaskCompleted(final IPersona agent, final ITask assignedTask) {
         Objects.requireNonNull(agent, "IExecutionComponent cannot be null");
         Objects.requireNonNull(assignedTask, "assignmentTask cannot be null");
-
-        if (taskAssignment.equals(assignedTask)) taskAssignment = null;
+        assignment = null;
         final IOrganizationEvent organizationEvent = new OrganizationEvent(OrganizationEventType.EVENT,
                 ACHIEVED_EVENT, assignedTask.getAssignment().getInstanceGoal(), null);
         List<IOrganizationEvent> organizationEvents = new ArrayList<>();
@@ -287,7 +226,7 @@ public class Persona extends AbstractPersona {
      */
     public synchronized void doTaskFailed(final ITask task) {
         if (debug) LOG.debug("Entering assignmentTaskFailed() {}", String.format("Task \"%s\" Failed", task));
-        if (taskAssignment.equals(task)) taskAssignment = null;
+        assignment = null;
         final IOrganizationEvent organizationEvent = new OrganizationEvent(OrganizationEventType.TASK_FAILURE_EVENT,
                 null, task.getAssignment().getInstanceGoal(), null);
         final List<IOrganizationEvent> organizationEvents = new ArrayList<>();
@@ -295,45 +234,19 @@ public class Persona extends AbstractPersona {
         informControlComponent(organizationEvents);
     }
 
-    private Assignment getAssignment() {
-        Assignment a = assignment;
-        assignment = null;
-        return a;
-    }
-
     public void addAssignment(Assignment a) {
         if (assignment != null) {
-            LOG.error("ERROR in EC execute: tried to add another assignment");
+            LOG.error("Tried to add another assignment");
             System.exit(-1);
         }
         assignment = a;
     }
 
-    private Assignment getDeassignment() {
-        Assignment d = deassignment;
-        deassignment = null;
-        return d;
-    }
-
     public void addDeAssignment(Assignment d) {
         if (deassignment != null) {
-            LOG.error("ERROR in EC execute: tried to add another deassignment");
+            LOG.error("Tried to add another deassignment");
             System.exit(-1);
         }
         deassignment = d;
-    }
-
-    private ITask getTaskAssignment() {
-        ITask task = taskAssignment;
-        taskAssignment = null;
-        return task;
-    }
-
-    private void setTaskAssignment(ITask task) {
-        if (taskAssignment != null) {
-            LOG.error("ERROR in EC execute: tried to assign another task");
-            System.exit(-1);
-        }
-        taskAssignment = task;
     }
 }
