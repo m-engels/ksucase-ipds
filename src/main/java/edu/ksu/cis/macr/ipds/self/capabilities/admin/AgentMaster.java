@@ -602,20 +602,8 @@ public class AgentMaster extends AbstractBaseControlComponent implements IPerson
             LOG.debug("New Assignments {}", String.format(" (%d): %s", assignments.size(), assignments));
             getOrganizationModel().addAssignments(assignments);
             for (final Assignment assignment : assignments) {
-
-                LOG.info("CREATING ASSIGNMENT MESSAGE. ParticipateMessage= {}",
-                        String.format("New Assignments (%d): %s  " +
-                                        "%s", assignments.size(), assignments,
-                                assignment.getAgent().getIdentifier()
-                        )
-                );
-                ParticipateMessage msg = new ParticipateMessage(
-                        getPersonaExecutionComponent().getUniqueIdentifier(),
-                        assignment.getAgent().getIdentifier(),
-                        ParticipatePerformative.ASSIGNMENT,
-                        AssignmentContent.createAssignmentContent(assignment));
-                LOG.info("SENDING ASSIGNMENT MESSAGE via internalOrganizationCommunicationCapability: {}", msg);
-                this.internalOrganizationCommunicationCapability.sendLocal(msg);
+                IPersona persona=getPersona().getOrganization().getAgent(assignment.getAgent().getIdentifier());
+                persona.addAssignment(assignment);
             }
         }
     }
