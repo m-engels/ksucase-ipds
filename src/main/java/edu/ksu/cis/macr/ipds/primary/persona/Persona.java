@@ -136,6 +136,8 @@ public class Persona extends AbstractPersona {
 
     public void addCapability(edu.ksu.cis.macr.obaa_pp.ec.ICapability capability) {
         // must override abstract method in IPersonaExecutionComponent
+        LOG.error("Tried to add capability by wrong overload");
+        System.exit(-1);
     }
 
     public void addGoalModification(InstanceGoal<InstanceParameters> modification) {

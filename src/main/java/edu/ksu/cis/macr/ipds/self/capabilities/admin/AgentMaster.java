@@ -14,6 +14,7 @@ import edu.ksu.cis.macr.goal.model.InstanceParameters;
 import edu.ksu.cis.macr.goal.model.InstanceTreeChanges;
 import edu.ksu.cis.macr.goal.model.InstanceTreeModifications;
 import edu.ksu.cis.macr.goal.model.SpecificationEvent;
+import edu.ksu.cis.macr.ipds.primary.capabilities.participate.Participant;
 import edu.ksu.cis.macr.ipds.primary.persona.AbstractBaseControlComponent;
 import edu.ksu.cis.macr.ipds.self.organizer.SelfReorganizationAlgorithm;
 import edu.ksu.cis.macr.obaa_pp.cc.om.IOrganizationModel;
@@ -360,54 +361,22 @@ public class AgentMaster extends AbstractBaseControlComponent implements IPerson
         triggerReorganization(true);
     }
 
-    protected synchronized void processAgentRegistration(final IParticipateMessage message) {
-        if (debug) LOG.debug("Entering processAgentRegistration(message={})", message);
-
-        final Object content = message.getContent();
-        final UniqueIdentifier participant = message.getLocalSender();
-        if (content instanceof RegistrationContent) {
-            final RegistrationContent registrationContent = (RegistrationContent) content;
-            if (debug) LOG.debug("Registration from {} RegContent: {}", participant, registrationContent);
-
-            final Agent<UniqueIdentifier> agent = new AgentImpl<>(registrationContent.getAgentIdentifier());
-            for (final Entry<UniqueIdentifier, Double> entry : registrationContent.getCapabilities().entrySet()) {
-                if (debug)
-                    LOG.debug("Registration from {} Checking capability: {}-{}", participant, entry.getKey(), entry.getValue());
-                final Capability capability = getOrganizationModel().getCapability(entry.getKey());
-                if (capability != null) {
-                    agent.addPossesses(capability, entry.getValue());
-                } else {
-                    if (debug) LOG.debug("Registration from {} Unknown Capability {}", participant, entry.getKey());
-                }
+    public synchronized void register(IPersona ec){
+        if(!(ec.getPersonaControlComponent() instanceof Participant)) return;
+        Participant cc=(Participant)ec.getPersonaControlComponent();
+        Agent<UniqueIdentifier> agent=new AgentImpl<>(ec.getUniqueIdentifier());
+        for(Capability participantCapability: ec.getCapabilities()){
+            double score=cc.register(participantCapability);
+            Capability masterCapability=getOrganizationModel().getCapability(participantCapability.getIdentifier());
+            if(masterCapability==null) {
+                masterCapability = new CapabilityImpl(participantCapability.getIdentifier());
+                getOrganizationModel().addCapability(masterCapability);
             }
-            // TODO include checks for existing agents
-            this.agentQueue.put(agent.getIdentifier(), agent);
-            if (debug) LOG.debug("agentQueue={}", this.agentQueue);
-            this.internalOrganizationCommunicationCapability.sendLocal(
-                     new ParticipateMessage(getPersonaExecutionComponent()
-                            .getUniqueIdentifier(), registrationContent.getAgentIdentifier(),
-                            ParticipatePerformative.AGENT_REGISTRATION_CONFIRMATION,
-                            getPersonaExecutionComponent().getUniqueIdentifier()
-                    )
-            );
-
-            if (debug) LOG.debug("processAgentRegistration() ThisAgent={}: {}",
-                    this.getPersonaExecutionComponent().getUniqueIdentifier(), agent.getPossessesSet()
-            );
+            agent.addPossesses(masterCapability, score);
         }
-    }
-
-    protected synchronized void processAgentRegistrationConfirmationReceived(final IParticipateMessage message) {
-        if (debug) LOG.debug("Entering processAgentRegistrationConfirmationReceived(message={})", message);
-        final UniqueIdentifier agentIdentifier = message.getLocalSender();
-        final Agent<UniqueIdentifier> agent = this.agentQueue.get(agentIdentifier);
-        if (agent != null) {
-            getOrganizationModel().addAgent(agent);
-            LOG.info("EVENT: ADDED_AGENT={}", agent, agent.getPossessesSet());
-        } else {
-            LOG.error("Unknown Agent:  {}.", agentIdentifier);
-        }
-        if (debug) LOG.debug("Processing agent registration confirmation received, beginning reorg.");
+        cc.register(getPersonaExecutionComponent().getUniqueIdentifier());
+        getOrganizationModel().addAgent(agent);
+        LOG.info("EVENT: ADDED_AGENT={}", agent, agent.getPossessesSet());
         triggerReorganization(true);
     }
 
@@ -539,12 +508,6 @@ public class AgentMaster extends AbstractBaseControlComponent implements IPerson
         if (debug) LOG.debug("Entering processMessage() Message: {}", message);
         if (message != null) {
             switch (message.getPerformativeType()) {
-                case BROADCASTING_AGENT_REGISTRATION:
-                    processAgentRegistration(message);
-                    break;
-                case AGENT_REGISTRATION_CONFIRMATION_RECEIVED:
-                    processAgentRegistrationConfirmationReceived(message);
-                    break;
                 case AGENT_UPDATE_INFORMATION:
                     processAgentUpdateInformation(message);
                     break;

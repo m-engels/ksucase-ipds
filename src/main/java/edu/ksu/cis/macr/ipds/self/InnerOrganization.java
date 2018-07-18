@@ -25,6 +25,7 @@ import edu.ksu.cis.macr.aasis.spec.OrganizationFocus;
 import edu.ksu.cis.macr.aasis.types.IAgentType;
 import edu.ksu.cis.macr.goal.model.InstanceParameters;
 import edu.ksu.cis.macr.goal.model.InstanceTreeChanges;
+import edu.ksu.cis.macr.ipds.self.capabilities.admin.AgentMaster;
 import edu.ksu.cis.macr.ipds.self.guidelines.SelfGuidelineManager;
 import edu.ksu.cis.macr.obaa_pp.events.OrganizationEvents;
 import org.slf4j.Logger;
@@ -220,10 +221,14 @@ public class InnerOrganization extends Organization implements IInnerOrganizatio
                      */
                     if (this.turns.get() == 0) {
                         newParticipants.add(persona);
+                        AgentMaster cc=(AgentMaster)getSelfControlComponentMaster();
+                        cc.register(persona);
                     } else {
                         if (addTangibleObject(persona)) {
                             newParticipants.add(persona);
                             this.agents.put(persona.getUniqueIdentifier(), persona);
+                            AgentMaster cc=(AgentMaster)getSelfControlComponentMaster();
+                            cc.register(persona);
                         }
                     }
                 }
