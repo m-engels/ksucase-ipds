@@ -45,11 +45,6 @@ public class GridParticipant extends Participant implements IBaseControlComponen
         }
     }
 
-    @Override
-    protected synchronized void doInitialization() {
-        this.state = ExecutionState.REGISTERING;
-    }
-
     protected void doRegistration() {
         if (debug) LOG.debug("Beginning doRegistration().");
         IOrganizationModel knowledge = getOrganizationModel();

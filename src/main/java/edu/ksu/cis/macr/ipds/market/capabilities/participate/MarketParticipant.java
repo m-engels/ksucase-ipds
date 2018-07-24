@@ -48,11 +48,6 @@ public class MarketParticipant extends Participant implements IBaseControlCompon
         }
     }
 
-    @Override
-    protected synchronized void doInitialization() {
-        this.state = ExecutionState.REGISTERING;
-    }
-
     protected void doRegistration() {
         if (debug) LOG.debug("Beginning doRegistration().");
         IOrganizationModel knowledge = getOrganizationModel();

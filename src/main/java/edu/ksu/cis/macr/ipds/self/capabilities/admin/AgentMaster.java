@@ -16,6 +16,7 @@ import edu.ksu.cis.macr.goal.model.InstanceTreeModifications;
 import edu.ksu.cis.macr.goal.model.SpecificationEvent;
 import edu.ksu.cis.macr.ipds.primary.capabilities.participate.Participant;
 import edu.ksu.cis.macr.ipds.primary.persona.AbstractBaseControlComponent;
+import edu.ksu.cis.macr.ipds.primary.persona.EmptyControlComponent;
 import edu.ksu.cis.macr.ipds.self.organizer.SelfReorganizationAlgorithm;
 import edu.ksu.cis.macr.obaa_pp.cc.om.IOrganizationModel;
 import edu.ksu.cis.macr.obaa_pp.cc_message.*;
@@ -362,21 +363,28 @@ public class AgentMaster extends AbstractBaseControlComponent implements IPerson
     }
 
     public synchronized void register(IPersona ec){
-        if(!(ec.getPersonaControlComponent() instanceof Participant)) return;
-        Participant cc=(Participant)ec.getPersonaControlComponent();
-        Agent<UniqueIdentifier> agent=new AgentImpl<>(ec.getUniqueIdentifier());
+        if(!(ec.getPersonaControlComponent() instanceof EmptyControlComponent)) return;
+        EmptyControlComponent cc=(EmptyControlComponent)ec.getPersonaControlComponent();
+        Agent<UniqueIdentifier> masterAgent=new AgentImpl<>(ec.getUniqueIdentifier());
         for(Capability participantCapability: ec.getCapabilities()){
-            double score=cc.register(participantCapability);
+            double score = ec.getCapabilityScore(participantCapability);
             Capability masterCapability=getOrganizationModel().getCapability(participantCapability.getIdentifier());
             if(masterCapability==null) {
                 masterCapability = new CapabilityImpl(participantCapability.getIdentifier());
                 getOrganizationModel().addCapability(masterCapability);
             }
-            agent.addPossesses(masterCapability, score);
+            masterAgent.addPossesses(masterCapability, score);
+            Agent<?> participantAgent=cc.getOrganizationModel().getAgent(ec.getUniqueIdentifier());
+            if(participantAgent==null){
+                participantAgent=new AgentImpl<>(ec.getUniqueIdentifier());
+                cc.getOrganizationModel().addAgent(participantAgent);
+            }
+            double agentScore=participantAgent.getPossessesScore(participantCapability.getIdentifier());
+            if(score !=agentScore&&agentScore!=0.0 && score==1.0)
+                participantAgent.setPossessesScore(participantCapability.getIdentifier(), score);
         }
-        cc.register(getPersonaExecutionComponent().getUniqueIdentifier());
-        getOrganizationModel().addAgent(agent);
-        LOG.info("EVENT: ADDED_AGENT={}", agent, agent.getPossessesSet());
+        getOrganizationModel().addAgent(masterAgent);
+        LOG.info("EVENT: ADDED_AGENT={}", masterAgent, masterAgent.getPossessesSet());
         triggerReorganization(true);
     }
 

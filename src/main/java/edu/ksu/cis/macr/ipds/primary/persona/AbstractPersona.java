@@ -89,6 +89,9 @@ public abstract class AbstractPersona extends AbstractObject implements IPersona
         if (organization == null) {
             if (debug) LOG.debug("Creating EMPTY CONTROL COMPONENT in null organization");
             controlComponent = new EmptyControlComponent(identifier, this, null, focus);
+        } else if (knowledge.getAttribute(IXMLFormattableKnowledge.ATTRIBUTE_TYPE).equals("Participant")) {
+            LOG.info("Skipping Participant");
+            controlComponent = new EmptyControlComponent(identifier, this, knowledge, focus);
         } else {
             if (debug)
                 LOG.debug("Creating CONTROL COMPONENT in {}.  Org={}, knowledge={}, focus={}", identifier, organization, knowledge, focus);

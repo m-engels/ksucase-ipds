@@ -88,25 +88,6 @@ public class Participant extends AbstractBaseControlComponent implements IBaseCo
         }
     }
 
-    public synchronized double register(Capability capability){
-        IPersona ec=getPersonaExecutionComponent();
-        Agent<?> agent=getOrganizationModel().getAgent(ec.getUniqueIdentifier());
-        if(agent==null){
-            agent=new AgentImpl<>(ec.getUniqueIdentifier());
-            getOrganizationModel().addAgent(agent);
-        }
-        double score=ec.getCapabilityScore(capability);
-        double agentScore=agent.getPossessesScore(capability.getIdentifier());
-        if(score !=agentScore&&agentScore!=0.0 && score==1.0)
-            agent.setPossessesScore(capability.getIdentifier(), score);
-        return score;
-    }
-
-    public synchronized void register(UniqueIdentifier id){
-        master=id;
-        setLocalMaster(master);
-    }
-
 
     public synchronized String getSelfOrganizationFromPersonaName(String personaName) {
         // e.g. H44_FinN43
@@ -203,7 +184,7 @@ public class Participant extends AbstractBaseControlComponent implements IBaseCo
     }
 
     protected synchronized void doInitialization() {
-        this.state = ExecutionState.WORKING;
+        this.state = ExecutionState.REGISTERING;
     }
 
     protected synchronized void doRegistration() {
