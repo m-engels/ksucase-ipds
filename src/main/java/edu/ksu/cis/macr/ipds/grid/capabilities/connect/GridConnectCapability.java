@@ -38,14 +38,14 @@ import java.util.*;
 public class GridConnectCapability extends HierarchicalConnectCapability implements IGridConnectCapability {
     private static final Logger LOG = LoggerFactory.getLogger(GridConnectCapability.class);
     private static final boolean debug = false;
-    private static IMessagingFocus messagingFocus ;
+    private static IMessagingFocus messagingFocus;
 
     /**
      * @param owner        - the entity to which this capability belongs.
      * @param organization - the {@code Organization} in which this {@code IAgent} acts.
      */
     public GridConnectCapability(final IPersona owner, final IOrganization organization) {
-        super(IGridConnectCapability.class , owner, organization);
+        super(IGridConnectCapability.class, owner, organization);
         COMMUNICATION_CHANNEL_ID = "GridConnectCommunicationChannel";
         messagingFocus = GridMessagingFocus.GRID_PARTICIPATE;
         LOG.debug("Before getting channel from Messaging Manager, channel = {}", channel);
@@ -56,9 +56,9 @@ public class GridConnectCapability extends HierarchicalConnectCapability impleme
     /**
      * Constructs a new instance of {@code ConnectCapability}.
      *
-     * @param owner           - the entity to which this capability belongs.
-     * @param organization    - the {@code IAgentInternalOrganization} in which this {@code IAgent} acts.
-     * @param connections - the guidelines for all authorized grid connections.
+     * @param owner        - the entity to which this capability belongs.
+     * @param organization - the {@code IAgentInternalOrganization} in which this {@code IAgent} acts.
+     * @param connections  - the guidelines for all authorized grid connections.
      */
     public GridConnectCapability(final IPersona owner, final IOrganization organization, IConnections connections) {
         super(IGridConnectCapability.class, owner, organization, connections);
@@ -75,14 +75,13 @@ public class GridConnectCapability extends HierarchicalConnectCapability impleme
         LOG.debug("sendREMOTE. message={}", message);
         final String queueLink = buildQueueLinkFromSenderAndReceiver(message.getRemoteSender(), message.getRemoteReceiver());
         final String fullQueueName = GridMessagingManager.getFullQueueName(queueLink, GridMessagingManager.getQueueFocus(messagingFocus));
-        final String routingKey = fullQueueName;
         GridMessagingManager.declareAndBindConsumerQueue(messagingFocus, queueLink);
         LOG.debug("SENDING MESSAGE TO {}. {}", fullQueueName, message.toString());
         try {
             byte[] messageBodyBytes = message.serialize();
             if (debug)
-                LOG.debug("Serialized HELLO TO routingKey: {} Size: ({} bytes) ", routingKey, messageBodyBytes.length);
-            channel.basicPublish(GridMessagingManager.getExchangeName(messagingFocus), routingKey, MessageProperties.PERSISTENT_TEXT_PLAIN, messageBodyBytes);
+                LOG.debug("Serialized HELLO TO routingKey: {} Size: ({} bytes) ", fullQueueName, messageBodyBytes.length);
+            channel.basicPublish(GridMessagingManager.getExchangeName(messagingFocus), fullQueueName, MessageProperties.PERSISTENT_TEXT_PLAIN, messageBodyBytes);
             LOG.info("SENT HELLO TO {}: {}", fullQueueName, message.toString());
         } catch (Exception e) {
             LOG.error("ERROR send() messages {} from {}. ", message.toString(), message.getRemoteSender());
@@ -110,8 +109,8 @@ public class GridConnectCapability extends HierarchicalConnectCapability impleme
      * @param instanceGoal - this instance of the specification goal
      */
     @Override
-    public  void init(InstanceGoal<?> instanceGoal) {
-       LOG.info("Entering init(instanceGoal={}.", instanceGoal);
+    public void init(InstanceGoal<?> instanceGoal) {
+        LOG.info("Entering init(instanceGoal={}.", instanceGoal);
         // Get the parameter values from the existing active instance goal
         final InstanceParameters params = Objects
                 .requireNonNull((InstanceParameters) instanceGoal
@@ -134,16 +133,16 @@ public class GridConnectCapability extends HierarchicalConnectCapability impleme
             if (debug) LOG.debug("Connections to other agents: {}", gridConnections.getListConnectionGuidelines());
             IConnections childConnections = new Connections(this.getAllChildConnections(gridConnections.getListConnectionGuidelines()), GridGoalParameters.childConnections.toString());
             if (debug) LOG.debug("Child connections: {}.", childConnections);
-            IConnections parentConnections = new Connections(this.getAllParentConnections(gridConnections.getListConnectionGuidelines()),  GridGoalParameters.parentConnections.toString().toString());
+            IConnections parentConnections = new Connections(this.getAllParentConnections(gridConnections.getListConnectionGuidelines()), GridGoalParameters.parentConnections.toString());
             if (debug) LOG.debug("Parent connections: {}.", parentConnections);
             this.setAllChildConnectionGuidelines(childConnections);
             this.setParentConnections(parentConnections);
         }
         if (this.childConnections != null) {
-                LOG.debug("{} authorized connections to holons.", childConnections.getListConnectionGuidelines().size());
+            LOG.debug("{} authorized connections to holons.", childConnections.getListConnectionGuidelines().size());
         }
         if (this.parentConnections != null) {
-                LOG.debug("There are {} authorized connections to super holons.", parentConnections.getListConnectionGuidelines().size());
+            LOG.debug("There are {} authorized connections to super holons.", parentConnections.getListConnectionGuidelines().size());
         }
     }
 
@@ -153,13 +152,6 @@ public class GridConnectCapability extends HierarchicalConnectCapability impleme
         return true;
     }
 
-    @Override
-    public  boolean send(IConnectMessage message) {
-        LOG.error("Too general - do not use. ");
-        System.exit(-99);
-        return false;
-    }
-
 
     /**
      * Trigger an associated "be sub holon" goal.
@@ -167,7 +159,7 @@ public class GridConnectCapability extends HierarchicalConnectCapability impleme
      * @param instanceGoal - the instance goal that is triggering the new goal.
      */
     @Override
-    public  void triggerChildGoal(final InstanceGoal<?> instanceGoal) {
+    public void triggerChildGoal(final InstanceGoal<?> instanceGoal) {
         final List<? extends IConnectionGuidelines> lstAll = this.connections.getListConnectionGuidelines();
         if (debug) LOG.debug("All connections are: {}", lstAll);
 
@@ -202,7 +194,6 @@ public class GridConnectCapability extends HierarchicalConnectCapability impleme
      * Trigger an associated "be super holon" goal.
      *
      * @param instanceGoal - the instance goal that is triggering the new goal.
-
      */
     @Override
     public synchronized void triggerParentGoal(final InstanceGoal<?> instanceGoal) {
@@ -235,47 +226,12 @@ public class GridConnectCapability extends HierarchicalConnectCapability impleme
         this.owner.getOrganizationEvents().addEventListToQueue(organizationEvents);
     }
 
-    protected boolean connectToChild(IConnectionGuidelines cg) {
-        final String other = cg.getOtherAgentAbbrev();
-        final String org = cg.getOrganizationAbbrev();
-        final String master = cg.getExpectedMasterAbbrev();
-        final String myPersona = ec.getUniqueIdentifier().toString();
-
-        if (alreadyInConnectionList(myPersona, other)) {
-            cg.setConnected(true);
-            LOG.debug("CONNECTED. Super holon {} already in the conn list to sub holon {}.", myPersona, other);
-        }
-        if (cg.isConnected()) return true;
-
-        if (debug) LOG.debug("Super holon {} not yet connected to sub holon {}. Checking for hello.", myPersona, other);
-        final IConnectMessage helloMessage = checkForRemoteConnectMessage(other, myPersona);
-
-        if (helloMessage != null) {
-            LOG.debug("Received CONNECT MESSAGE from participant: {}.", helloMessage);
-            try {
-                final String sender = helloMessage.getRemoteSender();  // other
-                final String receiver = helloMessage.getRemoteReceiver();  // me
-                cg.setConnected(true);
-                updateConnectionList(sender, receiver);
-                LOG.info("Super holon {} now connected to sub holon {}.", receiver, sender);
-            } catch (Exception e) {
-                LOG.error("Error getting info from received hello. {}", helloMessage.toString());
-                System.exit(-4);
-            }
-        } else {
-            if (debug)
-                LOG.debug("No connect received. Super holon {} sending again to sub holon {}.", myPersona, other);
-            sendRemoteHelloMessage(other, org, master, myPersona);
-        }
-        return cg.isConnected();
-    }
-
     /**
      * @param queueLink - prefix for the messaging queue
      * @return String messages - Grabs messages from Queue
-     * @throws IOException - Handles any IO Exceptions
+     * @throws IOException             - Handles any IO Exceptions
      * @throws ShutdownSignalException - Handles any ShutdownSignal Exceptions
-     * @throws InterruptedException - Handles any Interrupted Exceptions.
+     * @throws InterruptedException    - Handles any Interrupted Exceptions.
      */
     @Override
     public IConnectMessage remoteRECEIVE(final String queueLink) throws IOException, ShutdownSignalException, InterruptedException {
@@ -295,10 +251,11 @@ public class GridConnectCapability extends HierarchicalConnectCapability impleme
             try {
                 IConnectMessage received = (IConnectMessage) ConnectMessage.createEmptyConnectMessage().deserialize(delivery.getBody());
                 if (debug) LOG.debug("Deserialized remote GRID CONNECT message on {}. {}.", fullQueueName, received);
-                if (!queueLink.contains(received.getRemoteSender())){
+                if (!queueLink.contains(received.getRemoteSender())) {
                     LOG.error("ERROR: Got Message On Wrong Queue. Deserialized remote GRID CONNECT message on {}. {}.", fullQueueName, received);
                     System.exit(-9);
-                }return received;
+                }
+                return received;
             } catch (Exception ex) {
                 LOG.error("ERROR deserializing connect message: {}", ex.getCause().toString());
                 System.exit(-11);
@@ -306,16 +263,6 @@ public class GridConnectCapability extends HierarchicalConnectCapability impleme
         }
         if (debug) LOG.debug("got nothing on {}", fullQueueName);
         return null;
-    }
-
-    protected void setConsumer(final String queueLink) throws IOException {
-        if (debug) LOG.debug("Setting consumer with queueLink={}", queueLink);
-        GridMessagingManager.declareAndBindConsumerQueue(messagingFocus, queueLink);
-        if (debug) LOG.debug("declareAndBindConsumerQueue {}", queueLink);
-        String fullQueueName = GridMessagingManager.getFullQueueName(queueLink, GridMessagingManager.getQueueFocus(messagingFocus));
-        QueueingConsumer consumer = new QueueingConsumer(Objects.requireNonNull(channel, "Error null channel in receive()."));
-        String basicConsume = channel.basicConsume(fullQueueName, true, consumer);
-        if (debug) LOG.debug("basicConsume {}", basicConsume);
     }
 
     protected synchronized void updateConnectionList(final String sender, final String receiver) {
@@ -336,7 +283,6 @@ public class GridConnectCapability extends HierarchicalConnectCapability impleme
 
         final int numConnections = ConnectionModel.getConnectionSet().size();
         final int totalPossibleParentConnections = RunManager.getTotalConnectionCount();
-        final int hnum = ConnectionModel.getCountHomeConnections();
         LOG.debug("{}", ConnectionModel.getSummaryString());
         RunManager.setInitiallyConnected(numConnections >= RunManager.INITIAL_CONNECTION_THRESHOLD_FRACTION * totalPossibleParentConnections);
     }
@@ -380,31 +326,5 @@ public class GridConnectCapability extends HierarchicalConnectCapability impleme
             LOG.info("{} child connections.", childConnections.getListConnectionGuidelines().size());
         }
     }
-
-    /**
-     * Send a hello message.
-     *
-     * @param other     - the agent receiving the message
-     * @param org       - the organization abbreviation
-     * @param master    - the organization master
-     * @param myPersona - the agent sending the message
-     * @return - the {@code IConnectMessage} sent
-     */
-    @Override
-    public
-    IConnectMessage sendRemoteHelloMessage(final String other, final String org, final String master, final String
-            myPersona) {
-        final IConnectMessage message = this.createRemoteHelloMessage(other, org, master, myPersona);
-        if (debug) LOG.debug("COMPOSED remote hello message {} ", message.toString());
-        try {
-            sendREMOTE(message);
-            if (debug) LOG.debug("Remote HELLO SENT: {} ", message.toString());
-        } catch (Exception e) {
-            LOG.error("Remote HELLO NOT SENT: {} ", message.toString());
-            System.exit(-88);
-        }
-        return message;
-    }
-
 
 }
