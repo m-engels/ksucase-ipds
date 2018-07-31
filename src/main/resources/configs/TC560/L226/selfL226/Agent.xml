@@ -11,7 +11,7 @@
     <capability package="edu.ksu.cis.macr.ipds.primary.capabilities.manage" type="DateTimeCapability"/>
   </agents>
   <agents package="edu.ksu.cis.macr.ipds.primary.persona.types" type="LateralPersona">
-    <organization package="edu.ksu.cis.macr.ipds.primary.capabilities.participate" type="Participant"/>
+    <organization package="edu.ksu.cis.macr.ipds.primary.persona" type="EmptyControlComponent"/>
     <agent>L226</agent>
     <capability package="edu.ksu.cis.macr.ipds.primary.capabilities.participate" type="ParticipateCapability"/>
     <capability package="edu.ksu.cis.macr.aasis.agent.ec_cap" type="AutonomousOperationCapability"/>
@@ -22,7 +22,7 @@
     <capability package="edu.ksu.cis.macr.ipds.primary.capabilities.manage" type="ManageLateralCapability"/>
   </agents>
   <agents package="edu.ksu.cis.macr.ipds.grid.persona.types" type="LateralGridPersona">
-    <organization package="edu.ksu.cis.macr.ipds.primary.capabilities.participate" type="Participant"/>
+    <organization package="edu.ksu.cis.macr.ipds.primary.persona" type="EmptyControlComponent"/>
     <agent>L226inL226</agent>
     <capability package="edu.ksu.cis.macr.ipds.primary.capabilities.participate" type="ParticipateCapability"/>
     <capability package="edu.ksu.cis.macr.ipds.grid.capabilities.connect" type="GridConnectCapability"/>
@@ -37,7 +37,7 @@
     <capability package="edu.ksu.cis.macr.ipds.primary.capabilities.manage" type="ManageLateralCapability"/>
   </agents>
   <agents package="edu.ksu.cis.macr.ipds.grid.persona.types" type="LateralGridPersona">
-    <organization package="edu.ksu.cis.macr.ipds.primary.capabilities.participate" type="Participant"/>
+    <organization package="edu.ksu.cis.macr.ipds.primary.persona" type="EmptyControlComponent"/>
     <agent>L226inL225</agent>
     <capability package="edu.ksu.cis.macr.ipds.primary.capabilities.participate" type="ParticipateCapability"/>
     <capability package="edu.ksu.cis.macr.ipds.grid.capabilities.connect" type="GridConnectCapability"/>
@@ -50,7 +50,7 @@
     <capability package="edu.ksu.cis.macr.ipds.primary.capabilities.manage" type="ManageLateralCapability"/>
   </agents>
   <agents package="edu.ksu.cis.macr.ipds.market.persona.types" type="LateralMarketPersona">
-    <organization package="edu.ksu.cis.macr.ipds.primary.capabilities.participate" type="Participant"/>
+    <organization package="edu.ksu.cis.macr.ipds.primary.persona" type="EmptyControlComponent"/>
     <agent>L226AinL226A</agent>
     <capability package="edu.ksu.cis.macr.ipds.primary.capabilities.participate" type="ParticipateCapability"/>
     <capability package="edu.ksu.cis.macr.ipds.market.capabilities.participate" type="AuctionCommunicationCapability"/>

@@ -11,7 +11,7 @@
     <capability package="edu.ksu.cis.macr.ipds.primary.capabilities.manage" type="DateTimeCapability"/>
   </agents>
   <agents package="edu.ksu.cis.macr.ipds.primary.persona.types" type="FeederPersona">
-    <organization package="edu.ksu.cis.macr.ipds.primary.capabilities.participate" type="Participant"/>
+    <organization package="edu.ksu.cis.macr.ipds.primary.persona" type="EmptyControlComponent"/>
     <agent>F2</agent>
     <capability package="edu.ksu.cis.macr.ipds.primary.capabilities.participate" type="ParticipateCapability"/>
     <capability package="edu.ksu.cis.macr.aasis.agent.ec_cap" type="AutonomousOperationCapability"/>
@@ -22,7 +22,7 @@
     <capability package="edu.ksu.cis.macr.ipds.primary.capabilities.manage" type="ManageFeederCapability"/>
   </agents>
   <agents package="edu.ksu.cis.macr.ipds.grid.persona.types" type="FeederGridPersona">
-    <organization package="edu.ksu.cis.macr.ipds.primary.capabilities.participate" type="Participant"/>
+    <organization package="edu.ksu.cis.macr.ipds.primary.persona" type="EmptyControlComponent"/>
     <agent>F2inF2</agent>
     <capability package="edu.ksu.cis.macr.ipds.primary.capabilities.participate" type="ParticipateCapability"/>
     <capability package="edu.ksu.cis.macr.ipds.grid.capabilities.connect" type="GridConnectCapability"/>
@@ -37,7 +37,7 @@
     <capability package="edu.ksu.cis.macr.ipds.primary.capabilities.manage" type="ManageFeederCapability"/>
   </agents>
   <agents package="edu.ksu.cis.macr.ipds.grid.persona.types" type="FeederGridPersona">
-    <organization package="edu.ksu.cis.macr.ipds.primary.capabilities.participate" type="Participant"/>
+    <organization package="edu.ksu.cis.macr.ipds.primary.persona" type="EmptyControlComponent"/>
     <agent>F2inS1</agent>
     <capability package="edu.ksu.cis.macr.ipds.primary.capabilities.participate" type="ParticipateCapability"/>
     <capability package="edu.ksu.cis.macr.ipds.grid.capabilities.connect" type="GridConnectCapability"/>

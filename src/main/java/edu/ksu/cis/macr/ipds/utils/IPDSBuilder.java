@@ -586,8 +586,8 @@ public class IPDSBuilder {
 
     private static void addSelfParticipant(Element organization) {
         LOG.debug("Entering addSelfParticipant(organization={}", organization);
-        organization.setAttribute("type", "Participant");
-        organization.setAttribute("package", AGENT_PARTICIPATE_PACKAGE);
+        organization.setAttribute("type", "EmptyControlComponent");
+        organization.setAttribute("package", "edu.ksu.cis.macr.ipds.primary.persona");
     }
 
     private static void equipSelfWorker(String shortName, Document doc, Element agents, String myLevel) {
