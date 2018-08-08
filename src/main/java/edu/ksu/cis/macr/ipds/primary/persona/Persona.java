@@ -142,6 +142,8 @@ public class Persona extends AbstractPersona {
 
     public void addGoalModification(InstanceGoal<InstanceParameters> modification) {
         // must override abstract method in IPersonaExecutionComponent
+        LOG.error("Tried to modify goal");
+        System.exit(-1);
     }
 
     public IEventManager getEventManager() {
